@@ -98,14 +98,16 @@ original repository.
   retrieval, and the response reports it as `standalone_question`
   so the UI can show what it was understood as. A failed rewrite
   or a missing API key falls back to the original question.
-- **Eval dashboard in the demo:** the sidebar shows the measured
-  numbers — 7-doc P@3 / Hit@3, refusals, injection blocks,
-  retrieval-only latency, the public SQuAD scale table and the unit
-  test count — read from `metrics_summary.json`, which
+- **Eval dashboard (removed from the demo):** the sidebar used to
+  show the measured numbers from `metrics_summary.json`, which
   `eval/build_metrics_summary.py` generates from the real eval
   results files (no hand-typed numbers; the 500-doc answer scores
   are excluded, with the reason stated, because Groq 429s
-  contaminated them).
+  contaminated them). It was removed on 27 Nov 2026 — the same
+  static numbers for every visitor made it clutter, not a feature.
+  The measured numbers still live in this README's Performance
+  section and in `metrics_summary.json`, checked by
+  `tests/test_metrics_summary.py`.
 - **Hybrid search (`retrieval.py`):** pure-Python BM25 (no new
   dependency) over chunk text, rebuilt from the chunk registry on
   every upload / reset / startup. Retrieval is dense FAISS top-10 +
@@ -467,7 +469,7 @@ Document-QA-System/
 ├── answer_cache.py        # repeated-question answers (no Groq re-call)
 ├── citations.py           # deterministic inline citations
 ├── conversation.py        # follow-up detection + rewrite prompt
-├── metrics_summary.json   # eval numbers for the in-app dashboard
+├── metrics_summary.json   # eval numbers (no longer shown in the demo)
 ├── guardrails.py
 ├── .env.example
 ├── requirements.txt
