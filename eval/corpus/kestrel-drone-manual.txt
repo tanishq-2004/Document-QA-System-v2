@@ -1,0 +1,11 @@
+Kestrel Drone Model K-7 User Manual
+
+The Kestrel K-7 is a fictional quadcopter drone built for agricultural surveying. This manual covers battery, range, camera and safety rules for the K-7 only.
+
+Battery: the Kestrel K-7 uses a 5200 mAh lithium battery that provides up to 38 minutes of flight time in calm wind. The battery must be charged with the official K-7 charger, and charging takes approximately 75 minutes from empty to full.
+
+Range: the Kestrel K-7 has a maximum control range of 9 kilometres in open terrain with no interference. If the drone loses signal for more than 10 seconds, it automatically returns to its takeoff point at an altitude of 60 metres.
+
+Camera: the Kestrel K-7 carries a 20 megapixel camera with a 3-axis gimbal stabiliser. It records 4K video at 30 frames per second and stores footage on a microSD card of up to 256 gigabytes.
+
+Safety: the Kestrel K-7 must not be flown above 120 metres altitude or within 5 kilometres of an airport. Flights are prohibited in rain, and the propellers must be inspected for cracks before every flight.

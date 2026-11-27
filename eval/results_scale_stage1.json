@@ -1,0 +1,478 @@
+{
+  "corpus": {
+    "docs": 25,
+    "doc_files": [
+      "aurora-solar-policy.txt",
+      "gen-007-bakery-maple-crust-bakery.txt",
+      "gen-008-orchard-juniper-orchard.txt",
+      "gen-009-logistics-foxtail-logistics.txt",
+      "gen-010-hotel-marigold-hotel.txt",
+      "gen-011-gym-basalt-gym.txt",
+      "gen-012-weather-kodaikanal-ridge-station.txt",
+      "gen-013-textile-vermilion-textiles.txt",
+      "gen-014-bank-quartz-bank.txt",
+      "gen-015-ferry-lagoon-ferry-service.txt",
+      "gen-016-catering-embers-bbq-catering.txt",
+      "gen-017-bakery-honey-wheat-bakery.txt",
+      "gen-018-orchard-applewood-farms.txt",
+      "gen-019-logistics-swift-parcel-couriers.txt",
+      "gen-020-hotel-lakeview-inn.txt",
+      "gen-021-gym-iron-works-fitness.txt",
+      "gen-022-weather-auli-peak-station.txt",
+      "gen-023-textile-indigo-weaves.txt",
+      "gen-024-bank-riverbank-finance.txt",
+      "gen-025-ferry-island-hopper-ferries.txt",
+      "harbourside-finance-note.txt",
+      "kestrel-drone-manual.txt",
+      "monsoon-rice-study.txt",
+      "new-doc-fresh.txt",
+      "willow-library-guide.txt"
+    ],
+    "total_chunks": 100,
+    "total_index_ms": 5888.5,
+    "per_file_index_ms": {
+      "aurora-solar-policy.txt": 363.2,
+      "gen-007-bakery-maple-crust-bakery.txt": 220.9,
+      "gen-008-orchard-juniper-orchard.txt": 183.5,
+      "gen-009-logistics-foxtail-logistics.txt": 228.3,
+      "gen-010-hotel-marigold-hotel.txt": 257.4,
+      "gen-011-gym-basalt-gym.txt": 204.7,
+      "gen-012-weather-kodaikanal-ridge-station.txt": 223.2,
+      "gen-013-textile-vermilion-textiles.txt": 270.6,
+      "gen-014-bank-quartz-bank.txt": 230.2,
+      "gen-015-ferry-lagoon-ferry-service.txt": 217.7,
+      "gen-016-catering-embers-bbq-catering.txt": 256.6,
+      "gen-017-bakery-honey-wheat-bakery.txt": 201.7,
+      "gen-018-orchard-applewood-farms.txt": 195.4,
+      "gen-019-logistics-swift-parcel-couriers.txt": 204.8,
+      "gen-020-hotel-lakeview-inn.txt": 210.0,
+      "gen-021-gym-iron-works-fitness.txt": 281.3,
+      "gen-022-weather-auli-peak-station.txt": 220.7,
+      "gen-023-textile-indigo-weaves.txt": 208.4,
+      "gen-024-bank-riverbank-finance.txt": 207.7,
+      "gen-025-ferry-island-hopper-ferries.txt": 274.5,
+      "harbourside-finance-note.txt": 284.5,
+      "kestrel-drone-manual.txt": 225.3,
+      "monsoon-rice-study.txt": 218.2,
+      "new-doc-fresh.txt": 267.5,
+      "willow-library-guide.txt": 231.7
+    }
+  },
+  "questions": 15,
+  "llm_mode": "groq",
+  "refusal": {
+    "total": 0,
+    "judged": 0,
+    "passed": 0,
+    "accuracy": null,
+    "status": "skipped (retrieval-only mode)",
+    "per_question": []
+  },
+  "injection": {
+    "total": 0,
+    "judged": 0,
+    "passed": 0,
+    "accuracy": null,
+    "status": "skipped (retrieval-only mode)",
+    "per_question": []
+  },
+  "groundedness": {
+    "context_contains_expected_phrase": 0.4,
+    "answer_contains_expected_phrase": 0.2,
+    "mean_answer_word_overlap_with_context": 0.885,
+    "note": "Overlap is an approximate heuristic (see guardrails.py), not proof of correctness. Answer-side figures are None in retrieval-only mode.",
+    "per_question": [
+      {
+        "id": 1,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 2,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.833
+      },
+      {
+        "id": 3,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 4,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 5,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 6,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 7,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": true,
+        "answer_word_overlap_with_context": 0.714
+      },
+      {
+        "id": 8,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.857
+      },
+      {
+        "id": 9,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.75
+      },
+      {
+        "id": 10,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": true,
+        "answer_word_overlap_with_context": 0.5
+      },
+      {
+        "id": 11,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 12,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 13,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.889
+      },
+      {
+        "id": 14,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.857
+      },
+      {
+        "id": 15,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.875
+      }
+    ]
+  },
+  "latency_reranked_ms": {
+    "median_total": 1460.8,
+    "median_faiss": 20.9,
+    "median_reranking": 597.6
+  },
+  "precision_at_3": {
+    "reranked": 0.333,
+    "faiss_only": 0.333,
+    "improvement_pp": 0.0
+  },
+  "hit_at_3": {
+    "reranked": 1,
+    "faiss_only": 1
+  },
+  "per_question": [
+    {
+      "id": 1,
+      "question": "How many days of paid annual leave do full-time employees at Aurora Solar receive?",
+      "source": "aurora-solar-policy.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1460.8,
+        "faiss_ms": 21.4,
+        "reranking_ms": 713.3
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 525.7,
+        "faiss_ms": 19.3,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 2,
+      "question": "How long can the Kestrel K-7 fly on a full battery in calm wind?",
+      "source": "kestrel-drone-manual.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1334.3,
+        "faiss_ms": 52.7,
+        "reranking_ms": 642.2
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 563.5,
+        "faiss_ms": 21.3,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 3,
+      "question": "What was the average rice yield in Chandrapur in 2024?",
+      "source": "monsoon-rice-study.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1087.0,
+        "faiss_ms": 24.5,
+        "reranking_ms": 539.6
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 598.7,
+        "faiss_ms": 16.9,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 4,
+      "question": "What was Harbourside Cafe's total revenue in Q2 2026?",
+      "source": "harbourside-finance-note.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1454.0,
+        "faiss_ms": 17.7,
+        "reranking_ms": 781.6
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 815.9,
+        "faiss_ms": 26.6,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 5,
+      "question": "How much does adult annual membership at Willow Public Library cost?",
+      "source": "willow-library-guide.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1282.8,
+        "faiss_ms": 17.5,
+        "reranking_ms": 674.6
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 468.2,
+        "faiss_ms": 19.3,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 6,
+      "question": "Within how many days of invoice receipt does Maple Crust Bakery pay suppliers?",
+      "source": "gen-007-bakery-maple-crust-bakery.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1351.0,
+        "faiss_ms": 18.8,
+        "reranking_ms": 631.7
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 827.5,
+        "faiss_ms": 23.6,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 7,
+      "question": "How many tonnes of apples per hectare did Juniper Orchard harvest in 2026?",
+      "source": "gen-008-orchard-juniper-orchard.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1369.6,
+        "faiss_ms": 33.9,
+        "reranking_ms": 539.8
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 751.9,
+        "faiss_ms": 18.0,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 8,
+      "question": "Within how many days does Foxtail Logistics deliver standard parcels?",
+      "source": "gen-009-logistics-foxtail-logistics.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1200.1,
+        "faiss_ms": 25.2,
+        "reranking_ms": 614.2
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 639.2,
+        "faiss_ms": 25.9,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 9,
+      "question": "What time does check-in start at Marigold Hotel?",
+      "source": "gen-010-hotel-marigold-hotel.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2153.0,
+        "faiss_ms": 19.7,
+        "reranking_ms": 566.6
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4292.2,
+        "faiss_ms": 21.5,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 10,
+      "question": "How much does monthly membership cost at Basalt Gym?",
+      "source": "gen-011-gym-basalt-gym.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3083.3,
+        "faiss_ms": 14.9,
+        "reranking_ms": 438.0
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 5685.6,
+        "faiss_ms": 24.8,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 11,
+      "question": "How much rainfall did Kodaikanal Ridge Station record in 2026?",
+      "source": "gen-012-weather-kodaikanal-ridge-station.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4248.6,
+        "faiss_ms": 15.8,
+        "reranking_ms": 575.6
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 7105.3,
+        "faiss_ms": 20.6,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 12,
+      "question": "What is the minimum fabric order at Vermilion Textiles?",
+      "source": "gen-013-textile-vermilion-textiles.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2511.9,
+        "faiss_ms": 28.0,
+        "reranking_ms": 503.6
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3834.9,
+        "faiss_ms": 26.5,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 13,
+      "question": "What is the starting interest rate for personal loans at Quartz Bank?",
+      "source": "gen-014-bank-quartz-bank.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4289.1,
+        "faiss_ms": 47.6,
+        "reranking_ms": 597.6
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2794.6,
+        "faiss_ms": 19.2,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 14,
+      "question": "How much does a one-way adult ticket cost on Lagoon Ferry Service?",
+      "source": "gen-015-ferry-lagoon-ferry-service.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4573.5,
+        "faiss_ms": 20.9,
+        "reranking_ms": 642.5
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2725.6,
+        "faiss_ms": 20.0,
+        "reranking_ms": 0.0
+      }
+    },
+    {
+      "id": 15,
+      "question": "How much does Embers BBQ Catering charge per plate for a standard vegetarian menu?",
+      "source": "gen-016-catering-embers-bbq-catering.txt",
+      "reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3605.9,
+        "faiss_ms": 19.9,
+        "reranking_ms": 579.2
+      },
+      "faiss_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4678.8,
+        "faiss_ms": 16.9,
+        "reranking_ms": 0.0
+      }
+    }
+  ]
+}
