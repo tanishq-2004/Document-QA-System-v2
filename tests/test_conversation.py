@@ -72,5 +72,28 @@ class TestBuildRewriteMessages(unittest.TestCase):
         self.assertIn("ONLY", msgs[0]["content"])
 
 
+class TestRewriteBudget(unittest.TestCase):
+    """The rewrite call's token budget must fit the model's reasoning
+    (regression test — live failure, 27 Nov 2026).
+
+    gpt-oss-20b spent 98 of a 100-token budget reasoning and returned
+    empty content (finish=length), so "What year was that?" fell back
+    to the original question and was refused. At 300 tokens the same
+    call returns a proper standalone question. This test reads app.py
+    instead of importing it, because importing app.py loads the ML
+    models (see the note at the top of this file).
+    """
+
+    def test_rewrite_call_asks_for_500_tokens(self):
+        repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        with open(os.path.join(repo, "app.py")) as f:
+            source = f.read()
+        start = source.index("def rewrite_followup_question")
+        end = source.index("@app.get", start)
+        body = source[start:end]
+        self.assertIn("max_tokens=500", body)
+        self.assertNotIn("max_tokens=100", body)
+
+
 if __name__ == "__main__":
     unittest.main()

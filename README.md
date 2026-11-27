@@ -92,7 +92,9 @@ original repository.
   the chat history and sends the last 3 turns with each question.
   When a question looks like a follow-up ("What year was that?"),
   the backend rewrites it as a standalone question with the same
-  Groq model (no second model or service; ~100 tokens) before
+  Groq model (no second model or service; up to 500 tokens — the
+  model reasons before answering, and a 100-token budget once left
+  no room for the answer, so the follow-up was refused) before
   retrieval, and the response reports it as `standalone_question`
   so the UI can show what it was understood as. A failed rewrite
   or a missing API key falls back to the original question.
@@ -159,7 +161,7 @@ original repository.
   covers history truncation, the follow-up detector and the rewrite
   prompt, and `tests/test_metrics_summary.py` checks every dashboard
   number against its source results file — all without loading any
-  ML model. 104 tests in total.
+  ML model. 105 tests in total.
 - **LLM settings configurable:** `LLM_MODEL`,
   `LLM_TEMPERATURE`, `LLM_MAX_TOKENS` via env vars (defaults
   `openai/gpt-oss-20b`, `0.3`, `500`).

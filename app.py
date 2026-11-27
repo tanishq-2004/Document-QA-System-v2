@@ -275,10 +275,17 @@ def rewrite_followup_question(history, question, groq_api_key):
             base_url="https://api.groq.com/openai/v1",
             timeout=GROQ_TIMEOUT_S,
         )
+        # NOTE: max_tokens must leave room for the model's reasoning.
+        # gpt-oss-20b reasons before answering, and those tokens count
+        # against the budget: at 100 tokens the live rewrite spent 98
+        # tokens reasoning and returned EMPTY content (finish=length),
+        # so "What year was that?" fell back to the original question
+        # and was refused. 500 leaves room for ~200 reasoning tokens
+        # plus the one-sentence rewrite (verified live, 27 Nov 2026).
         response = client.chat.completions.create(
             model=LLM_MODEL,
             messages=conversation.build_rewrite_messages(history, question),
-            max_tokens=100,
+            max_tokens=500,
             temperature=0.0,
         )
         rewritten = response.choices[0].message.content.strip()
