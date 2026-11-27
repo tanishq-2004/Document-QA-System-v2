@@ -19,8 +19,8 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-# Verified by running the suite on 2026-11-27 (96 passed).
-UNIT_TESTS_PASSED = 96
+# Verified by running the suite on 2026-11-27 (105 passed).
+UNIT_TESTS_PASSED = 105
 
 
 def _load(name):
