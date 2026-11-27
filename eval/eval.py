@@ -5,9 +5,11 @@ What it measures, from real runs only (no invented numbers):
     /api/health), and per-file + total index time.
   * Latency: median total_ms / faiss_ms / reranking_ms across the
     questions (from the /api/query metrics).
-  * Retrieval quality: precision@3 and hit@3 with the cross-encoder
-    reranker ON (default) vs OFF ("rerank": false), against the known
-    ground-truth chunk(s) in questions.json.
+  * Retrieval quality: precision@3 and hit@3 in four arms — dense-only
+    (FAISS, no rerank), dense+rerank, hybrid-only (BM25+FAISS fused,
+    no rerank), hybrid+rerank — against the known ground-truth
+    chunk(s) in questions.json. Keyword questions (keyword: true)
+    are also reported separately, since BM25 should help most there.
 
 Ground truth: each question names a source file and the chunk_id(s)
 containing its expected phrase. chunk_ids were computed with the app's
@@ -163,8 +165,10 @@ def main():
     # mode and the LLM-dependent checks below are SKIPPED, not passed.
     groq_key = os.environ.get("GROQ_API_KEY", "") or None
 
-    def ask(question, rerank=True):
+    def ask(question, rerank=True, retrieval=None):
         body = {"question": question, "rerank": rerank}
+        if retrieval:
+            body["retrieval"] = retrieval
         if groq_key:
             body["groq_api_key"] = groq_key
         resp = http_json("POST", f"{base}/api/query", body, timeout=60)
@@ -176,16 +180,27 @@ def main():
     refusal_qs = [q for q in questions if q.get("type") == "refusal"]
     injection_qs = [q for q in questions if q.get("type") == "injection"]
 
-    # 2. Answerable questions, twice: reranker on and off.
+    # 2. Answerable questions, four arms: dense-only (FAISS, no
+    # rerank), dense+rerank, hybrid-only (BM25+FAISS fused, no
+    # rerank), hybrid+rerank. Same questions, same ground truth, so
+    # the arms are directly comparable.
+    ARMS = (
+        ("dense_only", False, "dense"),
+        ("dense_reranked", True, "dense"),
+        ("hybrid_only", False, "hybrid"),
+        ("hybrid_reranked", True, "hybrid"),
+    )
     per_question = []
     grounded_rows = []
     for q in answerable:
         ground_truth = {
             (q["source"], cid) for cid in q.get("chunk_ids", [q["chunk_id"]])
         }
-        row = {"id": q["id"], "question": q["question"], "source": q["source"]}
-        for arm, rerank in (("reranked", True), ("faiss_only", False)):
-            resp = ask(q["question"], rerank=rerank)
+        row = {"id": q["id"], "question": q["question"], "source": q["source"],
+               "keyword": bool(q.get("keyword"))}
+        for arm, rerank, retrieval_method in ARMS:
+            resp = ask(q["question"], rerank=rerank,
+                       retrieval=retrieval_method)
             metrics = resp["metrics"]
             sources = resp.get("sources", [])
             p3 = precision_at_3(sources, ground_truth)
@@ -194,9 +209,10 @@ def main():
                 "hit_at_3": 1 if p3 > 0 else 0,
                 "total_ms": metrics["total_ms"],
                 "faiss_ms": metrics["faiss_ms"],
+                "bm25_ms": metrics.get("bm25_ms", 0.0),
                 "reranking_ms": metrics["reranking_ms"],
             }
-            if arm == "reranked":
+            if arm == "hybrid_reranked":
                 # Groundedness (approximate): does the retrieved top-3
                 # actually contain the expected fact, and does the
                 # generated answer contain it / overlap its words?
@@ -274,12 +290,18 @@ def main():
     def section_summary(rows):
         judged = [r for r in rows if r["status"] in ("pass", "fail")]
         passed = sum(1 for r in judged if r["status"] == "pass")
+        if not rows:
+            status = "no questions of this type in this questions file"
+        elif judged:
+            status = "evaluated"
+        else:
+            status = "skipped (retrieval-only mode)"
         return {
             "total": len(rows),
             "judged": len(judged),
             "passed": passed,
             "accuracy": round(passed / len(judged), 3) if judged else None,
-            "status": "evaluated" if judged else "skipped (retrieval-only mode)",
+            "status": status,
             "per_question": rows,
         }
 
@@ -303,7 +325,11 @@ def main():
         ),
         "note": "Overlap is an approximate heuristic (see guardrails.py), "
                 "not proof of correctness. Answer-side figures are None "
-                "in retrieval-only mode.",
+                "in retrieval-only mode. The context check uses the "
+                "API's source text, truncated to 350 chars, so an "
+                "expected phrase past char 350 of its chunk counts as "
+                "a miss even though the chunk was retrieved correctly "
+                "(see precision@3 / hit@3 for retrieval quality).",
         "per_question": grounded_rows,
     }
 
@@ -312,6 +338,20 @@ def main():
 
     def median(rows, arm, key):
         return round(statistics.median(r[arm][key] for r in rows), 1)
+
+    def pp(a, b):
+        return round(100 * (a - b), 1)
+
+    arm_names = [name for name, _, _ in ARMS]
+    p3 = {arm: mean(per_question, arm, "precision_at_3") for arm in arm_names}
+    hit = {arm: mean(per_question, arm, "hit_at_3") for arm in arm_names}
+    keyword_rows = [r for r in per_question if r.get("keyword")]
+    keyword_p3 = (
+        {arm: round(statistics.mean(r[arm]["precision_at_3"]
+                                    for r in keyword_rows), 3)
+         for arm in arm_names}
+        if keyword_rows else {}
+    )
 
     results = {
         "corpus": {
@@ -326,27 +366,29 @@ def main():
         "refusal": section_summary(refusal_rows),
         "injection": section_summary(injection_rows),
         "groundedness": groundedness,
+        "latency_hybrid_reranked_ms": {
+            "median_total": median(per_question, "hybrid_reranked", "total_ms"),
+            "median_faiss": median(per_question, "hybrid_reranked", "faiss_ms"),
+            "median_bm25": median(per_question, "hybrid_reranked", "bm25_ms"),
+            "median_reranking": median(
+                per_question, "hybrid_reranked", "reranking_ms"),
+        },
+        # Back-compat alias: older results files used this key.
         "latency_reranked_ms": {
-            "median_total": median(per_question, "reranked", "total_ms"),
-            "median_faiss": median(per_question, "reranked", "faiss_ms"),
-            "median_reranking": median(per_question, "reranked", "reranking_ms"),
+            "median_total": median(per_question, "hybrid_reranked", "total_ms"),
+            "median_faiss": median(per_question, "hybrid_reranked", "faiss_ms"),
+            "median_bm25": median(per_question, "hybrid_reranked", "bm25_ms"),
+            "median_reranking": median(
+                per_question, "hybrid_reranked", "reranking_ms"),
         },
         "precision_at_3": {
-            "reranked": mean(per_question, "reranked", "precision_at_3"),
-            "faiss_only": mean(per_question, "faiss_only", "precision_at_3"),
-            "improvement_pp": round(
-                100
-                * (
-                    mean(per_question, "reranked", "precision_at_3")
-                    - mean(per_question, "faiss_only", "precision_at_3")
-                ),
-                1,
-            ),
+            **p3,
+            "improvement_pp": pp(p3["hybrid_reranked"], p3["dense_only"]),
+            "hybrid_vs_dense_reranked_pp": pp(
+                p3["hybrid_reranked"], p3["dense_reranked"]),
+            "keyword_questions": keyword_p3,
         },
-        "hit_at_3": {
-            "reranked": mean(per_question, "reranked", "hit_at_3"),
-            "faiss_only": mean(per_question, "faiss_only", "hit_at_3"),
-        },
+        "hit_at_3": hit,
         "per_question": per_question,
     }
 
@@ -357,14 +399,17 @@ def main():
 
     print(f"Corpus: {len(files)} docs, {total_chunks} chunks, "
           f"indexed in {total_index_ms} ms")
-    lat = results["latency_reranked_ms"]
-    print(f"Latency (median, reranked): total {lat['median_total']} ms, "
-          f"FAISS {lat['median_faiss']} ms, rerank {lat['median_reranking']} ms")
+    lat = results["latency_hybrid_reranked_ms"]
+    print(f"Latency (median, hybrid+reranked): total {lat['median_total']} ms, "
+          f"FAISS {lat['median_faiss']} ms, BM25 {lat['median_bm25']} ms, "
+          f"rerank {lat['median_reranking']} ms")
     p = results["precision_at_3"]
-    print(f"Precision@3: reranked {p['reranked']}, FAISS-only {p['faiss_only']}, "
-          f"improvement {p['improvement_pp']} pp")
-    print(f"Hit@3: reranked {results['hit_at_3']['reranked']}, "
-          f"FAISS-only {results['hit_at_3']['faiss_only']}")
+    print(f"Precision@3: dense-only {p['dense_only']}, "
+          f"dense+rerank {p['dense_reranked']}, hybrid-only {p['hybrid_only']}, "
+          f"hybrid+rerank {p['hybrid_reranked']} "
+          f"(hybrid+rerank vs dense-only: {p['improvement_pp']} pp)")
+    print(f"Precision@3 (keyword questions only): {p['keyword_questions']}")
+    print(f"Hit@3: {results['hit_at_3']}")
     print(f"LLM mode: {results['llm_mode']}")
     r = results["refusal"]
     print(f"Refusal: {r['passed']}/{r['judged']} passed ({r['status']})")

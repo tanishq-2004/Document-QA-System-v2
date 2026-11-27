@@ -17,8 +17,8 @@ This project is a **Retrieval-Augmented Generation (RAG)** system that allows us
 
 The system combines:
 
-- ⚡ Fast semantic retrieval using **FAISS**
-- 🎯 Cross-encoder **re-ranking**
+- ⚡ Hybrid retrieval: **FAISS** (dense) + **BM25** (keyword), fused with Reciprocal Rank Fusion
+- 🎯 Cross-encoder **re-ranking** with fallback and near-duplicate diversity
 - 🧠 LLM answer generation using **Groq-hosted Llama 3.1**
 - 📚 Grounded source citations
 - 📊 Real-time latency metrics
@@ -55,20 +55,51 @@ original repository.
 - **Timeouts added:** Groq client 30s; Streamlit 5s for health /
   documents / reset, 60s for upload / query, with a friendly error
   instead of hanging.
-- **Cache bug fixed:** re-uploading a document only returns
-  "Document already indexed" when the hash cache file exists AND the
-  vector store is loaded AND non-empty. Before, a stale cache file
-  could claim a document was indexed when nothing was searchable.
+- **Cache fixed properly (manifest):** the old per-hash
+  `{"indexed": True}` pickle could not say *which* file a hash
+  belonged to, so editing a file added its new chunks while the old
+  chunks stayed searchable. `vector_store/manifest.json` now records
+  per file `{hash, chunks, indexed_at}`; a cache hit requires this
+  file's hash in the manifest AND all its chunks in the index, the
+  hash is computed from the upload bytes before the file is written,
+  and re-uploading an edited file removes its old chunks (index
+  rebuilt from the remaining files) before the new ones are added.
+  The fast cache-hit path (~3 ms measured) is unchanged.
+- **Hybrid search (`retrieval.py`):** pure-Python BM25 (no new
+  dependency) over chunk text, rebuilt from the chunk registry on
+  every upload / reset / startup. Retrieval is dense FAISS top-10 +
+  BM25 top-10, fused with Reciprocal Rank Fusion (k=60), then the
+  cross-encoder reranks to top 3. `HYBRID_SEARCH` env var (default
+  true) or a per-query `"retrieval": "hybrid" / "dense"` field
+  switches it; `/api/query` metrics now include `bm25_ms` and
+  `retrieval_method`.
+- **Reranking fixed:** if `reranker.predict()` throws, the query
+  falls back to retrieval order with `rerank_fallback: true` in the
+  metrics instead of a 500 (the error is logged). Top-3 selection
+  now drops near-duplicate chunks (token-overlap > 0.6 with an
+  already-selected chunk), so the same fact in two overlapping
+  chunks does not fill two of the three sources. The relevance
+  threshold refusal only applies when the reranker actually ran.
+- **Vector DB decision: keep FAISS.** At 400 chunks / ~0.6 MB of
+  vectors a dedicated vector DB (Qdrant / Chroma / Pinecone) adds a
+  server, cost, network latency and deployment complexity with no
+  measurable benefit. Switch only at > 50k chunks, multi-user
+  concurrent writes, or cross-service persistence. Retrieval lives
+  behind the `retrieval.py` interface, so swapping the store later
+  is a localised change (see "Why FAISS, not a vector DB" below).
+  No vector-DB dependency was added.
 - **Upload validation:** empty / zero-chunk documents now return a
   clear error instead of crashing in FAISS.
 - **Query validation:** a missing or < 3-character question now
   returns `{"error": ...}` instead of a 500 KeyError.
-- **Eval added:** `eval/` has a test corpus, 15 answerable questions
-  with known-correct chunks, 4 refusal questions, 4 prompt-injection
+- **Eval added:** `eval/` has a test corpus, 19 answerable questions
+  with known-correct chunks (15 general + 4 keyword-heavy, where
+  BM25 should help), 4 refusal questions, 4 prompt-injection
   questions, and `eval.py`, which measures median latency and
-  precision@3 with the reranker on vs off, plus refusal accuracy,
-  injection pass/fail per case, and groundedness — all from real
-  runs (see "Guardrails & threat model" below).
+  precision@3 in four arms — dense-only, dense+rerank,
+  hybrid-only, hybrid+rerank — plus refusal accuracy, injection
+  pass/fail per case, and groundedness — all from real runs (see
+  "Guardrails & threat model" below).
 - **Guardrails added (`guardrails.py`):** upload type + 10 MB size
   limits, question length (3–1000 chars) + control-character
   stripping, a hardened system prompt (documents are untrusted data,
@@ -77,9 +108,12 @@ original repository.
   retrieved is actually about the question, a post-generation check
   that replaces answers repeating a known injection payload, and a
   simple in-memory rate limit (60 queries/min per process).
-- **Tests added:** `tests/test_smoke.py` covers the text helpers and
-  `tests/test_guardrails.py` covers the guardrail helpers, both
-  without loading any ML model.
+- **Tests added:** `tests/test_smoke.py` covers the text helpers,
+  `tests/test_guardrails.py` covers the guardrail helpers,
+  `tests/test_hybrid.py` covers BM25 ranking, RRF fusion, diversity
+  and the rerank fallback (stub reranker), and `tests/test_cache.py`
+  covers the manifest cache-hit / stale-file logic — all without
+  loading any ML model. 64 tests in total.
 - **LLM settings configurable:** `LLM_MODEL`,
   `LLM_TEMPERATURE`, `LLM_MAX_TOKENS` via env vars (defaults
   `openai/gpt-oss-20b`, `0.3`, `300`).
@@ -98,10 +132,12 @@ python eval/eval.py
 
 This resets the index, uploads every document in `eval/corpus/`
 (works for any corpus size — 5, 25, 50 or 100 docs), asks each
-answerable question in `eval/questions.json` twice (reranker on and
-off), and asks the refusal / injection questions once each, then
-writes `eval/results.json` with docs / total chunks / index time,
-median latency, precision@3 for both arms, refusal accuracy,
+answerable question in `eval/questions.json` in four arms
+(dense-only, dense+rerank, hybrid-only, hybrid+rerank), and asks
+the refusal / injection questions once each, then writes
+`eval/results.json` with docs / total chunks / index time, median
+latency (including `bm25_ms`), precision@3 for all four arms
+(plus the keyword-question subset separately), refusal accuracy,
 injection pass/fail per case, and groundedness.
 
 By default no Groq key is sent, so generation timing is
@@ -190,6 +226,7 @@ publicly without auth in front of it.
 | `RELEVANCE_MIN_SCORE` | `0.0` | Min cross-encoder score to answer (reranked arm only) |
 | `RATE_LIMIT_PER_MINUTE` | `60` | Max `/api/query` calls per minute per process |
 | `LLM_MODEL` / `LLM_TEMPERATURE` / `LLM_MAX_TOKENS` | `openai/gpt-oss-20b` / `0.3` / `300` | Groq generation settings |
+| `HYBRID_SEARCH` | `true` | Hybrid (BM25 + FAISS) retrieval by default; `false` = dense-only. Per-query `"retrieval"` field overrides it |
 
 > Note: the Performance table further down still shows the original
 > claimed numbers (sub-second retrieval, 20+ documents). They are
@@ -208,12 +245,15 @@ User Question
 sentence-transformers/all-MiniLM-L6-v2
       │
       ▼
-[FAISS Vector Store]
-Top-K semantic retrieval
+[Hybrid Retrieval]
+FAISS top-10 (dense) + BM25 top-10 (keyword)
+  → Reciprocal Rank Fusion (k=60) → top-10
       │
       ▼
 [Cross-Encoder Re-ranking]
 ms-marco-MiniLM-L-6-v2
+(fallback to retrieval order on error;
+ near-duplicate chunks dropped from top 3)
       │
       ▼
 [Groq-hosted LLM]
@@ -228,9 +268,9 @@ Grounded Answer + Sources + Timing Metrics
 # ✨ Features
 
 - 📄 Upload and query PDF / DOCX / TXT documents
-- ⚡ Sub-second semantic retrieval using FAISS
+- ⚡ Hybrid retrieval (FAISS + BM25, RRF-fused) using FAISS
 - 🎯 Two-stage retrieval with cross-encoder reranking
-- 💾 Persistent vector index caching
+- 💾 Persistent vector index caching (manifest-based, stale-file safe)
 - 📊 Live retrieval and generation latency metrics
 - 🔍 Grounded source citations with chunk tracking
 - 🧩 Modular FastAPI backend with REST APIs
@@ -265,6 +305,9 @@ Document-QA-System/
 ├── app.py
 ├── streamlit.py
 ├── text_utils.py
+├── retrieval.py           # BM25 + RRF fusion + rerank fallback + diversity
+├── manifest.py            # manifest-based cache (hash / chunks / indexed_at)
+├── guardrails.py
 ├── .env.example
 ├── requirements.txt
 ├── Dockerfile
@@ -276,7 +319,10 @@ Document-QA-System/
 │   ├── questions.json
 │   └── corpus/            # test documents (any size: 5 / 25 / 50 / 100)
 ├── tests/
-│   └── test_smoke.py
+│   ├── test_smoke.py
+│   ├── test_guardrails.py
+│   ├── test_hybrid.py
+│   └── test_cache.py
 │
 ├── uploaded_docs/
 ├── vector_store/
@@ -402,17 +448,24 @@ docker run -p 8501:8501 -p 8000:8000 document-qa
 
 # 🔍 Retrieval Pipeline
 
-The retrieval pipeline follows a **two-stage architecture** for balancing retrieval speed and answer relevance.
+The retrieval pipeline follows a **hybrid, three-stage architecture** for balancing retrieval speed and answer relevance.
 
 ---
 
-## Stage 1 — Semantic Retrieval
+## Stage 1 — Hybrid Retrieval (FAISS + BM25)
 
 - Documents are chunked using overlapping text splitting
 - Chunks are embedded using:
   - `all-MiniLM-L6-v2`
 - Embeddings are indexed in a FAISS vector database
-- Top semantic candidates are retrieved efficiently
+- Top semantic candidates are retrieved efficiently (top-10)
+- In parallel, a pure-Python BM25 index (`retrieval.py`, no new
+  dependency) retrieves the top-10 chunks by exact keyword match —
+  this is what catches exact numbers, model names and rare terms
+  that dense retrieval can miss
+- The two top-10 lists are fused with Reciprocal Rank Fusion
+  (k=60) into a single top-10. Set `HYBRID_SEARCH=false` or pass
+  `"retrieval": "dense"` to use FAISS alone.
 
 ---
 
@@ -429,6 +482,11 @@ This improves:
 - retrieval precision
 - contextual relevance
 - grounded response quality
+
+If the reranker throws, the query falls back to retrieval order
+(`rerank_fallback: true` in the metrics) instead of a 500, and
+near-duplicate chunks are dropped from the top 3 so the same fact
+does not fill two of the three sources.
 
 ---
 
@@ -449,6 +507,30 @@ The model generates answers strictly grounded in retrieved context.
 > via the Groq API), and queries with it fail with HTTP 404. The default
 > is now `openai/gpt-oss-20b`; override with the `LLM_MODEL` env var if
 > Groq changes its catalogue again.
+
+---
+
+# 🗄️ Why FAISS, not a dedicated vector DB?
+
+The project keeps FAISS (in-process, persisted to disk) instead of
+moving to a dedicated vector database such as Qdrant, Chroma or
+Pinecone. The reason is scale, measured, not assumed:
+
+- At 100 documents / 400 chunks the vectors are ~0.6 MB and the
+  backend uses ~660–690 MB RSS total. FAISS search is ~20 ms and
+  flat vs corpus size. A separate vector-DB server would add a
+  process to run, network latency per query, deployment complexity
+  (and cost, for hosted options) with no measurable benefit at this
+  size.
+- Switch only when one of these is true: > 50k chunks (where a
+  flat FAISS index starts to hurt and IVF/HNSW or a managed index
+  earns its keep), multi-user concurrent writes that need
+  transactions, or persistence that must be shared across services.
+- Retrieval is isolated behind `retrieval.py` (BM25 + RRF + rerank
+  fallback + diversity) and the chunk registry in `app.py`, so
+  swapping FAISS for another store later is a localised change —
+  the query, rerank and generation code does not know which store
+  produced the candidates.
 
 ---
 

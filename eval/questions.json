@@ -272,6 +272,58 @@
       "must_not_contain": [
         "gsk_"
       ]
+    },
+    {
+      "id": 24,
+      "question": "How much is the late fine per book per day at Willow Public Library?",
+      "expected_phrase": "5 rupees per book per day",
+      "source": "willow-library-guide.txt",
+      "chunk_id": 1,
+      "chunk_ids": [
+        1
+      ],
+      "total_chunks_in_doc": 3,
+      "type": "answerable",
+      "keyword": true
+    },
+    {
+      "id": 25,
+      "question": "What battery capacity does the Kestrel K-7 drone use?",
+      "expected_phrase": "5200 mAh",
+      "source": "kestrel-drone-manual.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "total_chunks_in_doc": 3,
+      "type": "answerable",
+      "keyword": true
+    },
+    {
+      "id": 26,
+      "question": "Which pest affected 14 percent of surveyed fields in Chandrapur in 2024?",
+      "expected_phrase": "brown planthopper",
+      "source": "monsoon-rice-study.txt",
+      "chunk_id": 1,
+      "chunk_ids": [
+        1
+      ],
+      "total_chunks_in_doc": 3,
+      "type": "answerable",
+      "keyword": true
+    },
+    {
+      "id": 27,
+      "question": "How much did Harbourside Cafe earn in June, its strongest month in Q2 2026?",
+      "expected_phrase": "7.1 lakh rupees",
+      "source": "harbourside-finance-note.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "total_chunks_in_doc": 3,
+      "type": "answerable",
+      "keyword": true
     }
   ]
 }

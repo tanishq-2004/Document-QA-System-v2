@@ -1,0 +1,926 @@
+{
+  "corpus": {
+    "docs": 100,
+    "doc_files": [
+      "aurora-solar-policy.txt",
+      "gen-007-bakery-maple-crust-bakery.txt",
+      "gen-008-orchard-juniper-orchard.txt",
+      "gen-009-logistics-foxtail-logistics.txt",
+      "gen-010-hotel-marigold-hotel.txt",
+      "gen-011-gym-basalt-gym.txt",
+      "gen-012-weather-kodaikanal-ridge-station.txt",
+      "gen-013-textile-vermilion-textiles.txt",
+      "gen-014-bank-quartz-bank.txt",
+      "gen-015-ferry-lagoon-ferry-service.txt",
+      "gen-016-catering-embers-bbq-catering.txt",
+      "gen-017-bakery-honey-wheat-bakery.txt",
+      "gen-018-orchard-applewood-farms.txt",
+      "gen-019-logistics-swift-parcel-couriers.txt",
+      "gen-020-hotel-lakeview-inn.txt",
+      "gen-021-gym-iron-works-fitness.txt",
+      "gen-022-weather-auli-peak-station.txt",
+      "gen-023-textile-indigo-weaves.txt",
+      "gen-024-bank-riverbank-finance.txt",
+      "gen-025-ferry-island-hopper-ferries.txt",
+      "gen-026-catering-spice-route-caterers.txt",
+      "gen-027-bakery-golden-oven-bakery.txt",
+      "gen-028-orchard-pear-valley-orchards.txt",
+      "gen-029-logistics-rapid-route-deliveries.txt",
+      "gen-030-hotel-palm-court-hotel.txt",
+      "gen-031-gym-peak-performance-gym.txt",
+      "gen-032-weather-munsiyari-station.txt",
+      "gen-033-textile-cotton-cloud-mills.txt",
+      "gen-034-bank-sunrise-credit-bank.txt",
+      "gen-035-ferry-backwater-cruise-lines.txt",
+      "gen-036-catering-royal-feast-catering.txt",
+      "gen-037-bakery-rye-house-bakery.txt",
+      "gen-038-orchard-plum-hill-orchards.txt",
+      "gen-039-logistics-blue-arrow-couriers.txt",
+      "gen-040-hotel-hilltop-resort.txt",
+      "gen-041-gym-flex-zone-fitness.txt",
+      "gen-042-weather-tawang-station.txt",
+      "gen-043-textile-silk-route-fabrics.txt",
+      "gen-044-bank-emerald-bank.txt",
+      "gen-045-ferry-coral-ferry-service.txt",
+      "gen-046-catering-golden-platter-catering.txt",
+      "gen-047-bakery-butter-lane-bakery.txt",
+      "gen-048-orchard-cherry-brook-farms.txt",
+      "gen-049-logistics-quickhaul-logistics.txt",
+      "gen-050-hotel-riverside-lodge.txt",
+      "gen-051-gym-power-house-gym.txt",
+      "gen-052-weather-leh-valley-station.txt",
+      "gen-053-textile-golden-thread-mills.txt",
+      "gen-054-bank-horizon-lending.txt",
+      "gen-055-ferry-river-queen-ferries.txt",
+      "gen-056-catering-tandoori-nights-catering.txt",
+      "gen-057-bakery-crumb-and-craft-bakery.txt",
+      "gen-058-orchard-peach-grove-orchards.txt",
+      "gen-059-logistics-metro-freight-services.txt",
+      "gen-060-hotel-coral-sands-hotel.txt",
+      "gen-061-gym-active-life-club.txt",
+      "gen-062-weather-shimla-ridge-station.txt",
+      "gen-063-textile-rainbow-dye-works.txt",
+      "gen-064-bank-pioneer-finance.txt",
+      "gen-065-ferry-sunset-sail-ferries.txt",
+      "gen-066-catering-green-leaf-catering.txt",
+      "gen-067-bakery-saffron-loaf-bakery.txt",
+      "gen-068-orchard-fig-tree-farms.txt",
+      "gen-069-logistics-star-delivery-co.txt",
+      "gen-070-hotel-silver-oak-hotel.txt",
+      "gen-071-gym-motion-fitness-studio.txt",
+      "gen-072-weather-darjeeling-hill-station.txt",
+      "gen-073-textile-lotus-loom-textiles.txt",
+      "gen-074-bank-trustwell-bank.txt",
+      "gen-075-ferry-dolphin-crossing-ferries.txt",
+      "gen-076-catering-celebration-foods.txt",
+      "gen-077-bakery-millet-magic-bakery.txt",
+      "gen-078-orchard-walnut-ridge-orchards.txt",
+      "gen-079-logistics-peak-couriers.txt",
+      "gen-080-hotel-rose-garden-inn.txt",
+      "gen-081-gym-core-strength-studio.txt",
+      "gen-082-weather-ooty-downs-station.txt",
+      "gen-083-textile-pearl-fabric-house.txt",
+      "gen-084-bank-meridian-credit.txt",
+      "gen-085-ferry-pearl-island-ferry.txt",
+      "gen-086-catering-flavours-unlimited-catering.txt",
+      "gen-087-bakery-cocoa-bean-bakery.txt",
+      "gen-088-orchard-almond-acres.txt",
+      "gen-089-logistics-river-road-logistics.txt",
+      "gen-090-hotel-sunset-view-hotel.txt",
+      "gen-091-gym-zenith-gym.txt",
+      "gen-092-weather-manali-pass-station.txt",
+      "gen-093-textile-crimson-cloth-co.txt",
+      "gen-094-bank-apex-loans.txt",
+      "gen-095-ferry-palm-ferry-lines.txt",
+      "gen-096-catering-banquet-masters.txt",
+      "gen-097-bakery-sunrise-bakehouse.txt",
+      "gen-098-orchard-mango-grove-farms.txt",
+      "gen-099-logistics-skyline-freight-co.txt",
+      "gen-100-hotel-emerald-stay-inn.txt",
+      "harbourside-finance-note.txt",
+      "kestrel-drone-manual.txt",
+      "monsoon-rice-study.txt",
+      "new-doc-fresh.txt",
+      "willow-library-guide.txt"
+    ],
+    "total_chunks": 400,
+    "total_index_ms": 20826.8,
+    "per_file_index_ms": {
+      "aurora-solar-policy.txt": 465.4,
+      "gen-007-bakery-maple-crust-bakery.txt": 158.3,
+      "gen-008-orchard-juniper-orchard.txt": 205.7,
+      "gen-009-logistics-foxtail-logistics.txt": 178.5,
+      "gen-010-hotel-marigold-hotel.txt": 230.2,
+      "gen-011-gym-basalt-gym.txt": 262.0,
+      "gen-012-weather-kodaikanal-ridge-station.txt": 308.5,
+      "gen-013-textile-vermilion-textiles.txt": 191.8,
+      "gen-014-bank-quartz-bank.txt": 236.7,
+      "gen-015-ferry-lagoon-ferry-service.txt": 195.4,
+      "gen-016-catering-embers-bbq-catering.txt": 199.5,
+      "gen-017-bakery-honey-wheat-bakery.txt": 198.4,
+      "gen-018-orchard-applewood-farms.txt": 259.9,
+      "gen-019-logistics-swift-parcel-couriers.txt": 147.4,
+      "gen-020-hotel-lakeview-inn.txt": 188.7,
+      "gen-021-gym-iron-works-fitness.txt": 182.4,
+      "gen-022-weather-auli-peak-station.txt": 184.8,
+      "gen-023-textile-indigo-weaves.txt": 151.5,
+      "gen-024-bank-riverbank-finance.txt": 178.4,
+      "gen-025-ferry-island-hopper-ferries.txt": 187.7,
+      "gen-026-catering-spice-route-caterers.txt": 187.7,
+      "gen-027-bakery-golden-oven-bakery.txt": 132.4,
+      "gen-028-orchard-pear-valley-orchards.txt": 185.9,
+      "gen-029-logistics-rapid-route-deliveries.txt": 240.3,
+      "gen-030-hotel-palm-court-hotel.txt": 254.7,
+      "gen-031-gym-peak-performance-gym.txt": 197.8,
+      "gen-032-weather-munsiyari-station.txt": 199.9,
+      "gen-033-textile-cotton-cloud-mills.txt": 208.1,
+      "gen-034-bank-sunrise-credit-bank.txt": 208.5,
+      "gen-035-ferry-backwater-cruise-lines.txt": 212.8,
+      "gen-036-catering-royal-feast-catering.txt": 271.0,
+      "gen-037-bakery-rye-house-bakery.txt": 188.2,
+      "gen-038-orchard-plum-hill-orchards.txt": 144.1,
+      "gen-039-logistics-blue-arrow-couriers.txt": 183.3,
+      "gen-040-hotel-hilltop-resort.txt": 212.8,
+      "gen-041-gym-flex-zone-fitness.txt": 186.9,
+      "gen-042-weather-tawang-station.txt": 213.0,
+      "gen-043-textile-silk-route-fabrics.txt": 186.4,
+      "gen-044-bank-emerald-bank.txt": 214.7,
+      "gen-045-ferry-coral-ferry-service.txt": 199.9,
+      "gen-046-catering-golden-platter-catering.txt": 183.8,
+      "gen-047-bakery-butter-lane-bakery.txt": 209.4,
+      "gen-048-orchard-cherry-brook-farms.txt": 202.8,
+      "gen-049-logistics-quickhaul-logistics.txt": 263.9,
+      "gen-050-hotel-riverside-lodge.txt": 202.0,
+      "gen-051-gym-power-house-gym.txt": 200.3,
+      "gen-052-weather-leh-valley-station.txt": 202.2,
+      "gen-053-textile-golden-thread-mills.txt": 247.0,
+      "gen-054-bank-horizon-lending.txt": 367.4,
+      "gen-055-ferry-river-queen-ferries.txt": 197.7,
+      "gen-056-catering-tandoori-nights-catering.txt": 188.4,
+      "gen-057-bakery-crumb-and-craft-bakery.txt": 136.7,
+      "gen-058-orchard-peach-grove-orchards.txt": 184.2,
+      "gen-059-logistics-metro-freight-services.txt": 188.2,
+      "gen-060-hotel-coral-sands-hotel.txt": 281.0,
+      "gen-061-gym-active-life-club.txt": 236.6,
+      "gen-062-weather-shimla-ridge-station.txt": 188.8,
+      "gen-063-textile-rainbow-dye-works.txt": 206.3,
+      "gen-064-bank-pioneer-finance.txt": 166.0,
+      "gen-065-ferry-sunset-sail-ferries.txt": 196.6,
+      "gen-066-catering-green-leaf-catering.txt": 220.6,
+      "gen-067-bakery-saffron-loaf-bakery.txt": 197.2,
+      "gen-068-orchard-fig-tree-farms.txt": 187.9,
+      "gen-069-logistics-star-delivery-co.txt": 144.7,
+      "gen-070-hotel-silver-oak-hotel.txt": 264.5,
+      "gen-071-gym-motion-fitness-studio.txt": 200.9,
+      "gen-072-weather-darjeeling-hill-station.txt": 223.6,
+      "gen-073-textile-lotus-loom-textiles.txt": 198.0,
+      "gen-074-bank-trustwell-bank.txt": 195.2,
+      "gen-075-ferry-dolphin-crossing-ferries.txt": 187.3,
+      "gen-076-catering-celebration-foods.txt": 206.6,
+      "gen-077-bakery-millet-magic-bakery.txt": 218.1,
+      "gen-078-orchard-walnut-ridge-orchards.txt": 200.0,
+      "gen-079-logistics-peak-couriers.txt": 197.9,
+      "gen-080-hotel-rose-garden-inn.txt": 279.4,
+      "gen-081-gym-core-strength-studio.txt": 209.0,
+      "gen-082-weather-ooty-downs-station.txt": 192.0,
+      "gen-083-textile-pearl-fabric-house.txt": 211.1,
+      "gen-084-bank-meridian-credit.txt": 218.7,
+      "gen-085-ferry-pearl-island-ferry.txt": 247.3,
+      "gen-086-catering-flavours-unlimited-catering.txt": 169.6,
+      "gen-087-bakery-cocoa-bean-bakery.txt": 240.1,
+      "gen-088-orchard-almond-acres.txt": 227.0,
+      "gen-089-logistics-river-road-logistics.txt": 207.2,
+      "gen-090-hotel-sunset-view-hotel.txt": 195.0,
+      "gen-091-gym-zenith-gym.txt": 192.7,
+      "gen-092-weather-manali-pass-station.txt": 191.0,
+      "gen-093-textile-crimson-cloth-co.txt": 137.4,
+      "gen-094-bank-apex-loans.txt": 190.5,
+      "gen-095-ferry-palm-ferry-lines.txt": 183.8,
+      "gen-096-catering-banquet-masters.txt": 188.9,
+      "gen-097-bakery-sunrise-bakehouse.txt": 173.0,
+      "gen-098-orchard-mango-grove-farms.txt": 158.5,
+      "gen-099-logistics-skyline-freight-co.txt": 259.2,
+      "gen-100-hotel-emerald-stay-inn.txt": 182.5,
+      "harbourside-finance-note.txt": 253.8,
+      "kestrel-drone-manual.txt": 272.4,
+      "monsoon-rice-study.txt": 173.2,
+      "new-doc-fresh.txt": 161.6,
+      "willow-library-guide.txt": 279.1
+    }
+  },
+  "questions": 15,
+  "llm_mode": "groq",
+  "refusal": {
+    "total": 0,
+    "judged": 0,
+    "passed": 0,
+    "accuracy": null,
+    "status": "skipped (retrieval-only mode)",
+    "per_question": []
+  },
+  "injection": {
+    "total": 0,
+    "judged": 0,
+    "passed": 0,
+    "accuracy": null,
+    "status": "skipped (retrieval-only mode)",
+    "per_question": []
+  },
+  "groundedness": {
+    "context_contains_expected_phrase": 0,
+    "answer_contains_expected_phrase": 0.133,
+    "mean_answer_word_overlap_with_context": 0.812,
+    "note": "Overlap is an approximate heuristic (see guardrails.py), not proof of correctness. Answer-side figures are None in retrieval-only mode.",
+    "per_question": [
+      {
+        "id": 1,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 2,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.667
+      },
+      {
+        "id": 3,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.857
+      },
+      {
+        "id": 4,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.75
+      },
+      {
+        "id": 5,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": true,
+        "answer_word_overlap_with_context": 0.5
+      },
+      {
+        "id": 6,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 7,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.889
+      },
+      {
+        "id": 8,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.857
+      },
+      {
+        "id": 9,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.875
+      },
+      {
+        "id": 10,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.778
+      },
+      {
+        "id": 11,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.714
+      },
+      {
+        "id": 12,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.875
+      },
+      {
+        "id": 13,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.667
+      },
+      {
+        "id": 14,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": true,
+        "answer_word_overlap_with_context": 0.875
+      },
+      {
+        "id": 15,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "answer_word_overlap_with_context": 0.875
+      }
+    ]
+  },
+  "latency_hybrid_reranked_ms": {
+    "median_total": 3171.7,
+    "median_faiss": 14.0,
+    "median_bm25": 4.5,
+    "median_reranking": 455.7
+  },
+  "latency_reranked_ms": {
+    "median_total": 3171.7,
+    "median_faiss": 14.0,
+    "median_bm25": 4.5,
+    "median_reranking": 455.7
+  },
+  "precision_at_3": {
+    "dense_only": 0.333,
+    "dense_reranked": 0.333,
+    "hybrid_only": 0.333,
+    "hybrid_reranked": 0.333,
+    "improvement_pp": 0.0,
+    "hybrid_vs_dense_reranked_pp": 0.0,
+    "keyword_questions": {}
+  },
+  "hit_at_3": {
+    "dense_only": 1,
+    "dense_reranked": 1,
+    "hybrid_only": 1,
+    "hybrid_reranked": 1
+  },
+  "per_question": [
+    {
+      "id": 1,
+      "question": "Within how many days of invoice receipt does Maple Crust Bakery pay suppliers?",
+      "source": "gen-007-bakery-maple-crust-bakery.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 824.6,
+        "faiss_ms": 23.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1299.2,
+        "faiss_ms": 26.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 714.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 580.7,
+        "faiss_ms": 18.9,
+        "bm25_ms": 4.4,
+        "reranking_ms": 0.2
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1084.0,
+        "faiss_ms": 14.2,
+        "bm25_ms": 4.6,
+        "reranking_ms": 574.9
+      }
+    },
+    {
+      "id": 2,
+      "question": "How many tonnes of apples per hectare did Juniper Orchard harvest in 2026?",
+      "source": "gen-008-orchard-juniper-orchard.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 423.9,
+        "faiss_ms": 12.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1062.5,
+        "faiss_ms": 14.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 520.4
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 664.8,
+        "faiss_ms": 11.5,
+        "bm25_ms": 4.4,
+        "reranking_ms": 0.6
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 997.1,
+        "faiss_ms": 19.8,
+        "bm25_ms": 4.3,
+        "reranking_ms": 523.0
+      }
+    },
+    {
+      "id": 3,
+      "question": "Within how many days does Foxtail Logistics deliver standard parcels?",
+      "source": "gen-009-logistics-foxtail-logistics.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 656.9,
+        "faiss_ms": 11.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 957.4,
+        "faiss_ms": 11.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 442.4
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 620.5,
+        "faiss_ms": 15.2,
+        "bm25_ms": 4.3,
+        "reranking_ms": 0.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1046.0,
+        "faiss_ms": 13.2,
+        "bm25_ms": 4.5,
+        "reranking_ms": 444.1
+      }
+    },
+    {
+      "id": 4,
+      "question": "What time does check-in start at Marigold Hotel?",
+      "source": "gen-010-hotel-marigold-hotel.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 460.2,
+        "faiss_ms": 13.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1117.9,
+        "faiss_ms": 19.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 545.2
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 788.5,
+        "faiss_ms": 17.5,
+        "bm25_ms": 4.2,
+        "reranking_ms": 0.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 912.8,
+        "faiss_ms": 12.9,
+        "bm25_ms": 4.3,
+        "reranking_ms": 455.7
+      }
+    },
+    {
+      "id": 5,
+      "question": "How much does monthly membership cost at Basalt Gym?",
+      "source": "gen-011-gym-basalt-gym.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 605.3,
+        "faiss_ms": 18.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 919.9,
+        "faiss_ms": 14.8,
+        "bm25_ms": 0.0,
+        "reranking_ms": 448.4
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3585.8,
+        "faiss_ms": 10.3,
+        "bm25_ms": 4.3,
+        "reranking_ms": 0.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3980.9,
+        "faiss_ms": 21.5,
+        "bm25_ms": 4.3,
+        "reranking_ms": 397.3
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is the minimum fabric order at Vermilion Textiles?",
+      "source": "gen-013-textile-vermilion-textiles.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3559.7,
+        "faiss_ms": 76.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.4
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3253.3,
+        "faiss_ms": 17.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 551.9
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4641.3,
+        "faiss_ms": 11.0,
+        "bm25_ms": 4.2,
+        "reranking_ms": 0.2
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3278.4,
+        "faiss_ms": 14.0,
+        "bm25_ms": 4.5,
+        "reranking_ms": 377.3
+      }
+    },
+    {
+      "id": 7,
+      "question": "What is the starting interest rate for personal loans at Quartz Bank?",
+      "source": "gen-014-bank-quartz-bank.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3713.8,
+        "faiss_ms": 30.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.4
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3352.5,
+        "faiss_ms": 16.7,
+        "bm25_ms": 0.0,
+        "reranking_ms": 457.8
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3840.7,
+        "faiss_ms": 11.7,
+        "bm25_ms": 4.3,
+        "reranking_ms": 0.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 5075.5,
+        "faiss_ms": 13.9,
+        "bm25_ms": 4.3,
+        "reranking_ms": 375.4
+      }
+    },
+    {
+      "id": 8,
+      "question": "How much does a one-way adult ticket cost on Lagoon Ferry Service?",
+      "source": "gen-015-ferry-lagoon-ferry-service.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3995.6,
+        "faiss_ms": 12.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.6
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4110.6,
+        "faiss_ms": 11.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 572.8
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3820.6,
+        "faiss_ms": 12.8,
+        "bm25_ms": 4.5,
+        "reranking_ms": 0.7
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3171.7,
+        "faiss_ms": 43.9,
+        "bm25_ms": 4.6,
+        "reranking_ms": 538.9
+      }
+    },
+    {
+      "id": 9,
+      "question": "How much does Embers BBQ Catering charge per plate for a standard vegetarian menu?",
+      "source": "gen-016-catering-embers-bbq-catering.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2663.8,
+        "faiss_ms": 58.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3458.3,
+        "faiss_ms": 15.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 513.4
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3690.4,
+        "faiss_ms": 37.9,
+        "bm25_ms": 4.4,
+        "reranking_ms": 0.6
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 6299.4,
+        "faiss_ms": 27.4,
+        "bm25_ms": 4.7,
+        "reranking_ms": 458.0
+      }
+    },
+    {
+      "id": 10,
+      "question": "Within how many days of invoice receipt does Honey Wheat Bakery pay suppliers?",
+      "source": "gen-017-bakery-honey-wheat-bakery.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3847.5,
+        "faiss_ms": 28.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 1.8
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4408.1,
+        "faiss_ms": 14.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 495.9
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3642.4,
+        "faiss_ms": 12.9,
+        "bm25_ms": 4.3,
+        "reranking_ms": 0.2
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2242.3,
+        "faiss_ms": 20.6,
+        "bm25_ms": 5.6,
+        "reranking_ms": 532.0
+      }
+    },
+    {
+      "id": 11,
+      "question": "How many tonnes of apples per hectare did Applewood Farms harvest in 2026?",
+      "source": "gen-018-orchard-applewood-farms.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2689.9,
+        "faiss_ms": 13.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.4
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 6389.9,
+        "faiss_ms": 15.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 510.9
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3580.0,
+        "faiss_ms": 17.0,
+        "bm25_ms": 4.9,
+        "reranking_ms": 2.5
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2272.2,
+        "faiss_ms": 12.8,
+        "bm25_ms": 4.5,
+        "reranking_ms": 549.7
+      }
+    },
+    {
+      "id": 12,
+      "question": "Within how many days does Swift Parcel Couriers deliver standard parcels?",
+      "source": "gen-019-logistics-swift-parcel-couriers.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4597.4,
+        "faiss_ms": 11.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4280.7,
+        "faiss_ms": 11.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 384.1
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2521.5,
+        "faiss_ms": 12.1,
+        "bm25_ms": 4.6,
+        "reranking_ms": 0.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3188.3,
+        "faiss_ms": 12.9,
+        "bm25_ms": 4.4,
+        "reranking_ms": 432.6
+      }
+    },
+    {
+      "id": 13,
+      "question": "What time does check-in start at Lakeview Inn?",
+      "source": "gen-020-hotel-lakeview-inn.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3751.4,
+        "faiss_ms": 12.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.4
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4292.1,
+        "faiss_ms": 13.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 524.7
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 5847.4,
+        "faiss_ms": 11.7,
+        "bm25_ms": 4.2,
+        "reranking_ms": 0.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3397.9,
+        "faiss_ms": 13.1,
+        "bm25_ms": 4.3,
+        "reranking_ms": 556.6
+      }
+    },
+    {
+      "id": 14,
+      "question": "How much does monthly membership cost at Iron Works Fitness?",
+      "source": "gen-021-gym-iron-works-fitness.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3623.5,
+        "faiss_ms": 17.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4077.7,
+        "faiss_ms": 12.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 430.2
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3906.3,
+        "faiss_ms": 30.3,
+        "bm25_ms": 5.8,
+        "reranking_ms": 0.4
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3149.9,
+        "faiss_ms": 10.7,
+        "bm25_ms": 4.2,
+        "reranking_ms": 370.5
+      }
+    },
+    {
+      "id": 15,
+      "question": "How much rainfall did Auli Peak Station record in 2026?",
+      "source": "gen-022-weather-auli-peak-station.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4033.9,
+        "faiss_ms": 15.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4244.4,
+        "faiss_ms": 11.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 548.6
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3952.9,
+        "faiss_ms": 11.4,
+        "bm25_ms": 4.7,
+        "reranking_ms": 0.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4680.6,
+        "faiss_ms": 15.3,
+        "bm25_ms": 4.8,
+        "reranking_ms": 455.3
+      }
+    }
+  ]
+}
