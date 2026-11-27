@@ -1,0 +1,67 @@
+{
+  "generated_from": [
+    "eval/results_hybrid_run1.json",
+    "eval/results_hybrid_run2.json",
+    "eval/results_public_100.json",
+    "eval/results_public_200.json",
+    "eval/results_public_500.json",
+    "doc-qa-measure/recheck_results_2026-11-27.json"
+  ],
+  "generated_on": "2026-11-27",
+  "notes": "P@3 has a 0.333 ceiling with one right chunk per question, so Hit@3 is the real retrieval signal. 500-doc answer scores are excluded: Groq 429 failures contaminated them. End-to-end latency with live Groq generation varies a lot (0.79s vs 3.71s medians across runs), so only the retrieval-only median is shown as a stable latency.",
+  "eval_7doc": {
+    "questions": 27,
+    "runs": 2,
+    "precision_at_3": 0.351,
+    "hit_at_3": 1,
+    "keyword_precision_at_3": 0.333,
+    "refusal_passed": 4,
+    "refusal_total": 4,
+    "injection_passed": 4,
+    "injection_total": 4,
+    "context_contains_expected_phrase": 0.947
+  },
+  "retrieval_only_latency_ms": {
+    "median_total": 609.5,
+    "p95_total": 753.9,
+    "median_faiss": 12.3,
+    "median_bm25": 0.3,
+    "median_reranking": 596.8
+  },
+  "scale_squad": [
+    {
+      "docs": 100,
+      "chunks": 218,
+      "index_seconds": 22.2,
+      "precision_at_3_dense_only": 0.333,
+      "precision_at_3_hybrid_reranked": 0.333,
+      "hit_at_3_dense_only": 1,
+      "hit_at_3_hybrid_reranked": 1,
+      "token_f1": 0.594,
+      "token_f1_note": null
+    },
+    {
+      "docs": 200,
+      "chunks": 437,
+      "index_seconds": 23.7,
+      "precision_at_3_dense_only": 0.333,
+      "precision_at_3_hybrid_reranked": 0.333,
+      "hit_at_3_dense_only": 1,
+      "hit_at_3_hybrid_reranked": 1,
+      "token_f1": 0.489,
+      "token_f1_note": null
+    },
+    {
+      "docs": 500,
+      "chunks": 1109,
+      "index_seconds": 67.5,
+      "precision_at_3_dense_only": 0.3,
+      "precision_at_3_hybrid_reranked": 0.333,
+      "hit_at_3_dense_only": 0.9,
+      "hit_at_3_hybrid_reranked": 1,
+      "token_f1": null,
+      "token_f1_note": "excluded: Groq 429 contamination"
+    }
+  ],
+  "unit_tests_passed": 96
+}

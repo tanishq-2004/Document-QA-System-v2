@@ -94,6 +94,14 @@ original repository.
   retrieval, and the response reports it as `standalone_question`
   so the UI can show what it was understood as. A failed rewrite
   or a missing API key falls back to the original question.
+- **Eval dashboard in the demo:** the sidebar shows the measured
+  numbers — 7-doc P@3 / Hit@3, refusals, injection blocks,
+  retrieval-only latency, the public SQuAD scale table and the unit
+  test count — read from `metrics_summary.json`, which
+  `eval/build_metrics_summary.py` generates from the real eval
+  results files (no hand-typed numbers; the 500-doc answer scores
+  are excluded, with the reason stated, because Groq 429s
+  contaminated them).
 - **Hybrid search (`retrieval.py`):** pure-Python BM25 (no new
   dependency) over chunk text, rebuilt from the chunk registry on
   every upload / reset / startup. Retrieval is dense FAISS top-10 +
@@ -145,9 +153,11 @@ original repository.
   `tests/test_answer_cache.py` covers question normalisation,
   cache keys, FIFO eviction and the disable switch,
   `tests/test_citations.py` covers sentence-to-chunk matching and
-  the no-guessed-citation rule, and `tests/test_conversation.py`
+  the no-guessed-citation rule, `tests/test_conversation.py`
   covers history truncation, the follow-up detector and the rewrite
-  prompt — all without loading any ML model. 96 tests in total.
+  prompt, and `tests/test_metrics_summary.py` checks every dashboard
+  number against its source results file — all without loading any
+  ML model. 101 tests in total.
 - **LLM settings configurable:** `LLM_MODEL`,
   `LLM_TEMPERATURE`, `LLM_MAX_TOKENS` via env vars (defaults
   `openai/gpt-oss-20b`, `0.3`, `500`).
@@ -453,6 +463,7 @@ Document-QA-System/
 ├── answer_cache.py        # repeated-question answers (no Groq re-call)
 ├── citations.py           # deterministic inline citations
 ├── conversation.py        # follow-up detection + rewrite prompt
+├── metrics_summary.json   # eval numbers for the in-app dashboard
 ├── guardrails.py
 ├── .env.example
 ├── requirements.txt
@@ -462,6 +473,7 @@ Document-QA-System/
 │
 ├── eval/
 │   ├── eval.py
+│   ├── build_metrics_summary.py  # generates metrics_summary.json
 │   ├── questions.json
 │   └── corpus/            # test documents (any size: 5 / 25 / 50 / 100)
 ├── tests/
@@ -471,7 +483,8 @@ Document-QA-System/
 │   ├── test_cache.py
 │   ├── test_answer_cache.py
 │   ├── test_citations.py
-│   └── test_conversation.py
+│   ├── test_conversation.py
+│   └── test_metrics_summary.py
 │
 ├── uploaded_docs/
 ├── vector_store/
