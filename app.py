@@ -13,6 +13,7 @@ from sentence_transformers import CrossEncoder
 
 from text_utils import extract_text, split_text
 
+import answer_cache
 import guardrails
 import manifest as cache_manifest
 import retrieval
@@ -382,6 +383,10 @@ async def upload_document(
 
     save_vectorstore()
 
+    # The index changed, so cached answers may no longer match the
+    # current documents — drop them.
+    answer_cache.cache.clear()
+
     # The old per-hash pickle cache is superseded by the manifest;
     # drop any stale pickle for this file's old/new hash so nothing
     # can claim a file is indexed on the basis of a stray file.
@@ -458,6 +463,60 @@ def query_documents(data: dict):
 
             "error":
             "No documents indexed"
+        }
+
+    # Answer cache: a repeated question (same text, rerank flag and
+    # retrieval method) against an unchanged index gets the stored
+    # answer with no retrieval, rerank or LLM call, so no Groq tokens
+    # are spent. The cache is cleared whenever the index changes
+    # (upload of new/edited content, reset), so a hit always matches
+    # the current documents.
+    cache_key = answer_cache.cache_key(question, rerank, retrieval_method)
+    cached = answer_cache.cache.get(cache_key)
+    if cached is not None:
+        return {
+
+            "question": question,
+
+            "answer": cached["answer"],
+
+            "sources": cached["sources"],
+
+            "metrics": {
+
+                "faiss_ms": 0.0,
+
+                "bm25_ms": 0.0,
+
+                "reranking_ms": 0.0,
+
+                "generation_ms": 0.0,
+
+                "total_ms": round(
+
+                    (time.perf_counter() - t0) * 1000,
+
+                    1
+                ),
+
+                "stage1_candidates": cached["stage1_candidates"],
+
+                "final_sources": cached["final_sources"],
+
+                "retrieval_method": cached["retrieval_method"],
+
+                "reranked": cached["reranked"],
+
+                "rerank_fallback": cached["rerank_fallback"],
+
+                "refused": cached["refused"],
+
+                "refusal_reason": cached["refusal_reason"],
+
+                "injection_flagged": cached["injection_flagged"],
+
+                "cached": True,
+            },
         }
 
     # --- Stage 1: retrieval -------------------------------------------
@@ -611,7 +670,7 @@ def query_documents(data: dict):
             )
         })
 
-    return {
+    response = {
 
         "question": question,
 
@@ -674,9 +733,30 @@ def query_documents(data: dict):
 
             "refusal_reason": refusal_reason,
 
-            "injection_flagged": bool(injection_flagged)
+            "injection_flagged": bool(injection_flagged),
+
+            "cached": False,
         }
     }
+
+    # Store only real generated answers. Refusals cost no LLM tokens
+    # (generation 0.0 ms), and a flagged answer is a refusal, so there
+    # is nothing to save by caching them.
+    if not refused and not injection_flagged:
+        answer_cache.cache.put(cache_key, {
+            "answer": answer,
+            "sources": response["sources"],
+            "refused": bool(refused),
+            "refusal_reason": refusal_reason,
+            "injection_flagged": bool(injection_flagged),
+            "retrieval_method": retrieval_method,
+            "reranked": bool(rerank),
+            "rerank_fallback": bool(rerank_fallback),
+            "stage1_candidates": len(candidates),
+            "final_sources": len(top_docs),
+        })
+
+    return response
 
 
 @app.get("/api/health")
@@ -741,6 +821,9 @@ def reset_index():
     # A reset is also a fresh start for the rate limiter (useful for
     # the eval, which resets before every run).
     query_limiter.reset()
+
+    # The index is gone, so no cached answer can still be valid.
+    answer_cache.cache.clear()
 
     # Clear the registry, manifest and BM25 index too — otherwise a
     # reset index would still claim files are cached.

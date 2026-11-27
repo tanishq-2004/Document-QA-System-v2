@@ -68,6 +68,14 @@ original repository.
   7-doc eval corpus after the manifest fix, and **1.7–2.0 ms** at
   500 docs — about 98% faster than the ~124 ms median fresh index
   per doc.
+- **Answer cache (`answer_cache.py`):** a repeated question (same
+  text, rerank flag and retrieval method) is served from memory with
+  no retrieval, rerank or LLM call, so no Groq tokens are spent —
+  the response reports `"cached": true` and `generation_ms: 0.0`.
+  Only real generated answers are cached (refusals cost no tokens
+  anyway); the cache is cleared whenever the index changes (upload
+  of new/edited content, reset). Capped at 200 entries (FIFO),
+  configurable with `ANSWER_CACHE_MAX_ENTRIES` (`0` disables it).
 - **Hybrid search (`retrieval.py`):** pure-Python BM25 (no new
   dependency) over chunk text, rebuilt from the chunk registry on
   every upload / reset / startup. Retrieval is dense FAISS top-10 +
@@ -114,9 +122,11 @@ original repository.
 - **Tests added:** `tests/test_smoke.py` covers the text helpers,
   `tests/test_guardrails.py` covers the guardrail helpers,
   `tests/test_hybrid.py` covers BM25 ranking, RRF fusion, diversity
-  and the rerank fallback (stub reranker), and `tests/test_cache.py`
-  covers the manifest cache-hit / stale-file logic — all without
-  loading any ML model. 64 tests in total.
+  and the rerank fallback (stub reranker), `tests/test_cache.py`
+  covers the manifest cache-hit / stale-file logic, and
+  `tests/test_answer_cache.py` covers question normalisation,
+  cache keys, FIFO eviction and the disable switch — all without
+  loading any ML model. 75 tests in total.
 - **LLM settings configurable:** `LLM_MODEL`,
   `LLM_TEMPERATURE`, `LLM_MAX_TOKENS` via env vars (defaults
   `openai/gpt-oss-20b`, `0.3`, `500`).
@@ -337,6 +347,7 @@ publicly without auth in front of it.
 | `RATE_LIMIT_PER_MINUTE` | `60` | Max `/api/query` calls per minute per process |
 | `LLM_MODEL` / `LLM_TEMPERATURE` / `LLM_MAX_TOKENS` | `openai/gpt-oss-20b` / `0.3` / `500` | Groq generation settings |
 | `HYBRID_SEARCH` | `true` | Hybrid (BM25 + FAISS) retrieval by default; `false` = dense-only. Per-query `"retrieval"` field overrides it |
+| `ANSWER_CACHE_MAX_ENTRIES` | `200` | Repeated-question answer cache size (FIFO); `0` disables it |
 
 > The Performance table further down now shows measured numbers
 > from real runs (see "Running the eval" and the public-document
