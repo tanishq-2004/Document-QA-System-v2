@@ -3,4 +3,5 @@ __pycache__/
 vector_store/
 uploaded_docs/
 *.pyc
-.env
+.enveval/corpus_public/
+public_corpus/

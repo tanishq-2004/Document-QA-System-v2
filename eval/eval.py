@@ -125,6 +125,30 @@ def precision_at_3(sources, ground_truth):
     return hits / min(3, len(sources))
 
 
+def token_f1(answer, reference):
+    """Token-level F1 between an answer and a reference answer.
+
+    Free, deterministic answer-correctness check (no LLM judge):
+    a paraphrase that shares the reference's content words scores
+    high, a wrong fact scores low. Returns None if either is empty.
+    """
+    if not answer or not reference:
+        return None
+    import re
+    tok = lambda s: re.findall(r"[a-z0-9]+", s.lower())
+    a, r = tok(answer), tok(reference)
+    if not a or not r:
+        return None
+    from collections import Counter
+    ca, cr = Counter(a), Counter(r)
+    overlap = sum((ca & cr).values())
+    if overlap == 0:
+        return 0.0
+    precision = overlap / len(a)
+    recall = overlap / len(r)
+    return round(2 * precision * recall / (precision + recall), 3)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Evaluate the Document QA backend.")
     parser.add_argument("--base-url", default="http://localhost:8000")
@@ -211,6 +235,7 @@ def main():
                 "faiss_ms": metrics["faiss_ms"],
                 "bm25_ms": metrics.get("bm25_ms", 0.0),
                 "reranking_ms": metrics["reranking_ms"],
+                "generation_ms": metrics.get("generation_ms", 0.0),
             }
             if arm == "hybrid_reranked":
                 # Groundedness (approximate): does the retrieved top-3
@@ -229,6 +254,10 @@ def main():
                     "answer_contains_expected_phrase": (
                         None if retrieval_only else
                         (bool(expected) and expected.lower() in answer.lower())
+                    ),
+                    "token_f1_vs_reference": (
+                        None if retrieval_only else
+                        token_f1(answer, q.get("reference_answer") or expected)
                     ),
                     "answer_word_overlap_with_context": (
                         None if retrieval_only else
@@ -339,6 +368,28 @@ def main():
     def median(rows, arm, key):
         return round(statistics.median(r[arm][key] for r in rows), 1)
 
+    def p95(rows, arm, key):
+        vals = sorted(r[arm][key] for r in rows)
+        if not vals:
+            return None
+        idx = min(len(vals) - 1, int(0.95 * len(vals)))
+        return round(vals[idx], 1)
+
+    # Answer correctness (free, no LLM judge): mean token-F1 of the
+    # hybrid+reranked answer against the reference answer, plus the
+    # exact-phrase hit rate already in groundedness.
+    f1_vals = [g["token_f1_vs_reference"] for g in grounded_rows
+               if g.get("token_f1_vs_reference") is not None]
+    answer_correctness = {
+        "mean_token_f1_vs_reference": (
+            round(statistics.mean(f1_vals), 3) if f1_vals else None
+        ),
+        "n_scored": len(f1_vals),
+        "note": "Token-F1 vs the SQuAD reference answer (or expected "
+                "phrase). A paraphrase of the right fact scores high; "
+                "a wrong fact scores low. None in retrieval-only mode.",
+    }
+
     def pp(a, b):
         return round(100 * (a - b), 1)
 
@@ -368,11 +419,20 @@ def main():
         "groundedness": groundedness,
         "latency_hybrid_reranked_ms": {
             "median_total": median(per_question, "hybrid_reranked", "total_ms"),
+            "p95_total": p95(per_question, "hybrid_reranked", "total_ms"),
             "median_faiss": median(per_question, "hybrid_reranked", "faiss_ms"),
+            "p95_faiss": p95(per_question, "hybrid_reranked", "faiss_ms"),
             "median_bm25": median(per_question, "hybrid_reranked", "bm25_ms"),
+            "p95_bm25": p95(per_question, "hybrid_reranked", "bm25_ms"),
             "median_reranking": median(
                 per_question, "hybrid_reranked", "reranking_ms"),
+            "p95_reranking": p95(
+                per_question, "hybrid_reranked", "reranking_ms"),
+            "median_generation": median(
+                per_question, "hybrid_reranked", "generation_ms")
+            if per_question and "generation_ms" in per_question[0]["hybrid_reranked"] else None,
         },
+        "answer_correctness": answer_correctness,
         # Back-compat alias: older results files used this key.
         "latency_reranked_ms": {
             "median_total": median(per_question, "hybrid_reranked", "total_ms"),
@@ -400,9 +460,11 @@ def main():
     print(f"Corpus: {len(files)} docs, {total_chunks} chunks, "
           f"indexed in {total_index_ms} ms")
     lat = results["latency_hybrid_reranked_ms"]
-    print(f"Latency (median, hybrid+reranked): total {lat['median_total']} ms, "
+    print(f"Latency (median, hybrid+reranked): total {lat['median_total']} ms "
+          f"(p95 {lat['p95_total']} ms), "
           f"FAISS {lat['median_faiss']} ms, BM25 {lat['median_bm25']} ms, "
-          f"rerank {lat['median_reranking']} ms")
+          f"rerank {lat['median_reranking']} ms, "
+          f"generation {lat.get('median_generation')} ms")
     p = results["precision_at_3"]
     print(f"Precision@3: dense-only {p['dense_only']}, "
           f"dense+rerank {p['dense_reranked']}, hybrid-only {p['hybrid_only']}, "
@@ -420,6 +482,9 @@ def main():
           f"{g['context_contains_expected_phrase']}, answer contains it "
           f"{g['answer_contains_expected_phrase']}, mean word overlap "
           f"{g['mean_answer_word_overlap_with_context']}")
+    ac = results["answer_correctness"]
+    print(f"Answer correctness: mean token-F1 vs reference "
+          f"{ac['mean_token_f1_vs_reference']} (n={ac['n_scored']})")
     print(f"Full results: {out_path}")
     return 0
 

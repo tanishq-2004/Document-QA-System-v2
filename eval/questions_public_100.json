@@ -1,0 +1,288 @@
+{
+  "source": "https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json",
+  "licence": "CC BY-SA 4.0",
+  "corpus_size": 100,
+  "method": "SQuAD v1.1 dev contexts as .txt docs (title + context); one sampled question per context, answer span verified to sit in the app-splitter chunks of that file; 4 refusal questions about Aurora Solar, absent from SQuAD.",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What feature of the Shah's army enable the weary Mongol forces easy early victories?",
+      "source": "squad-0001.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "fragmentation",
+      "reference_answer": "fragmentation",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 2,
+      "question": "What cultures were part of Kublai's administration?",
+      "source": "squad-0006.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Han Chinese, Khitans, Jurchens, Mongols, and Tibetan Buddhists",
+      "reference_answer": "Han Chinese, Khitans, Jurchens, Mongols, and Tibetan Buddhists",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 3,
+      "question": "What candy company did Edward John Noble own?",
+      "source": "squad-0011.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Life Savers candy",
+      "reference_answer": "Life Savers candy",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 4,
+      "question": "What would Mongol armies divert in order to cut off the resources of cities they were attacking?",
+      "source": "squad-0016.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "rivers",
+      "reference_answer": "rivers",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 5,
+      "question": "What is the earliest known movie featuring scenes filmed outdoors in Newcastle?",
+      "source": "squad-0021.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "On the Night of the Fire",
+      "reference_answer": "On the Night of the Fire",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 6,
+      "question": "What do chloroplasts do like mitochondria?",
+      "source": "squad-0026.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "generate ATP energy",
+      "reference_answer": "generate ATP energy",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 7,
+      "question": "What are three examples of complexity classes associated with definitions established by probabilistic Turing machines?",
+      "source": "squad-0031.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "BPP, ZPP and RP",
+      "reference_answer": "BPP, ZPP and RP",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 8,
+      "question": "Who took command of French in spring of 1753?",
+      "source": "squad-0036.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Paul Marin de la Malgue",
+      "reference_answer": "Paul Marin de la Malgue",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 9,
+      "question": "where is the Victoria and Albert Museum located?",
+      "source": "squad-0041.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "The V&A is located in the Brompton district of the Royal Borough of Kensington and Chelsea",
+      "reference_answer": "The V&A is located in the Brompton district of the Royal Borough of Kensington and Chelsea",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 10,
+      "question": "Which comedian did a parody where a Dalek appears?",
+      "source": "squad-0046.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Spike Milligan",
+      "reference_answer": "Spike Milligan",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 11,
+      "question": "What caused the separation of the Methodists in the American colonies?",
+      "source": "squad-0051.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "American Revolution",
+      "reference_answer": "American Revolution",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 12,
+      "question": "What is one example of what a clinical pharmacist's duties entail?",
+      "source": "squad-0056.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "creating a comprehensive drug therapy plan for patient-specific problems",
+      "reference_answer": "creating a comprehensive drug therapy plan for patient-specific problems",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 13,
+      "question": "What was the cause for the issues with city funding?",
+      "source": "squad-0061.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Much of the city's tax base dissipated",
+      "reference_answer": "Much of the city's tax base dissipated",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 14,
+      "question": "What are examples of differentiated effector cells that peak during wake periods?",
+      "source": "squad-0066.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "cytotoxic natural killer cells and CTLs (cytotoxic T lymphocytes)",
+      "reference_answer": "cytotoxic natural killer cells and CTLs (cytotoxic T lymphocytes)",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 15,
+      "question": "How else can petrologists understand the pressures at which different mineral phases appear?",
+      "source": "squad-0071.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "pressure physical experiments",
+      "reference_answer": "pressure physical experiments",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 16,
+      "question": "Where does the largest part of Kenya's power come from?",
+      "source": "squad-0076.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "hydroelectric stations at dams",
+      "reference_answer": "hydroelectric stations at dams",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 17,
+      "question": "Who is the founder of modern community organizing?",
+      "source": "squad-0081.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Saul Alinsky",
+      "reference_answer": "Saul Alinsky",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 18,
+      "question": "When did the Rhine become borders with Francia?",
+      "source": "squad-0086.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "6th century",
+      "reference_answer": "6th century",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 19,
+      "question": "By what year had Tem\u00fcjin created a significant \"Mongol\" tribal alliance?",
+      "source": "squad-0091.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "1206",
+      "reference_answer": "1206",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 20,
+      "question": "What was the capital of the Ottoman empire?",
+      "source": "squad-0096.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Istanbul",
+      "reference_answer": "Istanbul",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 901,
+      "type": "refusal",
+      "question": "How many days of paid annual leave do full-time employees at Aurora Solar receive?"
+    },
+    {
+      "id": 902,
+      "type": "refusal",
+      "question": "What is Aurora Solar's policy on working from home on Fridays?"
+    },
+    {
+      "id": 903,
+      "type": "refusal",
+      "question": "How much does Aurora Solar reimburse per day for travel outside Jaipur city limits?"
+    },
+    {
+      "id": 904,
+      "type": "refusal",
+      "question": "What is the name of Aurora Solar's chief executive officer?"
+    }
+  ]
+}

@@ -147,6 +147,112 @@ pass**. To evaluate those, run with `GROQ_API_KEY` set in the
 environment — the eval reads it from the env var and sends it in
 the query body; it is never printed or written to `results.json`.
 
+**Caveat — server-side key defeats retrieval-only mode.** If the
+backend itself was started with `GROQ_API_KEY` in its environment,
+it will still call Groq even when the eval sends no key (the
+backend falls back to its own env var). For a true retrieval-only
+run, start the backend without the key in its environment. This
+bit the 500-doc public run once: a "retrieval-only" run timed out
+because the backend was still calling Groq, which was rate-limited
+and retried for ~59 s inside the request.
+
+## Public-document scale test (SQuAD v1.1 dev, local only)
+
+Corpus: SQuAD v1.1 dev set, public, CC BY-SA 4.0 —
+https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json
+(2,067 unique contexts available; 4.7 MB download). Each context is
+one `.txt` document (title + context). Corpora are nested and
+deterministic (seed 42): the 100 docs are a subset of the 200, which
+are a subset of the 500. 20 sampled questions per size (1 per context,
+answer span verified to sit in the app-splitter chunks of that file)
+plus 4 refusal questions. Reproduce it locally with:
+
+```bash
+python eval/download_public_corpus.py --out-dir eval/corpus_public
+python eval/eval.py --base-url http://127.0.0.1:8001 \
+  --corpus-dir eval/corpus_public/corpus_500 \
+  --questions eval/questions_public_500.json \
+  --out eval/results_public_500.json
+```
+
+The corpus `.txt` files are **not** committed (see `.gitignore`);
+only the download script, the questions files and the results JSON
+are in the repo. Full results: `eval/results_public_100.json`,
+`eval/results_public_200.json`, `eval/results_public_500.json`,
+`eval/results_public_500_retrieval_only.json`,
+`eval/results_public_500_answers.json`. All runs used Groq
+`openai/gpt-oss-20b`, local backend on port 8001.
+
+| Docs | Chunks | Index time | P@3 dense / dense+rerank / hybrid / hybrid+rerank | Hit@3 dense / reranked | FAISS / BM25 / rerank (median ms) | Total (median / p95 ms) |
+|---:|---:|---:|---|---:|---:|---:|
+| 100 | 218 | 22.2 s | 0.333 / 0.333 / 0.333 / 0.333 | 1.0 / 1.0 | 14.1 / 2.0 / 515.9 | 3860 / 7407 |
+| 200 | 437 | 23.7 s | 0.333 / 0.333 / 0.333 / 0.333 | 1.0 / 1.0 | 12.4 / 4.1 / 524.1 | 3972 / 5275 |
+| 500 | 1109 | 67.5 s* | 0.300 / 0.333 / 0.316 / 0.333 | 0.90 / 1.0 | 12.4 / 9.9 / 466.6 | 893 / 1300† |
+
+P@3 is capped at 0.333 here because each question has exactly one
+ground-truth chunk and the top 3 can contain it at most once — so
+read Hit@3 (is the right chunk in the top 3 at all) as the real
+retrieval signal. Refusal was 4/4 at all three sizes.
+
+**Did hybrid help? Only at 500 docs, and only a little.** At 100 and
+200 docs every arm hits Hit@3 1.0 — the facts are too distinct, so
+dense retrieval already finds everything (ceiling effect again).
+At 500 docs the corpus is dense enough that dense-only misses 2 of
+20 (Hit@3 0.90, P@3 0.300); hybrid-only recovers one of them (Hit@3
+0.95, P@3 0.316), and reranking recovers both (Hit@3 1.0, P@3
+0.333 in both reranked arms). So hybrid+rerank beats dense-only by
++3.3 pp P@3 at 500 docs. BM25 costs 2.0 ms (100 docs) → 9.9 ms
+(500 docs); FAISS stays ~12–14 ms flat; reranking dominates
+retrieval at ~470–550 ms.
+
+**Answer correctness (token-F1 vs the SQuAD reference, free,
+no LLM judge):** 0.594 at 100 docs, 0.489 at 200 docs (20 questions
+each, real generations). Exact-phrase hit was only 0.45 at both
+sizes even though the retrieved context contained the phrase 0.95
+of the time — the model paraphrases instead of copying the span, so
+exact-phrase is too strict and token-F1 is the fairer number.
+
+**What is NOT valid from the 500-doc Groq run — read this before
+quoting any 500-doc answer number.** The three Groq runs together
+used ~199k of Groq's 200k tokens/day free-tier limit, so the 500-doc
+run's generations failed with HTTP 429 partway through. Its
+retrieval numbers are clean (confirmed by an identical retrieval-only
+re-run: same P@3 and Hit@3 in all four arms), but its
+answer-correctness numbers (token-F1 0.069, exact-phrase 0.85,
+generation 416 ms) are contaminated by fast-failing generation calls
+whose error text echoes retrieved context — do not quote them. A
+small re-check after the limit partially reset (`eval/
+public_answer_check.py`, 7 questions) also hit the limit on 6 of 7
+calls; the one real generation it produced was correct, and one
+injection question answered with a real generation gave the true
+fact (24 days, not the planted 99). Injection 4/4 and refusal 4/4
+stand from the earlier runs on this same guardrail code; at 500 docs
+they could not be cleanly re-measured because of the token limit.
+
+**Two real findings, not artefacts:**
+- *False refusal (Q18 at 500 docs).* "Who is most likely to teach a
+  child at home?" — the correct chunk (squad-0426 chunk 0) ranks #1
+  but its cross-encoder score is −2.03, below the 0.0 relevance
+  threshold, so the guardrail refuses even though retrieval was
+  right. The 0.0 threshold is too strict for paraphrased questions;
+  1 false refusal in 20 at 500 docs. The threshold was left
+  unchanged (tuning it needs a re-run of the full eval).
+- *Index time is noisy and grows faster than linearly.* The same
+  500-doc index took 67.5 s in the Groq run and 140.7 s in the
+  retrieval-only re-run (per-file median 124 ms vs 244 ms) — VM CPU
+  contention, plus every upload rewrites the whole FAISS index with
+  `save_local`, so per-upload cost grows with index size.
+  Cache-hit re-upload at 500 docs: **1.7–2.0 ms** vs ~124 ms median
+  fresh index per doc (~98% faster).
+
+\* 500-doc index time measured twice: 67.5 s and 140.7 s (see above).
+† 500-doc total/generation latency from the Groq run is contaminated
+by the token-limit failures; the retrieval-only re-run gives the clean
+retrieval latency: total median 569.8 ms, p95 858.4 ms, generation 0 ms.
+No stop-rule limit was hit (no OOM, no errors, median total query
+well under 30 s); the limit found was Groq's daily token budget, not
+the system's.
+
 ---
 
 # 🛡️ Guardrails & threat model

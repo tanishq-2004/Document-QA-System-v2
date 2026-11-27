@@ -1,0 +1,1298 @@
+{
+  "corpus": {
+    "docs": 100,
+    "doc_files": [
+      "squad-0001.txt",
+      "squad-0002.txt",
+      "squad-0003.txt",
+      "squad-0004.txt",
+      "squad-0005.txt",
+      "squad-0006.txt",
+      "squad-0007.txt",
+      "squad-0008.txt",
+      "squad-0009.txt",
+      "squad-0010.txt",
+      "squad-0011.txt",
+      "squad-0012.txt",
+      "squad-0013.txt",
+      "squad-0014.txt",
+      "squad-0015.txt",
+      "squad-0016.txt",
+      "squad-0017.txt",
+      "squad-0018.txt",
+      "squad-0019.txt",
+      "squad-0020.txt",
+      "squad-0021.txt",
+      "squad-0022.txt",
+      "squad-0023.txt",
+      "squad-0024.txt",
+      "squad-0025.txt",
+      "squad-0026.txt",
+      "squad-0027.txt",
+      "squad-0028.txt",
+      "squad-0029.txt",
+      "squad-0030.txt",
+      "squad-0031.txt",
+      "squad-0032.txt",
+      "squad-0033.txt",
+      "squad-0034.txt",
+      "squad-0035.txt",
+      "squad-0036.txt",
+      "squad-0037.txt",
+      "squad-0038.txt",
+      "squad-0039.txt",
+      "squad-0040.txt",
+      "squad-0041.txt",
+      "squad-0042.txt",
+      "squad-0043.txt",
+      "squad-0044.txt",
+      "squad-0045.txt",
+      "squad-0046.txt",
+      "squad-0047.txt",
+      "squad-0048.txt",
+      "squad-0049.txt",
+      "squad-0050.txt",
+      "squad-0051.txt",
+      "squad-0052.txt",
+      "squad-0053.txt",
+      "squad-0054.txt",
+      "squad-0055.txt",
+      "squad-0056.txt",
+      "squad-0057.txt",
+      "squad-0058.txt",
+      "squad-0059.txt",
+      "squad-0060.txt",
+      "squad-0061.txt",
+      "squad-0062.txt",
+      "squad-0063.txt",
+      "squad-0064.txt",
+      "squad-0065.txt",
+      "squad-0066.txt",
+      "squad-0067.txt",
+      "squad-0068.txt",
+      "squad-0069.txt",
+      "squad-0070.txt",
+      "squad-0071.txt",
+      "squad-0072.txt",
+      "squad-0073.txt",
+      "squad-0074.txt",
+      "squad-0075.txt",
+      "squad-0076.txt",
+      "squad-0077.txt",
+      "squad-0078.txt",
+      "squad-0079.txt",
+      "squad-0080.txt",
+      "squad-0081.txt",
+      "squad-0082.txt",
+      "squad-0083.txt",
+      "squad-0084.txt",
+      "squad-0085.txt",
+      "squad-0086.txt",
+      "squad-0087.txt",
+      "squad-0088.txt",
+      "squad-0089.txt",
+      "squad-0090.txt",
+      "squad-0091.txt",
+      "squad-0092.txt",
+      "squad-0093.txt",
+      "squad-0094.txt",
+      "squad-0095.txt",
+      "squad-0096.txt",
+      "squad-0097.txt",
+      "squad-0098.txt",
+      "squad-0099.txt",
+      "squad-0100.txt"
+    ],
+    "total_chunks": 218,
+    "total_index_ms": 22219.3,
+    "per_file_index_ms": {
+      "squad-0001.txt": 806.4,
+      "squad-0002.txt": 204.7,
+      "squad-0003.txt": 119.6,
+      "squad-0004.txt": 299.6,
+      "squad-0005.txt": 193.9,
+      "squad-0006.txt": 405.3,
+      "squad-0007.txt": 182.5,
+      "squad-0008.txt": 114.9,
+      "squad-0009.txt": 101.7,
+      "squad-0010.txt": 199.3,
+      "squad-0011.txt": 193.1,
+      "squad-0012.txt": 97.6,
+      "squad-0013.txt": 283.1,
+      "squad-0014.txt": 132.8,
+      "squad-0015.txt": 263.1,
+      "squad-0016.txt": 126.6,
+      "squad-0017.txt": 375.1,
+      "squad-0018.txt": 220.5,
+      "squad-0019.txt": 203.3,
+      "squad-0020.txt": 191.3,
+      "squad-0021.txt": 199.0,
+      "squad-0022.txt": 298.1,
+      "squad-0023.txt": 113.0,
+      "squad-0024.txt": 193.1,
+      "squad-0025.txt": 201.4,
+      "squad-0026.txt": 417.6,
+      "squad-0027.txt": 164.9,
+      "squad-0028.txt": 430.0,
+      "squad-0029.txt": 374.0,
+      "squad-0030.txt": 193.6,
+      "squad-0031.txt": 98.7,
+      "squad-0032.txt": 120.0,
+      "squad-0033.txt": 282.3,
+      "squad-0034.txt": 129.2,
+      "squad-0035.txt": 376.4,
+      "squad-0036.txt": 594.7,
+      "squad-0037.txt": 200.1,
+      "squad-0038.txt": 119.8,
+      "squad-0039.txt": 185.7,
+      "squad-0040.txt": 127.1,
+      "squad-0041.txt": 198.3,
+      "squad-0042.txt": 180.0,
+      "squad-0043.txt": 190.5,
+      "squad-0044.txt": 196.5,
+      "squad-0045.txt": 133.8,
+      "squad-0046.txt": 468.9,
+      "squad-0047.txt": 215.2,
+      "squad-0048.txt": 287.0,
+      "squad-0049.txt": 127.2,
+      "squad-0050.txt": 192.7,
+      "squad-0051.txt": 199.4,
+      "squad-0052.txt": 188.6,
+      "squad-0053.txt": 186.3,
+      "squad-0054.txt": 34.1,
+      "squad-0055.txt": 197.9,
+      "squad-0056.txt": 372.5,
+      "squad-0057.txt": 398.4,
+      "squad-0058.txt": 227.1,
+      "squad-0059.txt": 282.1,
+      "squad-0060.txt": 289.3,
+      "squad-0061.txt": 121.9,
+      "squad-0062.txt": 293.5,
+      "squad-0063.txt": 182.8,
+      "squad-0064.txt": 204.9,
+      "squad-0065.txt": 207.2,
+      "squad-0066.txt": 308.2,
+      "squad-0067.txt": 186.3,
+      "squad-0068.txt": 305.7,
+      "squad-0069.txt": 120.6,
+      "squad-0070.txt": 272.6,
+      "squad-0071.txt": 120.0,
+      "squad-0072.txt": 281.9,
+      "squad-0073.txt": 118.8,
+      "squad-0074.txt": 195.9,
+      "squad-0075.txt": 186.2,
+      "squad-0076.txt": 191.7,
+      "squad-0077.txt": 132.7,
+      "squad-0078.txt": 183.0,
+      "squad-0079.txt": 184.1,
+      "squad-0080.txt": 232.4,
+      "squad-0081.txt": 183.8,
+      "squad-0082.txt": 107.1,
+      "squad-0083.txt": 202.3,
+      "squad-0084.txt": 208.5,
+      "squad-0085.txt": 275.8,
+      "squad-0086.txt": 121.0,
+      "squad-0087.txt": 197.5,
+      "squad-0088.txt": 278.5,
+      "squad-0089.txt": 203.7,
+      "squad-0090.txt": 317.7,
+      "squad-0091.txt": 278.9,
+      "squad-0092.txt": 202.5,
+      "squad-0093.txt": 216.5,
+      "squad-0094.txt": 182.0,
+      "squad-0095.txt": 225.9,
+      "squad-0096.txt": 193.5,
+      "squad-0097.txt": 95.1,
+      "squad-0098.txt": 197.5,
+      "squad-0099.txt": 209.3,
+      "squad-0100.txt": 189.0
+    }
+  },
+  "questions": 24,
+  "llm_mode": "groq",
+  "refusal": {
+    "total": 4,
+    "judged": 4,
+    "passed": 4,
+    "accuracy": 1.0,
+    "status": "evaluated",
+    "per_question": [
+      {
+        "id": 901,
+        "question": "How many days of paid annual leave do full-time employees at Aurora Solar receive?",
+        "status": "pass",
+        "detail": "refused with the fixed phrase / low relevance",
+        "refused": true,
+        "injection_flagged": false,
+        "answer_preview": "The answer is not present in the documents."
+      },
+      {
+        "id": 902,
+        "question": "What is Aurora Solar's policy on working from home on Fridays?",
+        "status": "pass",
+        "detail": "refused with the fixed phrase / low relevance",
+        "refused": true,
+        "injection_flagged": false,
+        "answer_preview": "The answer is not present in the documents."
+      },
+      {
+        "id": 903,
+        "question": "How much does Aurora Solar reimburse per day for travel outside Jaipur city limits?",
+        "status": "pass",
+        "detail": "refused with the fixed phrase / low relevance",
+        "refused": true,
+        "injection_flagged": false,
+        "answer_preview": "The answer is not present in the documents."
+      },
+      {
+        "id": 904,
+        "question": "What is the name of Aurora Solar's chief executive officer?",
+        "status": "pass",
+        "detail": "refused with the fixed phrase / low relevance",
+        "refused": true,
+        "injection_flagged": false,
+        "answer_preview": "The answer is not present in the documents."
+      }
+    ]
+  },
+  "injection": {
+    "total": 0,
+    "judged": 0,
+    "passed": 0,
+    "accuracy": null,
+    "status": "no questions of this type in this questions file",
+    "per_question": []
+  },
+  "groundedness": {
+    "context_contains_expected_phrase": 0.95,
+    "answer_contains_expected_phrase": 0.45,
+    "mean_answer_word_overlap_with_context": 0.86,
+    "note": "Overlap is an approximate heuristic (see guardrails.py), not proof of correctness. Answer-side figures are None in retrieval-only mode. The context check uses the API's source text, truncated to 350 chars, so an expected phrase past char 350 of its chunk counts as a miss even though the chunk was retrieved correctly (see precision@3 / hit@3 for retrieval quality).",
+    "per_question": [
+      {
+        "id": 1,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 0.0,
+        "answer_word_overlap_with_context": 0.615
+      },
+      {
+        "id": 2,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 1.0,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 3,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 0.6,
+        "answer_word_overlap_with_context": 0.857
+      },
+      {
+        "id": 4,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 0.333,
+        "answer_word_overlap_with_context": 0.8
+      },
+      {
+        "id": 5,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 0.923,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 6,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 0.333,
+        "answer_word_overlap_with_context": 0.857
+      },
+      {
+        "id": 7,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 1.0,
+        "answer_word_overlap_with_context": 0.0
+      },
+      {
+        "id": 8,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 1.0,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 9,
+        "context_contains_expected_phrase": false,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 0.811,
+        "answer_word_overlap_with_context": 0.727
+      },
+      {
+        "id": 10,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 1.0,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 11,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 0.182,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 12,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 0.129,
+        "answer_word_overlap_with_context": 0.818
+      },
+      {
+        "id": 13,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 0.522,
+        "answer_word_overlap_with_context": 0.714
+      },
+      {
+        "id": 14,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 0.621,
+        "answer_word_overlap_with_context": 0.933
+      },
+      {
+        "id": 15,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 0.214,
+        "answer_word_overlap_with_context": 0.941
+      },
+      {
+        "id": 16,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 0.25,
+        "answer_word_overlap_with_context": 0.938
+      },
+      {
+        "id": 17,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": false,
+        "token_f1_vs_reference": 1.0,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 18,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 0.286,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 19,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 0.667,
+        "answer_word_overlap_with_context": 1.0
+      },
+      {
+        "id": 20,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": true,
+        "token_f1_vs_reference": 1.0,
+        "answer_word_overlap_with_context": 1.0
+      }
+    ]
+  },
+  "latency_hybrid_reranked_ms": {
+    "median_total": 3859.6,
+    "p95_total": 7407.0,
+    "median_faiss": 14.1,
+    "p95_faiss": 48.9,
+    "median_bm25": 2.0,
+    "p95_bm25": 2.6,
+    "median_reranking": 515.9,
+    "p95_reranking": 954.4,
+    "median_generation": 3263.9
+  },
+  "answer_correctness": {
+    "mean_token_f1_vs_reference": 0.594,
+    "n_scored": 20,
+    "note": "Token-F1 vs the SQuAD reference answer (or expected phrase). A paraphrase of the right fact scores high; a wrong fact scores low. None in retrieval-only mode."
+  },
+  "latency_reranked_ms": {
+    "median_total": 3859.6,
+    "median_faiss": 14.1,
+    "median_bm25": 2.0,
+    "median_reranking": 515.9
+  },
+  "precision_at_3": {
+    "dense_only": 0.333,
+    "dense_reranked": 0.333,
+    "hybrid_only": 0.333,
+    "hybrid_reranked": 0.333,
+    "improvement_pp": 0.0,
+    "hybrid_vs_dense_reranked_pp": 0.0,
+    "keyword_questions": {
+      "dense_only": 0.333,
+      "dense_reranked": 0.333,
+      "hybrid_only": 0.333,
+      "hybrid_reranked": 0.333
+    }
+  },
+  "hit_at_3": {
+    "dense_only": 1,
+    "dense_reranked": 1,
+    "hybrid_only": 1,
+    "hybrid_reranked": 1
+  },
+  "per_question": [
+    {
+      "id": 1,
+      "question": "What feature of the Shah's army enable the weary Mongol forces easy early victories?",
+      "source": "squad-0001.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2162.3,
+        "faiss_ms": 13.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 2148.6
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1432.0,
+        "faiss_ms": 16.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 647.2,
+        "generation_ms": 768.9
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 660.0,
+        "faiss_ms": 38.5,
+        "bm25_ms": 2.2,
+        "reranking_ms": 0.3,
+        "generation_ms": 619.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1280.9,
+        "faiss_ms": 14.7,
+        "bm25_ms": 2.3,
+        "reranking_ms": 544.4,
+        "generation_ms": 719.6
+      }
+    },
+    {
+      "id": 2,
+      "question": "What cultures were part of Kublai's administration?",
+      "source": "squad-0006.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 800.7,
+        "faiss_ms": 13.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 787.2
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1199.2,
+        "faiss_ms": 13.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 559.2,
+        "generation_ms": 626.1
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 785.6,
+        "faiss_ms": 11.0,
+        "bm25_ms": 1.9,
+        "reranking_ms": 0.2,
+        "generation_ms": 772.5
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1594.8,
+        "faiss_ms": 39.5,
+        "bm25_ms": 2.0,
+        "reranking_ms": 605.1,
+        "generation_ms": 948.1
+      }
+    },
+    {
+      "id": 3,
+      "question": "What candy company did Edward John Noble own?",
+      "source": "squad-0011.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 662.9,
+        "faiss_ms": 86.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 575.8
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1009.6,
+        "faiss_ms": 12.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 409.6,
+        "generation_ms": 587.1
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 600.6,
+        "faiss_ms": 17.4,
+        "bm25_ms": 2.6,
+        "reranking_ms": 0.2,
+        "generation_ms": 580.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1313.9,
+        "faiss_ms": 10.4,
+        "bm25_ms": 2.0,
+        "reranking_ms": 393.5,
+        "generation_ms": 907.9
+      }
+    },
+    {
+      "id": 4,
+      "question": "What would Mongol armies divert in order to cut off the resources of cities they were attacking?",
+      "source": "squad-0016.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 655.6,
+        "faiss_ms": 41.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 613.8
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1209.5,
+        "faiss_ms": 14.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 509.6,
+        "generation_ms": 685.7
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 765.7,
+        "faiss_ms": 15.0,
+        "bm25_ms": 2.1,
+        "reranking_ms": 0.2,
+        "generation_ms": 748.3
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1455.9,
+        "faiss_ms": 13.4,
+        "bm25_ms": 1.9,
+        "reranking_ms": 609.3,
+        "generation_ms": 831.2
+      }
+    },
+    {
+      "id": 5,
+      "question": "What is the earliest known movie featuring scenes filmed outdoors in Newcastle?",
+      "source": "squad-0021.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 842.7,
+        "faiss_ms": 23.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 818.6
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1081.4,
+        "faiss_ms": 12.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 500.9,
+        "generation_ms": 568.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2659.9,
+        "faiss_ms": 13.7,
+        "bm25_ms": 2.1,
+        "reranking_ms": 0.2,
+        "generation_ms": 2643.8
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 5192.9,
+        "faiss_ms": 48.9,
+        "bm25_ms": 2.6,
+        "reranking_ms": 516.6,
+        "generation_ms": 4624.8
+      }
+    },
+    {
+      "id": 6,
+      "question": "What do chloroplasts do like mitochondria?",
+      "source": "squad-0026.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2939.2,
+        "faiss_ms": 14.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 2924.4
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4299.6,
+        "faiss_ms": 13.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 612.6,
+        "generation_ms": 3673.8
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3735.9,
+        "faiss_ms": 13.7,
+        "bm25_ms": 1.9,
+        "reranking_ms": 0.2,
+        "generation_ms": 3720.1
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3364.0,
+        "faiss_ms": 14.4,
+        "bm25_ms": 2.0,
+        "reranking_ms": 495.2,
+        "generation_ms": 2852.3
+      }
+    },
+    {
+      "id": 7,
+      "question": "What are three examples of complexity classes associated with definitions established by probabilistic Turing machines?",
+      "source": "squad-0031.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3619.4,
+        "faiss_ms": 13.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 3605.7
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3393.5,
+        "faiss_ms": 12.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 485.8,
+        "generation_ms": 2895.5
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3757.1,
+        "faiss_ms": 17.0,
+        "bm25_ms": 2.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 3737.8
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1128.8,
+        "faiss_ms": 17.9,
+        "bm25_ms": 2.1,
+        "reranking_ms": 521.2,
+        "generation_ms": 587.6
+      }
+    },
+    {
+      "id": 8,
+      "question": "Who took command of French in spring of 1753?",
+      "source": "squad-0036.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4765.0,
+        "faiss_ms": 46.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 4718.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2353.8,
+        "faiss_ms": 12.8,
+        "bm25_ms": 0.0,
+        "reranking_ms": 464.9,
+        "generation_ms": 1876.2
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2874.7,
+        "faiss_ms": 13.4,
+        "bm25_ms": 2.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 2859.1
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 7407.0,
+        "faiss_ms": 13.0,
+        "bm25_ms": 1.9,
+        "reranking_ms": 515.2,
+        "generation_ms": 6876.9
+      }
+    },
+    {
+      "id": 9,
+      "question": "where is the Victoria and Albert Museum located?",
+      "source": "squad-0041.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4191.5,
+        "faiss_ms": 23.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3,
+        "generation_ms": 4167.4
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4120.0,
+        "faiss_ms": 20.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 482.0,
+        "generation_ms": 3617.6
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2588.5,
+        "faiss_ms": 10.7,
+        "bm25_ms": 1.9,
+        "reranking_ms": 0.2,
+        "generation_ms": 2575.7
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4188.2,
+        "faiss_ms": 12.2,
+        "bm25_ms": 1.9,
+        "reranking_ms": 565.6,
+        "generation_ms": 3608.4
+      }
+    },
+    {
+      "id": 10,
+      "question": "Which comedian did a parody where a Dalek appears?",
+      "source": "squad-0046.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2950.7,
+        "faiss_ms": 77.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 2873.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4336.3,
+        "faiss_ms": 11.7,
+        "bm25_ms": 0.0,
+        "reranking_ms": 535.9,
+        "generation_ms": 3788.7
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2699.3,
+        "faiss_ms": 14.9,
+        "bm25_ms": 1.9,
+        "reranking_ms": 0.3,
+        "generation_ms": 2682.2
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 5539.4,
+        "faiss_ms": 19.4,
+        "bm25_ms": 2.0,
+        "reranking_ms": 502.4,
+        "generation_ms": 5015.6
+      }
+    },
+    {
+      "id": 11,
+      "question": "What caused the separation of the Methodists in the American colonies?",
+      "source": "squad-0051.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2922.0,
+        "faiss_ms": 20.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 2901.2
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4414.4,
+        "faiss_ms": 14.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 509.4,
+        "generation_ms": 3890.7
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2046.0,
+        "faiss_ms": 12.9,
+        "bm25_ms": 1.9,
+        "reranking_ms": 0.2,
+        "generation_ms": 2031.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4620.2,
+        "faiss_ms": 15.5,
+        "bm25_ms": 2.1,
+        "reranking_ms": 483.1,
+        "generation_ms": 4119.5
+      }
+    },
+    {
+      "id": 12,
+      "question": "What is one example of what a clinical pharmacist's duties entail?",
+      "source": "squad-0056.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2979.9,
+        "faiss_ms": 51.8,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 2928.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4370.1,
+        "faiss_ms": 11.7,
+        "bm25_ms": 0.0,
+        "reranking_ms": 546.2,
+        "generation_ms": 3812.3
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4747.0,
+        "faiss_ms": 13.0,
+        "bm25_ms": 2.1,
+        "reranking_ms": 0.2,
+        "generation_ms": 4731.6
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3441.6,
+        "faiss_ms": 15.9,
+        "bm25_ms": 2.5,
+        "reranking_ms": 547.7,
+        "generation_ms": 2875.5
+      }
+    },
+    {
+      "id": 13,
+      "question": "What was the cause for the issues with city funding?",
+      "source": "squad-0061.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4683.8,
+        "faiss_ms": 13.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.1,
+        "generation_ms": 4670.1
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3226.2,
+        "faiss_ms": 13.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 416.6,
+        "generation_ms": 2796.3
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 583.5,
+        "faiss_ms": 23.9,
+        "bm25_ms": 2.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 557.4
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 5439.0,
+        "faiss_ms": 18.2,
+        "bm25_ms": 2.1,
+        "reranking_ms": 406.4,
+        "generation_ms": 5012.3
+      }
+    },
+    {
+      "id": 14,
+      "question": "What are examples of differentiated effector cells that peak during wake periods?",
+      "source": "squad-0066.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1973.3,
+        "faiss_ms": 30.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 1942.6
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3388.1,
+        "faiss_ms": 27.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 467.7,
+        "generation_ms": 2893.1
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4909.0,
+        "faiss_ms": 11.6,
+        "bm25_ms": 2.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 4895.2
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4235.7,
+        "faiss_ms": 12.4,
+        "bm25_ms": 2.1,
+        "reranking_ms": 564.7,
+        "generation_ms": 3656.5
+      }
+    },
+    {
+      "id": 15,
+      "question": "How else can petrologists understand the pressures at which different mineral phases appear?",
+      "source": "squad-0071.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4856.1,
+        "faiss_ms": 26.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 4829.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4298.0,
+        "faiss_ms": 15.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 572.5,
+        "generation_ms": 3710.3
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3784.2,
+        "faiss_ms": 16.4,
+        "bm25_ms": 2.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 3765.6
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4368.7,
+        "faiss_ms": 12.7,
+        "bm25_ms": 2.1,
+        "reranking_ms": 487.1,
+        "generation_ms": 3866.8
+      }
+    },
+    {
+      "id": 16,
+      "question": "Where does the largest part of Kenya's power come from?",
+      "source": "squad-0076.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3857.2,
+        "faiss_ms": 51.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 3805.8
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3681.9,
+        "faiss_ms": 17.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 533.8,
+        "generation_ms": 3130.7
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4059.1,
+        "faiss_ms": 12.6,
+        "bm25_ms": 2.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 4044.2
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3530.9,
+        "faiss_ms": 32.3,
+        "bm25_ms": 2.1,
+        "reranking_ms": 577.2,
+        "generation_ms": 2919.3
+      }
+    },
+    {
+      "id": 17,
+      "question": "Who is the founder of modern community organizing?",
+      "source": "squad-0081.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2737.3,
+        "faiss_ms": 21.8,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 2715.3
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2976.4,
+        "faiss_ms": 12.7,
+        "bm25_ms": 0.0,
+        "reranking_ms": 432.5,
+        "generation_ms": 2531.2
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2668.9,
+        "faiss_ms": 20.8,
+        "bm25_ms": 1.9,
+        "reranking_ms": 0.2,
+        "generation_ms": 2646.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3152.7,
+        "faiss_ms": 11.0,
+        "bm25_ms": 2.0,
+        "reranking_ms": 377.1,
+        "generation_ms": 2762.6
+      }
+    },
+    {
+      "id": 18,
+      "question": "When did the Rhine become borders with Francia?",
+      "source": "squad-0086.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3946.2,
+        "faiss_ms": 12.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 3933.5
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4498.4,
+        "faiss_ms": 11.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 479.3,
+        "generation_ms": 4007.9
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1924.4,
+        "faiss_ms": 10.7,
+        "bm25_ms": 2.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 1911.5
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 5518.2,
+        "faiss_ms": 10.2,
+        "bm25_ms": 1.8,
+        "reranking_ms": 469.7,
+        "generation_ms": 5036.4
+      }
+    },
+    {
+      "id": 19,
+      "question": "By what year had Tem\u00fcjin created a significant \"Mongol\" tribal alliance?",
+      "source": "squad-0091.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2629.2,
+        "faiss_ms": 18.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 2610.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 4583.3,
+        "faiss_ms": 16.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 717.9,
+        "generation_ms": 3849.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3737.5,
+        "faiss_ms": 11.7,
+        "bm25_ms": 1.9,
+        "reranking_ms": 0.2,
+        "generation_ms": 3723.7
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 5714.9,
+        "faiss_ms": 13.8,
+        "bm25_ms": 2.0,
+        "reranking_ms": 954.4,
+        "generation_ms": 4744.7
+      }
+    },
+    {
+      "id": 20,
+      "question": "What was the capital of the Ottoman empire?",
+      "source": "squad-0096.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 1539.3,
+        "faiss_ms": 11.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.1,
+        "generation_ms": 1527.8
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 3247.4,
+        "faiss_ms": 17.7,
+        "bm25_ms": 0.0,
+        "reranking_ms": 403.2,
+        "generation_ms": 2826.5
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2766.6,
+        "faiss_ms": 11.5,
+        "bm25_ms": 2.0,
+        "reranking_ms": 0.1,
+        "generation_ms": 2753.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 2029.6,
+        "faiss_ms": 12.1,
+        "bm25_ms": 1.9,
+        "reranking_ms": 388.5,
+        "generation_ms": 1627.0
+      }
+    }
+  ]
+}

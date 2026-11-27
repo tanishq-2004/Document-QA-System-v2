@@ -1,0 +1,288 @@
+{
+  "source": "https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json",
+  "licence": "CC BY-SA 4.0",
+  "corpus_size": 500,
+  "method": "SQuAD v1.1 dev contexts as .txt docs (title + context); one sampled question per context, answer span verified to sit in the app-splitter chunks of that file; 4 refusal questions about Aurora Solar, absent from SQuAD.",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What feature of the Shah's army enable the weary Mongol forces easy early victories?",
+      "source": "squad-0001.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "fragmentation",
+      "reference_answer": "fragmentation",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 2,
+      "question": "What do chloroplasts do like mitochondria?",
+      "source": "squad-0026.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "generate ATP energy",
+      "reference_answer": "generate ATP energy",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 3,
+      "question": "What caused the separation of the Methodists in the American colonies?",
+      "source": "squad-0051.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "American Revolution",
+      "reference_answer": "American Revolution",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 4,
+      "question": "Where does the largest part of Kenya's power come from?",
+      "source": "squad-0076.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "hydroelectric stations at dams",
+      "reference_answer": "hydroelectric stations at dams",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 5,
+      "question": "What commemorates Warsaw's heroic history?",
+      "source": "squad-0101.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "many places",
+      "reference_answer": "many places",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 6,
+      "question": "In what country was a full-scale working railway steam locomotive first invented?",
+      "source": "squad-0126.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "United Kingdom",
+      "reference_answer": "United Kingdom",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 7,
+      "question": "Which group seeks to reconceive and promote Biblical holiness in today's church?",
+      "source": "squad-0151.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Wesleyan Holiness Consortium",
+      "reference_answer": "Wesleyan Holiness Consortium",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 8,
+      "question": "What are the two ABC affiliates for Tampa, Florida?",
+      "source": "squad-0176.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "WFTS-TV and WWSB",
+      "reference_answer": "WFTS-TV and WWSB",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 9,
+      "question": "In 1758 what was duc de Choiseul's plan for focused military efforts?",
+      "source": "squad-0201.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "invasion of Britain, to draw British resources away from North America and the European mainland",
+      "reference_answer": "invasion of Britain, to draw British resources away from North America and the European mainland",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 10,
+      "question": "What was the Presidential Working Party on the Second University commissioned to do?",
+      "source": "squad-0226.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "look at both the possibilities of setting up a second university in Kenya as well as the reforming of the entire education system",
+      "reference_answer": "look at both the possibilities of setting up a second university in Kenya as well as the reforming of the entire education system",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 11,
+      "question": "What is one type of public key cryptography algorithm?",
+      "source": "squad-0251.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "RSA",
+      "reference_answer": "RSA",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 12,
+      "question": "What story has little foundation in truth?",
+      "source": "squad-0276.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "the posting on the door",
+      "reference_answer": "the posting on the door",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 13,
+      "question": "Of what form are Sophie Germain primes?",
+      "source": "squad-0301.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "2p + 1",
+      "reference_answer": "2p + 1",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 14,
+      "question": "When did Martin Luther protest the sale of indulgences to his bishop?",
+      "source": "squad-0326.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "31 October 1517",
+      "reference_answer": "31 October 1517",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 15,
+      "question": "What happened to Tesla's belongings?",
+      "source": "squad-0351.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "FBI ordered the Alien Property Custodian to seize Tesla's belongings",
+      "reference_answer": "FBI ordered the Alien Property Custodian to seize Tesla's belongings",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 16,
+      "question": "When did ABC first start?",
+      "source": "squad-0376.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "October 12, 1943",
+      "reference_answer": "October 12, 1943",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 17,
+      "question": "Who did the attacks resonate most with?",
+      "source": "squad-0401.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "conservative Muslims",
+      "reference_answer": "conservative Muslims",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 18,
+      "question": "Who is most likely to teach a child at home?",
+      "source": "squad-0426.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "family member",
+      "reference_answer": "family member",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 19,
+      "question": "Where does southern California's megalopolis standard in terms of population nationwide?",
+      "source": "squad-0451.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "third",
+      "reference_answer": "third",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 20,
+      "question": "What are the biggest game animals of Kenya called?",
+      "source": "squad-0476.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "The \"Big Five\"",
+      "reference_answer": "The \"Big Five\"",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 901,
+      "type": "refusal",
+      "question": "How many days of paid annual leave do full-time employees at Aurora Solar receive?"
+    },
+    {
+      "id": 902,
+      "type": "refusal",
+      "question": "What is Aurora Solar's policy on working from home on Fridays?"
+    },
+    {
+      "id": 903,
+      "type": "refusal",
+      "question": "How much does Aurora Solar reimburse per day for travel outside Jaipur city limits?"
+    },
+    {
+      "id": 904,
+      "type": "refusal",
+      "question": "What is the name of Aurora Solar's chief executive officer?"
+    }
+  ]
+}

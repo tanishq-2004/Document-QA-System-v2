@@ -1,0 +1,288 @@
+{
+  "source": "https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json",
+  "licence": "CC BY-SA 4.0",
+  "corpus_size": 200,
+  "method": "SQuAD v1.1 dev contexts as .txt docs (title + context); one sampled question per context, answer span verified to sit in the app-splitter chunks of that file; 4 refusal questions about Aurora Solar, absent from SQuAD.",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What feature of the Shah's army enable the weary Mongol forces easy early victories?",
+      "source": "squad-0001.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "fragmentation",
+      "reference_answer": "fragmentation",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 2,
+      "question": "What candy company did Edward John Noble own?",
+      "source": "squad-0011.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Life Savers candy",
+      "reference_answer": "Life Savers candy",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 3,
+      "question": "What is the earliest known movie featuring scenes filmed outdoors in Newcastle?",
+      "source": "squad-0021.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "On the Night of the Fire",
+      "reference_answer": "On the Night of the Fire",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 4,
+      "question": "What are three examples of complexity classes associated with definitions established by probabilistic Turing machines?",
+      "source": "squad-0031.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "BPP, ZPP and RP",
+      "reference_answer": "BPP, ZPP and RP",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 5,
+      "question": "where is the Victoria and Albert Museum located?",
+      "source": "squad-0041.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "The V&A is located in the Brompton district of the Royal Borough of Kensington and Chelsea",
+      "reference_answer": "The V&A is located in the Brompton district of the Royal Borough of Kensington and Chelsea",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 6,
+      "question": "What caused the separation of the Methodists in the American colonies?",
+      "source": "squad-0051.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "American Revolution",
+      "reference_answer": "American Revolution",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 7,
+      "question": "What was the cause for the issues with city funding?",
+      "source": "squad-0061.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Much of the city's tax base dissipated",
+      "reference_answer": "Much of the city's tax base dissipated",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 8,
+      "question": "How else can petrologists understand the pressures at which different mineral phases appear?",
+      "source": "squad-0071.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "pressure physical experiments",
+      "reference_answer": "pressure physical experiments",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 9,
+      "question": "Who is the founder of modern community organizing?",
+      "source": "squad-0081.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Saul Alinsky",
+      "reference_answer": "Saul Alinsky",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 10,
+      "question": "By what year had Tem\u00fcjin created a significant \"Mongol\" tribal alliance?",
+      "source": "squad-0091.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "1206",
+      "reference_answer": "1206",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 11,
+      "question": "What commemorates Warsaw's heroic history?",
+      "source": "squad-0101.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "many places",
+      "reference_answer": "many places",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 12,
+      "question": "Where does Kenya have deposits of oil?",
+      "source": "squad-0111.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "in Turkana",
+      "reference_answer": "in Turkana",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 13,
+      "question": "Where is Kenya located?",
+      "source": "squad-0121.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "in Africa",
+      "reference_answer": "in Africa",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 14,
+      "question": "Local church and certified  are two types of what?",
+      "source": "squad-0131.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "lay servants",
+      "reference_answer": "lay servants",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 15,
+      "question": "How many mechanisms does a typical steam engine have to keep boiler pressure from getting too high?",
+      "source": "squad-0141.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "two",
+      "reference_answer": "two",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 16,
+      "question": "Which group seeks to reconceive and promote Biblical holiness in today's church?",
+      "source": "squad-0151.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Wesleyan Holiness Consortium",
+      "reference_answer": "Wesleyan Holiness Consortium",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 17,
+      "question": "Who purchased or commissioned the works of European artists included the British galleries of the V&A?",
+      "source": "squad-0161.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "British patrons",
+      "reference_answer": "British patrons",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 18,
+      "question": "Why is the second timeline needed? ",
+      "source": "squad-0171.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "second scale shows the most recent eon with an expanded scale",
+      "reference_answer": "second scale shows the most recent eon with an expanded scale",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 19,
+      "question": "Who was an important figure in the twentieth-century Islamic revival in India?",
+      "source": "squad-0181.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Sayyid Abul Ala Maududi",
+      "reference_answer": "Sayyid Abul Ala Maududi",
+      "keyword": false,
+      "type": "answerable"
+    },
+    {
+      "id": 20,
+      "question": "Who noticed that Luther's view of the soul after death differed from later theologians?",
+      "source": "squad-0191.txt",
+      "chunk_id": 0,
+      "chunk_ids": [
+        0
+      ],
+      "expected_phrase": "Franz Pieper",
+      "reference_answer": "Franz Pieper",
+      "keyword": true,
+      "type": "answerable"
+    },
+    {
+      "id": 901,
+      "type": "refusal",
+      "question": "How many days of paid annual leave do full-time employees at Aurora Solar receive?"
+    },
+    {
+      "id": 902,
+      "type": "refusal",
+      "question": "What is Aurora Solar's policy on working from home on Fridays?"
+    },
+    {
+      "id": 903,
+      "type": "refusal",
+      "question": "How much does Aurora Solar reimburse per day for travel outside Jaipur city limits?"
+    },
+    {
+      "id": 904,
+      "type": "refusal",
+      "question": "What is the name of Aurora Solar's chief executive officer?"
+    }
+  ]
+}
