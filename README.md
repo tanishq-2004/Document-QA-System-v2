@@ -19,7 +19,7 @@ The system combines:
 
 - ⚡ Hybrid retrieval: **FAISS** (dense) + **BM25** (keyword), fused with Reciprocal Rank Fusion
 - 🎯 Cross-encoder **re-ranking** with fallback and near-duplicate diversity
-- 🧠 LLM answer generation using **Groq-hosted Llama 3.1**
+- 🧠 LLM answer generation using **Groq-hosted openai/gpt-oss-20b**
 - 📚 Grounded source citations
 - 📊 Real-time latency metrics
 - 💾 Persistent vector index caching
@@ -32,7 +32,7 @@ The application is designed with a modular backend architecture using **FastAPI*
 
 # 🔗 Live Links
 
-- GitHub Repository: https://github.com/tanishq-2004/Document-QA-System
+- GitHub Repository: https://github.com/tanishq-2004/Document-QA-System-v2
 - Hugging Face Demo: https://huggingface.co/spaces/Skywalker67/Document-QA-System
 
 ---
@@ -64,7 +64,10 @@ original repository.
   hash is computed from the upload bytes before the file is written,
   and re-uploading an edited file removes its old chunks (index
   rebuilt from the remaining files) before the new ones are added.
-  The fast cache-hit path (~3 ms measured) is unchanged.
+  The fast cache-hit path is unchanged: **8.9 ms** measured on the
+  7-doc eval corpus after the manifest fix, and **1.7–2.0 ms** at
+  500 docs — about 98% faster than the ~124 ms median fresh index
+  per doc.
 - **Hybrid search (`retrieval.py`):** pure-Python BM25 (no new
   dependency) over chunk text, rebuilt from the chunk registry on
   every upload / reset / startup. Retrieval is dense FAISS top-10 +
@@ -335,10 +338,11 @@ publicly without auth in front of it.
 | `LLM_MODEL` / `LLM_TEMPERATURE` / `LLM_MAX_TOKENS` | `openai/gpt-oss-20b` / `0.3` / `300` | Groq generation settings |
 | `HYBRID_SEARCH` | `true` | Hybrid (BM25 + FAISS) retrieval by default; `false` = dense-only. Per-query `"retrieval"` field overrides it |
 
-> Note: the Performance table further down still shows the original
-> claimed numbers (sub-second retrieval, 20+ documents). They are
-> unmeasured claims, not results — run the eval above and replace
-> them with the numbers from `eval/results.json`.
+> The Performance table further down now shows measured numbers
+> from real runs (see "Running the eval" and the public-document
+> scale test above). The original claimed numbers (sub-second
+> retrieval, 20+ documents) were unmeasured claims, not results,
+> and have been removed — do not quote them.
 
 ---
 
@@ -443,9 +447,9 @@ Document-QA-System/
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/tanishq-2004/Document-QA-System.git
+git clone https://github.com/tanishq-2004/Document-QA-System-v2.git
 
-cd Document-QA-System
+cd Document-QA-System-v2
 ```
 
 ---
@@ -542,14 +546,32 @@ docker run -p 7860:7860 -p 8000:8000 document-qa
 
 # 📊 Performance
 
-| Metric | Value |
-|---|---|
-| Semantic Retrieval | < 100ms |
-| Cross-Encoder Reranking | ~100–300ms |
-| End-to-End Query | ~1–2s |
-| Indexed Documents | 20+ |
-| Chunking Strategy | 500 chars / 50 overlap |
-| Vector Persistence | Enabled |
+Every number below is measured, from a real run — see "Running the
+eval" and the public-document scale test above for the method and
+the raw result files. The original claimed numbers (retrieval
+< 100 ms, reranking ~100–300 ms, end-to-end ~1–2 s, "20+
+documents") had no measurement behind them and have been removed.
+
+| Metric | Measured value | How measured |
+|---|---|---|
+| FAISS retrieval | ~12–14 ms median | 100–500 doc SQuAD runs; flat vs corpus size |
+| BM25 retrieval | 0.3 ms (7 docs) – 9.9 ms (500 docs) median | 7-doc eval and SQuAD runs |
+| Cross-encoder reranking | ~470–597 ms median | 7-doc eval and SQuAD runs; dominates retrieval |
+| Retrieval-only total | 609.5 ms median / 753.9 ms p95 | 7-doc eval recheck, 27 Nov 2026 |
+| End-to-end with Groq generation | 3859.6 ms median | 100 docs / 400 chunks, Groq `openai/gpt-oss-20b` |
+| Scale tested | 500 docs / 1109 chunks | Hit@3 1.0 hybrid+rerank vs 0.90 dense-only |
+| Answer correctness (token-F1) | 0.594 (100 docs) / 0.489 (200 docs) | SQuAD reference answers, free, no LLM judge |
+| Chunking strategy | 500 chars / 50 overlap | Fixed config |
+| Vector persistence | Enabled | FAISS index + manifest on disk |
+
+**Do not quote a sub-2-second end-to-end time.** Generation
+latency is unstable — it is Groq-side variance, not this code:
+the same eval run twice gave generation medians of 0.79 s and
+3.71 s. Quote only the measured medians above, with their context.
+The 500-doc run's answer numbers are also not quotable: its
+generations failed with HTTP 429 when Groq's 200k tokens/day free
+limit was hit (see the contamination warning in the scale-test
+section above).
 
 ---
 
@@ -669,53 +691,56 @@ Pinecone. The reason is scale, measured, not assumed:
 
 # ☁️ Deployment
 
-This project is fully deployable on:
+Live demo: https://huggingface.co/spaces/Skywalker67/Document-QA-System
+(Docker SDK, cpu-basic, Streamlit on 7860, uvicorn internal on 8000).
+The same Docker image runs anywhere Docker runs; the only verified
+deployment is the Hugging Face Space below.
 
-- Hugging Face Spaces
-- Render
-- Railway
-- Docker-compatible cloud platforms
+## What actually happened — the original Space was updated in place
 
-Recommended deployment:
-- Hugging Face Spaces (Docker SDK)
+On 27 Nov 2026 the **existing** Space was edited in place, not
+replaced: all 10 code files were committed together as Space commit
+`8be76ce` ("Upload 10 files"). Replaced: `app.py`, `streamlit.py`,
+`Dockerfile`, `requirements.txt`, `.dockerignore`. Added:
+`guardrails.py`, `manifest.py`, `retrieval.py`, `text_utils.py`,
+`.env.example`. The Space `README.md`, `.gitattributes` and
+`.gitignore` were left untouched. The Space rebuilt in ~3 minutes
+and came back RUNNING.
 
----
+- **Port fix:** the edited `Dockerfile` first served Streamlit on
+  8501, but HF Docker Spaces route external traffic to port 7860
+  by default. The fix is Streamlit `--server.port 7860`; uvicorn
+  stays internal on 8000.
+- **Groq key as a Space secret:** `GROQ_API_KEY` is set as a
+  Repository secret on the Space, so generation works for every
+  visitor with no key needed on their side. Live generation was
+  verified 27 Nov 2026, 18:52 IST: "What is the capital of
+  France?" answered **"Paris"** with real generation (Retrieval
+  20.2 ms, Reranking 39.3 ms, Generation 1268.1 ms, Total
+  1327.7 ms), and "What is the secret code?" was refused with
+  "not present in the documents". The test document
+  (`live-test-doc.txt`, 1 chunk) is still indexed in the Space;
+  remove it with the sidebar "Clear Vector Store" button.
+  **Sidebar key precedence:** a Groq key entered in the Space
+  sidebar overrides the Space secret for that session, and that
+  visitor's generations run on their key and their daily limit.
+  An empty sidebar falls back to the secret.
+- **Do not create a new Space.** Creating a new Docker/Gradio
+  Space on cpu-basic is PRO-gated (HTTP 402) on a free account,
+  so the existing Space can only be edited in place — and must
+  never be deleted. The working route for editing it was uploading
+  the files in place through the signed-in browser: the saved
+  Hugging Face API token was rejected with 401 "Invalid user
+  token", so an API push was never possible and remains untested.
 
-# 🚀 Deploy on Hugging Face Spaces
+## Updating the Space later
 
-## 1. Create a New Space
-
-Go to:
-
-```text
-https://huggingface.co/new-space
-```
-
-Choose:
-
-- SDK → Docker
-- Visibility → Public
-- Hardware → CPU Basic
-
----
-
-## 2. Add Space Remote
-
-```bash
-git remote add space https://huggingface.co/spaces/Skywalker67/Document-QA-System
-```
-
----
-
-## 3. Push Code
-
-```bash
-git add .
-
-git commit -m "Deploy RAG system"
-
-git push space main
-```
+Edit the files in this repo, commit and push here, then upload the
+changed code files to the existing Space in place (same browser
+route as above). Do not touch the Space `README.md`,
+`.gitattributes` or `.gitignore` unless you mean to, and remember
+a Space restart clears the in-memory index — re-upload any
+documents you want indexed afterwards.
 
 ---
 
