@@ -14,6 +14,8 @@ from sentence_transformers import CrossEncoder
 from text_utils import extract_text, split_text
 
 import answer_cache
+import citations
+import conversation
 import guardrails
 import manifest as cache_manifest
 import retrieval
@@ -256,6 +258,38 @@ def generate_answer(
         )
 
 
+def rewrite_followup_question(history, question, groq_api_key):
+    """Rewrite a follow-up question as a standalone question.
+
+    Uses the same Groq model as generation (no second model or
+    service). Returns the rewritten question, or None when the
+    rewrite should not be used (no key, empty result, error, or the
+    model returned the question unchanged) — the caller then falls
+    back to the original question.
+    """
+    if not groq_api_key:
+        return None
+    try:
+        client = OpenAI(
+            api_key=groq_api_key,
+            base_url="https://api.groq.com/openai/v1",
+            timeout=GROQ_TIMEOUT_S,
+        )
+        response = client.chat.completions.create(
+            model=LLM_MODEL,
+            messages=conversation.build_rewrite_messages(history, question),
+            max_tokens=100,
+            temperature=0.0,
+        )
+        rewritten = response.choices[0].message.content.strip()
+        if not rewritten or rewritten == question:
+            return None
+        return rewritten
+    except Exception as e:
+        logger.warning("follow-up rewrite failed: %s", e)
+        return None
+
+
 @app.get("/")
 def home():
 
@@ -465,6 +499,24 @@ def query_documents(data: dict):
             "No documents indexed"
         }
 
+    # Multi-turn follow-ups: if the caller sent conversation history
+    # and the question looks like a follow-up ("What year was that?"),
+    # rewrite it as a standalone question before retrieval, so it can
+    # be answered without the history. A standalone question is never
+    # rewritten; a failed rewrite falls back to the original.
+    asked_question = question
+    standalone_question = None
+    history = conversation.truncate_history(data.get("history") or [])
+    if (
+        history
+        and conversation.looks_like_followup(question)
+        and groq_api_key
+    ):
+        rewritten = rewrite_followup_question(history, question, groq_api_key)
+        if rewritten:
+            standalone_question = rewritten
+            question = rewritten
+
     # Answer cache: a repeated question (same text, rerank flag and
     # retrieval method) against an unchanged index gets the stored
     # answer with no retrieval, rerank or LLM call, so no Groq tokens
@@ -476,11 +528,15 @@ def query_documents(data: dict):
     if cached is not None:
         return {
 
-            "question": question,
+            "question": asked_question,
+
+            "standalone_question": cached.get("standalone_question"),
 
             "answer": cached["answer"],
 
             "sources": cached["sources"],
+
+            "citations": cached.get("citations", []),
 
             "metrics": {
 
@@ -670,13 +726,28 @@ def query_documents(data: dict):
             )
         })
 
+    # Inline citations: match each answer sentence to the chunk it
+    # actually shares words with. Refusals and flagged answers are
+    # never cited — a refusal has nothing to cite. Retrieval-only
+    # answers are not cited either: they are a raw context dump plus
+    # app-generated boilerplate, and the boilerplate shares words
+    # ("Groq API key") with the rogue test document, which once
+    # earned it a false citation.
+    citations_list = []
+    if not refused and not injection_flagged and groq_api_key:
+        answer, citations_list = citations.assign_citations(answer, sources)
+
     response = {
 
-        "question": question,
+        "question": asked_question,
+
+        "standalone_question": standalone_question,
 
         "answer": answer,
 
         "sources": sources,
+
+        "citations": citations_list,
 
         "metrics": {
 
@@ -754,6 +825,8 @@ def query_documents(data: dict):
             "rerank_fallback": bool(rerank_fallback),
             "stage1_candidates": len(candidates),
             "final_sources": len(top_docs),
+            "citations": citations_list,
+            "standalone_question": standalone_question,
         })
 
     return response

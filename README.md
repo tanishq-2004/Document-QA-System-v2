@@ -76,6 +76,24 @@ original repository.
   anyway); the cache is cleared whenever the index changes (upload
   of new/edited content, reset). Capped at 200 entries (FIFO),
   configurable with `ANSWER_CACHE_MAX_ENTRIES` (`0` disables it).
+- **Inline citations (`citations.py`):** every sentence of a
+  generated answer is matched against the retrieved chunks by
+  content-word overlap (≥0.30 overlap and ≥3 shared words) and the
+  matching chunk is cited inline, e.g. `Fryatt's revenue was
+  $630,000. [FR_part1.pdf #891]`. A sentence with no strong match
+  gets no marker — an uncited claim is honest, a guessed citation
+  is not. Deterministic, no extra LLM call; the response also
+  carries a `citations` list. Retrieval-only answers are not cited
+  (their boilerplate once earned a false citation from the rogue
+  test document).
+- **Multi-turn follow-ups (`conversation.py`):** the frontend keeps
+  the chat history and sends the last 3 turns with each question.
+  When a question looks like a follow-up ("What year was that?"),
+  the backend rewrites it as a standalone question with the same
+  Groq model (no second model or service; ~100 tokens) before
+  retrieval, and the response reports it as `standalone_question`
+  so the UI can show what it was understood as. A failed rewrite
+  or a missing API key falls back to the original question.
 - **Hybrid search (`retrieval.py`):** pure-Python BM25 (no new
   dependency) over chunk text, rebuilt from the chunk registry on
   every upload / reset / startup. Retrieval is dense FAISS top-10 +
@@ -125,8 +143,11 @@ original repository.
   and the rerank fallback (stub reranker), `tests/test_cache.py`
   covers the manifest cache-hit / stale-file logic, and
   `tests/test_answer_cache.py` covers question normalisation,
-  cache keys, FIFO eviction and the disable switch — all without
-  loading any ML model. 75 tests in total.
+  cache keys, FIFO eviction and the disable switch,
+  `tests/test_citations.py` covers sentence-to-chunk matching and
+  the no-guessed-citation rule, and `tests/test_conversation.py`
+  covers history truncation, the follow-up detector and the rewrite
+  prompt — all without loading any ML model. 96 tests in total.
 - **LLM settings configurable:** `LLM_MODEL`,
   `LLM_TEMPERATURE`, `LLM_MAX_TOKENS` via env vars (defaults
   `openai/gpt-oss-20b`, `0.3`, `500`).
@@ -429,6 +450,9 @@ Document-QA-System/
 ├── text_utils.py
 ├── retrieval.py           # BM25 + RRF fusion + rerank fallback + diversity
 ├── manifest.py            # manifest-based cache (hash / chunks / indexed_at)
+├── answer_cache.py        # repeated-question answers (no Groq re-call)
+├── citations.py           # deterministic inline citations
+├── conversation.py        # follow-up detection + rewrite prompt
 ├── guardrails.py
 ├── .env.example
 ├── requirements.txt
@@ -444,7 +468,10 @@ Document-QA-System/
 │   ├── test_smoke.py
 │   ├── test_guardrails.py
 │   ├── test_hybrid.py
-│   └── test_cache.py
+│   ├── test_cache.py
+│   ├── test_answer_cache.py
+│   ├── test_citations.py
+│   └── test_conversation.py
 │
 ├── uploaded_docs/
 ├── vector_store/

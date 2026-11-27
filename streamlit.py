@@ -206,6 +206,38 @@ if uploaded_file and st.sidebar.button(
         )
 
 # ====================================
+# CHAT HISTORY (multi-turn follow-ups)
+# ====================================
+# Kept in session state only; the backend gets the last 3 turns with
+# each question so follow-ups ("What year was that?") can be
+# rewritten as standalone questions. Clearing this never touches the
+# index.
+
+if "chat_history" not in st.session_state:
+
+    st.session_state.chat_history = []
+
+if st.sidebar.button(
+    "Clear chat history"
+):
+
+    st.session_state.chat_history = []
+
+    st.sidebar.success(
+        "Chat history cleared."
+    )
+
+for turn in st.session_state.chat_history:
+
+    st.chat_message("user").write(
+        turn["question"]
+    )
+
+    st.chat_message("assistant").write(
+        turn["answer"]
+    )
+
+# ====================================
 # CHAT INPUT
 # ====================================
 
@@ -232,6 +264,10 @@ if question:
                 json={
 
                     "question": question,
+
+                    # Last 3 turns so the backend can rewrite
+                    # follow-up questions as standalone ones.
+                    "history": st.session_state.chat_history[-3:],
 
                     # New field; the old name is also sent so older
                     # backends keep working.
@@ -266,6 +302,24 @@ if question:
 
                     data["answer"]
                 )
+
+                # Show what a follow-up was understood as, when the
+                # backend rewrote it.
+                if data.get("standalone_question"):
+
+                    st.caption(
+
+                        f"Interpreted as: "
+                        f"{data['standalone_question']}"
+                    )
+
+                # Remember this turn for follow-ups.
+                st.session_state.chat_history.append({
+
+                    "question": question,
+
+                    "answer": data["answer"]
+                })
 
                 # ====================================
                 # METRICS
