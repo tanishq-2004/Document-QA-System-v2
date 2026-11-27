@@ -119,8 +119,9 @@ original repository.
   `openai/gpt-oss-20b`, `0.3`, `300`).
 - **Code split:** pure text helpers moved from `app.py` to
   `text_utils.py` so they can be tested without model loads.
-- Unchanged on purpose: Dockerfile ports (8501 / 8000) and every
-  `requirements.txt` version, so the live Space keeps working.
+- Dockerfile ports are now 7860 (Streamlit, required by HF Docker
+  Spaces) / 8000 (uvicorn, internal only); `requirements.txt`
+  versions are unchanged on purpose, so the live Space keeps working.
 
 ## Running the eval
 
@@ -498,7 +499,7 @@ streamlit run streamlit.py
 Frontend:
 
 ```text
-http://localhost:8501
+http://localhost:7860
 ```
 
 Backend Docs:
@@ -522,7 +523,7 @@ docker build -t document-qa .
 ## Run Docker Container
 
 ```bash
-docker run -p 8501:8501 -p 8000:8000 document-qa
+docker run -p 7860:7860 -p 8000:8000 document-qa
 ```
 
 ---
