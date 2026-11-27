@@ -101,9 +101,14 @@ def chunk_ids_for_answer(file_text: str, filename: str, answer: str):
     return ids, len(chunks)
 
 
-def build_size(contexts, size, n_questions, out_root: Path):
+def build_size(contexts, size, n_questions, out_root: Path,
+               min_bytes: int = 0):
     corpus_dir = out_root / f"corpus_{size}"
     corpus_dir.mkdir(parents=True, exist_ok=True)
+    if min_bytes:
+        contexts = [c for c in contexts
+                    if len((c["title"] + "\n\n" + c["context"])
+                           .encode("utf-8")) >= min_bytes]
     subset = contexts[:size]
 
     # Write one .txt per context: title line + context.
@@ -161,8 +166,10 @@ def build_size(contexts, size, n_questions, out_root: Path):
             "source": SQUAD_URL,
             "licence": LICENCE,
             "corpus_size": size,
-            "method": "SQuAD v1.1 dev contexts as .txt docs (title + context); "
-                      "one sampled question per context, answer span verified "
+            "method": "SQuAD v1.1 dev contexts as .txt docs (title + context)"
+                      + (f"; only contexts whose .txt is >= {min_bytes} bytes"
+                         if min_bytes else "")
+                      + "; one sampled question per context, answer span verified "
                       "to sit in the app-splitter chunks of that file; "
                       "4 refusal questions about Aurora Solar, absent from SQuAD.",
             "questions": questions,
@@ -180,6 +187,10 @@ def main():
                         help="Existing dev-v1.1.json (default: download it)")
     parser.add_argument("--sizes", type=int, nargs="+", default=[100, 200, 500])
     parser.add_argument("--questions-per-size", type=int, default=20)
+    parser.add_argument("--min-bytes", type=int, default=0,
+                        help="Only keep contexts whose .txt file is at "
+                             "least this many bytes (e.g. 1000 for the "
+                             "bigger-documents scale test)")
     args = parser.parse_args()
 
     out_root = Path(args.out_dir)
@@ -194,13 +205,21 @@ def main():
     print(f"SQuAD v{version}: {len(contexts)} unique contexts "
           f"(dev file SHA-256 {squad_sha[:16]}...)")
 
+    if args.min_bytes:
+        kept = [c for c in contexts
+                if len((c["title"] + "\n\n" + c["context"])
+                       .encode("utf-8")) >= args.min_bytes]
+        print(f"min-bytes filter {args.min_bytes}: {len(kept)} of "
+              f"{len(contexts)} contexts qualify")
+        contexts = kept
+
     summary = {}
     for size in args.sizes:
         if size > len(contexts):
             print(f"Skipping size {size}: only {len(contexts)} unique contexts")
             continue
         n_docs, n_q = build_size(contexts, size, args.questions_per_size,
-                                 out_root)
+                                 out_root, args.min_bytes)
         summary[size] = {"docs": n_docs, "questions": n_q}
 
     note = {
@@ -210,6 +229,7 @@ def main():
         "version": version,
         "dev_file_sha256": squad_sha,
         "unique_contexts_available": len(contexts),
+        "min_bytes": args.min_bytes,
         "seed": SEED,
         "sizes_built": summary,
         "note": "Corpus .txt files are NOT committed to git. Re-run this "

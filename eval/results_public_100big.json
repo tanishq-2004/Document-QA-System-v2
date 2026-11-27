@@ -1,0 +1,1298 @@
+{
+  "corpus": {
+    "docs": 100,
+    "doc_files": [
+      "squad-0001.txt",
+      "squad-0002.txt",
+      "squad-0003.txt",
+      "squad-0004.txt",
+      "squad-0005.txt",
+      "squad-0006.txt",
+      "squad-0007.txt",
+      "squad-0008.txt",
+      "squad-0009.txt",
+      "squad-0010.txt",
+      "squad-0011.txt",
+      "squad-0012.txt",
+      "squad-0013.txt",
+      "squad-0014.txt",
+      "squad-0015.txt",
+      "squad-0016.txt",
+      "squad-0017.txt",
+      "squad-0018.txt",
+      "squad-0019.txt",
+      "squad-0020.txt",
+      "squad-0021.txt",
+      "squad-0022.txt",
+      "squad-0023.txt",
+      "squad-0024.txt",
+      "squad-0025.txt",
+      "squad-0026.txt",
+      "squad-0027.txt",
+      "squad-0028.txt",
+      "squad-0029.txt",
+      "squad-0030.txt",
+      "squad-0031.txt",
+      "squad-0032.txt",
+      "squad-0033.txt",
+      "squad-0034.txt",
+      "squad-0035.txt",
+      "squad-0036.txt",
+      "squad-0037.txt",
+      "squad-0038.txt",
+      "squad-0039.txt",
+      "squad-0040.txt",
+      "squad-0041.txt",
+      "squad-0042.txt",
+      "squad-0043.txt",
+      "squad-0044.txt",
+      "squad-0045.txt",
+      "squad-0046.txt",
+      "squad-0047.txt",
+      "squad-0048.txt",
+      "squad-0049.txt",
+      "squad-0050.txt",
+      "squad-0051.txt",
+      "squad-0052.txt",
+      "squad-0053.txt",
+      "squad-0054.txt",
+      "squad-0055.txt",
+      "squad-0056.txt",
+      "squad-0057.txt",
+      "squad-0058.txt",
+      "squad-0059.txt",
+      "squad-0060.txt",
+      "squad-0061.txt",
+      "squad-0062.txt",
+      "squad-0063.txt",
+      "squad-0064.txt",
+      "squad-0065.txt",
+      "squad-0066.txt",
+      "squad-0067.txt",
+      "squad-0068.txt",
+      "squad-0069.txt",
+      "squad-0070.txt",
+      "squad-0071.txt",
+      "squad-0072.txt",
+      "squad-0073.txt",
+      "squad-0074.txt",
+      "squad-0075.txt",
+      "squad-0076.txt",
+      "squad-0077.txt",
+      "squad-0078.txt",
+      "squad-0079.txt",
+      "squad-0080.txt",
+      "squad-0081.txt",
+      "squad-0082.txt",
+      "squad-0083.txt",
+      "squad-0084.txt",
+      "squad-0085.txt",
+      "squad-0086.txt",
+      "squad-0087.txt",
+      "squad-0088.txt",
+      "squad-0089.txt",
+      "squad-0090.txt",
+      "squad-0091.txt",
+      "squad-0092.txt",
+      "squad-0093.txt",
+      "squad-0094.txt",
+      "squad-0095.txt",
+      "squad-0096.txt",
+      "squad-0097.txt",
+      "squad-0098.txt",
+      "squad-0099.txt",
+      "squad-0100.txt"
+    ],
+    "total_chunks": 336,
+    "total_index_ms": 32326.5,
+    "per_file_index_ms": {
+      "squad-0001.txt": 955.0,
+      "squad-0002.txt": 491.7,
+      "squad-0003.txt": 404.2,
+      "squad-0004.txt": 398.9,
+      "squad-0005.txt": 484.3,
+      "squad-0006.txt": 489.0,
+      "squad-0007.txt": 515.3,
+      "squad-0008.txt": 213.0,
+      "squad-0009.txt": 270.9,
+      "squad-0010.txt": 231.1,
+      "squad-0011.txt": 281.9,
+      "squad-0012.txt": 285.0,
+      "squad-0013.txt": 206.0,
+      "squad-0014.txt": 208.0,
+      "squad-0015.txt": 218.1,
+      "squad-0016.txt": 267.9,
+      "squad-0017.txt": 718.0,
+      "squad-0018.txt": 291.5,
+      "squad-0019.txt": 315.4,
+      "squad-0020.txt": 298.5,
+      "squad-0021.txt": 209.6,
+      "squad-0022.txt": 387.0,
+      "squad-0023.txt": 206.2,
+      "squad-0024.txt": 372.6,
+      "squad-0025.txt": 225.2,
+      "squad-0026.txt": 284.0,
+      "squad-0027.txt": 220.2,
+      "squad-0028.txt": 270.1,
+      "squad-0029.txt": 213.9,
+      "squad-0030.txt": 212.5,
+      "squad-0031.txt": 274.7,
+      "squad-0032.txt": 131.6,
+      "squad-0033.txt": 298.6,
+      "squad-0034.txt": 201.2,
+      "squad-0035.txt": 367.4,
+      "squad-0036.txt": 214.0,
+      "squad-0037.txt": 202.3,
+      "squad-0038.txt": 387.9,
+      "squad-0039.txt": 218.1,
+      "squad-0040.txt": 209.7,
+      "squad-0041.txt": 884.4,
+      "squad-0042.txt": 305.0,
+      "squad-0043.txt": 216.3,
+      "squad-0044.txt": 269.9,
+      "squad-0045.txt": 208.2,
+      "squad-0046.txt": 299.7,
+      "squad-0047.txt": 494.0,
+      "squad-0048.txt": 217.9,
+      "squad-0049.txt": 208.0,
+      "squad-0050.txt": 282.4,
+      "squad-0051.txt": 493.7,
+      "squad-0052.txt": 218.7,
+      "squad-0053.txt": 277.4,
+      "squad-0054.txt": 192.5,
+      "squad-0055.txt": 313.6,
+      "squad-0056.txt": 324.5,
+      "squad-0057.txt": 284.9,
+      "squad-0058.txt": 595.1,
+      "squad-0059.txt": 304.5,
+      "squad-0060.txt": 402.2,
+      "squad-0061.txt": 274.9,
+      "squad-0062.txt": 223.2,
+      "squad-0063.txt": 211.9,
+      "squad-0064.txt": 374.6,
+      "squad-0065.txt": 305.5,
+      "squad-0066.txt": 287.8,
+      "squad-0067.txt": 509.2,
+      "squad-0068.txt": 222.6,
+      "squad-0069.txt": 265.4,
+      "squad-0070.txt": 219.2,
+      "squad-0071.txt": 294.6,
+      "squad-0072.txt": 419.9,
+      "squad-0073.txt": 394.4,
+      "squad-0074.txt": 274.2,
+      "squad-0075.txt": 209.7,
+      "squad-0076.txt": 215.6,
+      "squad-0077.txt": 487.4,
+      "squad-0078.txt": 312.9,
+      "squad-0079.txt": 378.9,
+      "squad-0080.txt": 207.9,
+      "squad-0081.txt": 219.8,
+      "squad-0082.txt": 278.7,
+      "squad-0083.txt": 399.7,
+      "squad-0084.txt": 289.9,
+      "squad-0085.txt": 136.3,
+      "squad-0086.txt": 763.7,
+      "squad-0087.txt": 239.5,
+      "squad-0088.txt": 301.0,
+      "squad-0089.txt": 283.4,
+      "squad-0090.txt": 307.9,
+      "squad-0091.txt": 407.6,
+      "squad-0092.txt": 297.6,
+      "squad-0093.txt": 278.8,
+      "squad-0094.txt": 205.3,
+      "squad-0095.txt": 617.4,
+      "squad-0096.txt": 391.7,
+      "squad-0097.txt": 497.1,
+      "squad-0098.txt": 304.4,
+      "squad-0099.txt": 280.5,
+      "squad-0100.txt": 291.5
+    }
+  },
+  "questions": 24,
+  "llm_mode": "retrieval-only",
+  "refusal": {
+    "total": 4,
+    "judged": 4,
+    "passed": 4,
+    "accuracy": 1.0,
+    "status": "evaluated",
+    "per_question": [
+      {
+        "id": 901,
+        "question": "How many days of paid annual leave do full-time employees at Aurora Solar receive?",
+        "status": "pass",
+        "detail": "refused with the fixed phrase / low relevance",
+        "refused": true,
+        "injection_flagged": false,
+        "answer_preview": "The answer is not present in the documents."
+      },
+      {
+        "id": 902,
+        "question": "What is Aurora Solar's policy on working from home on Fridays?",
+        "status": "pass",
+        "detail": "refused with the fixed phrase / low relevance",
+        "refused": true,
+        "injection_flagged": false,
+        "answer_preview": "The answer is not present in the documents."
+      },
+      {
+        "id": 903,
+        "question": "How much does Aurora Solar reimburse per day for travel outside Jaipur city limits?",
+        "status": "pass",
+        "detail": "refused with the fixed phrase / low relevance",
+        "refused": true,
+        "injection_flagged": false,
+        "answer_preview": "The answer is not present in the documents."
+      },
+      {
+        "id": 904,
+        "question": "What is the name of Aurora Solar's chief executive officer?",
+        "status": "pass",
+        "detail": "refused with the fixed phrase / low relevance",
+        "refused": true,
+        "injection_flagged": false,
+        "answer_preview": "The answer is not present in the documents."
+      }
+    ]
+  },
+  "injection": {
+    "total": 0,
+    "judged": 0,
+    "passed": 0,
+    "accuracy": null,
+    "status": "no questions of this type in this questions file",
+    "per_question": []
+  },
+  "groundedness": {
+    "context_contains_expected_phrase": 1,
+    "answer_contains_expected_phrase": null,
+    "mean_answer_word_overlap_with_context": null,
+    "note": "Overlap is an approximate heuristic (see guardrails.py), not proof of correctness. Answer-side figures are None in retrieval-only mode. The context check uses the API's source text, truncated to 350 chars, so an expected phrase past char 350 of its chunk counts as a miss even though the chunk was retrieved correctly (see precision@3 / hit@3 for retrieval quality).",
+    "per_question": [
+      {
+        "id": 1,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 2,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 3,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 4,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 5,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 6,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 7,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 8,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 9,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 10,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 11,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 12,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 13,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 14,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 15,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 16,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 17,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 18,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 19,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      },
+      {
+        "id": 20,
+        "context_contains_expected_phrase": true,
+        "answer_contains_expected_phrase": null,
+        "token_f1_vs_reference": null,
+        "answer_word_overlap_with_context": null
+      }
+    ]
+  },
+  "latency_hybrid_reranked_ms": {
+    "median_total": 495.6,
+    "p95_total": 663.9,
+    "median_faiss": 11.4,
+    "p95_faiss": 55.4,
+    "median_bm25": 3.2,
+    "p95_bm25": 3.6,
+    "median_reranking": 480.9,
+    "p95_reranking": 611.3,
+    "median_generation": 0.0
+  },
+  "answer_correctness": {
+    "mean_token_f1_vs_reference": null,
+    "n_scored": 0,
+    "note": "Token-F1 vs the SQuAD reference answer (or expected phrase). A paraphrase of the right fact scores high; a wrong fact scores low. None in retrieval-only mode."
+  },
+  "latency_reranked_ms": {
+    "median_total": 495.6,
+    "median_faiss": 11.4,
+    "median_bm25": 3.2,
+    "median_reranking": 480.9
+  },
+  "precision_at_3": {
+    "dense_only": 0.333,
+    "dense_reranked": 0.35,
+    "hybrid_only": 0.333,
+    "hybrid_reranked": 0.333,
+    "improvement_pp": 0.0,
+    "hybrid_vs_dense_reranked_pp": -1.7,
+    "keyword_questions": {
+      "dense_only": 0.333,
+      "dense_reranked": 0.366,
+      "hybrid_only": 0.333,
+      "hybrid_reranked": 0.333
+    }
+  },
+  "hit_at_3": {
+    "dense_only": 1,
+    "dense_reranked": 1,
+    "hybrid_only": 1,
+    "hybrid_reranked": 1
+  },
+  "per_question": [
+    {
+      "id": 1,
+      "question": "What generally does not allow citizens to sue other citizens?",
+      "source": "squad-0001.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 21.3,
+        "faiss_ms": 21.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.667,
+        "hit_at_3": 1,
+        "total_ms": 663.0,
+        "faiss_ms": 14.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 648.9,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 16.0,
+        "faiss_ms": 11.9,
+        "bm25_ms": 3.8,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 590.9,
+        "faiss_ms": 13.5,
+        "bm25_ms": 3.4,
+        "reranking_ms": 573.9,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 2,
+      "question": "The term Huguenot was originally meant to confer?",
+      "source": "squad-0006.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.3,
+        "faiss_ms": 14.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 573.2,
+        "faiss_ms": 12.7,
+        "bm25_ms": 0.0,
+        "reranking_ms": 560.5,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 17.3,
+        "faiss_ms": 13.9,
+        "bm25_ms": 3.2,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 487.3,
+        "faiss_ms": 9.7,
+        "bm25_ms": 3.2,
+        "reranking_ms": 474.3,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 3,
+      "question": "When was Martin Luther born?",
+      "source": "squad-0011.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 13.2,
+        "faiss_ms": 13.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 486.0,
+        "faiss_ms": 8.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 477.5,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 13.0,
+        "faiss_ms": 9.7,
+        "bm25_ms": 3.1,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 491.2,
+        "faiss_ms": 8.4,
+        "bm25_ms": 2.9,
+        "reranking_ms": 479.9,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 4,
+      "question": "The UMC prohibits the celebration of what type of unions?",
+      "source": "squad-0016.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 10.8,
+        "faiss_ms": 10.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 517.1,
+        "faiss_ms": 10.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 507.0,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 49.1,
+        "faiss_ms": 45.7,
+        "bm25_ms": 3.1,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 518.3,
+        "faiss_ms": 11.1,
+        "bm25_ms": 3.0,
+        "reranking_ms": 504.1,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 5,
+      "question": "What astronomer worked for Kublai?",
+      "source": "squad-0021.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 13.5,
+        "faiss_ms": 13.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 485.6,
+        "faiss_ms": 10.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 475.4,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.1,
+        "faiss_ms": 10.7,
+        "bm25_ms": 3.1,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 560.5,
+        "faiss_ms": 55.4,
+        "bm25_ms": 3.0,
+        "reranking_ms": 502.1,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 6,
+      "question": "Who did the Mongols bring to China as administrators?",
+      "source": "squad-0026.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 16.7,
+        "faiss_ms": 16.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 563.4,
+        "faiss_ms": 17.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 546.0,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 21.0,
+        "faiss_ms": 17.2,
+        "bm25_ms": 3.5,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 406.9,
+        "faiss_ms": 12.7,
+        "bm25_ms": 3.1,
+        "reranking_ms": 391.1,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 7,
+      "question": "Who has performed all the Doctor Who music since the 2005 Christmas special?",
+      "source": "squad-0031.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 11.5,
+        "faiss_ms": 11.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 470.2,
+        "faiss_ms": 47.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 422.8,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 15.7,
+        "faiss_ms": 12.0,
+        "bm25_ms": 3.4,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 478.8,
+        "faiss_ms": 10.6,
+        "bm25_ms": 3.3,
+        "reranking_ms": 464.8,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 8,
+      "question": "What is generally considered to be the most basic iteration of a Turing machine?",
+      "source": "squad-0036.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 12.5,
+        "faiss_ms": 12.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 469.0,
+        "faiss_ms": 12.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 456.9,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 15.1,
+        "faiss_ms": 11.5,
+        "bm25_ms": 3.4,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 507.7,
+        "faiss_ms": 11.7,
+        "bm25_ms": 3.2,
+        "reranking_ms": 492.7,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 9,
+      "question": "What do all member states agree takes precedence over national law?",
+      "source": "squad-0041.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.0,
+        "faiss_ms": 13.8,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 470.9,
+        "faiss_ms": 43.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 427.6,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 16.0,
+        "faiss_ms": 12.3,
+        "bm25_ms": 3.5,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 493.7,
+        "faiss_ms": 11.2,
+        "bm25_ms": 3.5,
+        "reranking_ms": 479.0,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 10,
+      "question": "Which khanates had converted to Islam?",
+      "source": "squad-0046.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 10.2,
+        "faiss_ms": 10.0,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 467.6,
+        "faiss_ms": 44.3,
+        "bm25_ms": 0.0,
+        "reranking_ms": 423.3,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 13.1,
+        "faiss_ms": 9.8,
+        "bm25_ms": 3.1,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 501.6,
+        "faiss_ms": 10.0,
+        "bm25_ms": 3.1,
+        "reranking_ms": 488.5,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 11,
+      "question": "How are the particle forces and accelerations explained as by gauge bosons exchange?",
+      "source": "squad-0051.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.3,
+        "faiss_ms": 14.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 474.4,
+        "faiss_ms": 47.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 427.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 18.4,
+        "faiss_ms": 15.0,
+        "bm25_ms": 3.2,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 663.9,
+        "faiss_ms": 49.4,
+        "bm25_ms": 3.2,
+        "reranking_ms": 611.3,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 12,
+      "question": "What is the term for a mathematical model that theoretically represents a general computing machine?",
+      "source": "squad-0056.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.1,
+        "faiss_ms": 13.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 489.8,
+        "faiss_ms": 13.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 476.4,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.9,
+        "faiss_ms": 11.4,
+        "bm25_ms": 3.4,
+        "reranking_ms": 0.1,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 477.5,
+        "faiss_ms": 11.0,
+        "bm25_ms": 3.3,
+        "reranking_ms": 463.1,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 13,
+      "question": "What did the Industrial Revolution cause to happen to Newcastle?",
+      "source": "squad-0061.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 10.8,
+        "faiss_ms": 10.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 485.9,
+        "faiss_ms": 10.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 475.7,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.3,
+        "faiss_ms": 10.8,
+        "bm25_ms": 3.3,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 456.5,
+        "faiss_ms": 10.5,
+        "bm25_ms": 3.2,
+        "reranking_ms": 442.7,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 14,
+      "question": "What was Luther's major work of 60,000 words on the Jews?",
+      "source": "squad-0066.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 20.7,
+        "faiss_ms": 20.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 592.1,
+        "faiss_ms": 12.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 579.1,
+        "generation_ms": 0.1
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.9,
+        "faiss_ms": 11.4,
+        "bm25_ms": 3.3,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 561.7,
+        "faiss_ms": 14.2,
+        "bm25_ms": 3.5,
+        "reranking_ms": 543.9,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 15,
+      "question": "When did building activity in the palaces and churches take place in the later decades of?",
+      "source": "squad-0071.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 12.1,
+        "faiss_ms": 11.9,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 503.2,
+        "faiss_ms": 10.7,
+        "bm25_ms": 0.0,
+        "reranking_ms": 492.5,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 16.6,
+        "faiss_ms": 12.9,
+        "bm25_ms": 3.4,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 497.5,
+        "faiss_ms": 12.2,
+        "bm25_ms": 3.6,
+        "reranking_ms": 481.8,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 16,
+      "question": "What is the primary goal of pleading not guilty when arrested for Civil Disobedience?",
+      "source": "squad-0076.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 427.0,
+        "faiss_ms": 426.5,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.4,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 655.7,
+        "faiss_ms": 15.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 640.1,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 17.1,
+        "faiss_ms": 13.4,
+        "bm25_ms": 3.4,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 602.7,
+        "faiss_ms": 12.1,
+        "bm25_ms": 3.3,
+        "reranking_ms": 587.1,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 17,
+      "question": "Who ranked Warsaw as the 32nd most liveable city in the world?",
+      "source": "squad-0081.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 15.9,
+        "faiss_ms": 15.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 660.2,
+        "faiss_ms": 19.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 640.5,
+        "generation_ms": 0.1
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.7,
+        "faiss_ms": 11.2,
+        "bm25_ms": 3.3,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 492.5,
+        "faiss_ms": 11.3,
+        "bm25_ms": 3.3,
+        "reranking_ms": 477.9,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 18,
+      "question": "WHat do x.25 and Frame Relay both require",
+      "source": "squad-0086.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 14.6,
+        "faiss_ms": 14.4,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 593.9,
+        "faiss_ms": 11.7,
+        "bm25_ms": 0.0,
+        "reranking_ms": 582.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 22.5,
+        "faiss_ms": 17.8,
+        "bm25_ms": 4.4,
+        "reranking_ms": 0.3,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 580.5,
+        "faiss_ms": 11.5,
+        "bm25_ms": 3.2,
+        "reranking_ms": 565.7,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 19,
+      "question": "What effect does trade with poorer countries have on the workers in richer countries?",
+      "source": "squad-0091.txt",
+      "keyword": false,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 26.4,
+        "faiss_ms": 26.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 466.7,
+        "faiss_ms": 39.2,
+        "bm25_ms": 0.0,
+        "reranking_ms": 427.4,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 26.6,
+        "faiss_ms": 22.1,
+        "bm25_ms": 4.2,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 408.9,
+        "faiss_ms": 12.9,
+        "bm25_ms": 3.3,
+        "reranking_ms": 392.6,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "id": 20,
+      "question": "During what time period did income inequality decrease in the United States?",
+      "source": "squad-0096.txt",
+      "keyword": true,
+      "dense_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 21.4,
+        "faiss_ms": 21.1,
+        "bm25_ms": 0.0,
+        "reranking_ms": 0.3,
+        "generation_ms": 0.0
+      },
+      "dense_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 467.4,
+        "faiss_ms": 13.6,
+        "bm25_ms": 0.0,
+        "reranking_ms": 453.8,
+        "generation_ms": 0.0
+      },
+      "hybrid_only": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 15.5,
+        "faiss_ms": 11.7,
+        "bm25_ms": 3.6,
+        "reranking_ms": 0.2,
+        "generation_ms": 0.0
+      },
+      "hybrid_reranked": {
+        "precision_at_3": 0.333,
+        "hit_at_3": 1,
+        "total_ms": 423.0,
+        "faiss_ms": 10.7,
+        "bm25_ms": 3.4,
+        "reranking_ms": 408.8,
+        "generation_ms": 0.0
+      }
+    }
+  ]
+}
