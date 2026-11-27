@@ -87,6 +87,34 @@ class TestAssignCitations(unittest.TestCase):
         self.assertEqual(cited, answer)
         self.assertEqual(citations, [])
 
+    def test_bare_number_answer_gets_cited(self):
+        # Regression test (live demo, 27 Nov 2026): the model answered
+        # just "630,000" and got NO citation, because the old
+        # min-shared floor of 3 could never be met by 2 tokens.
+        cited, citations = assign_citations("630,000", [CHUNK_891])
+        self.assertIn("[FR_part1.pdf #891]", cited)
+        self.assertEqual(
+            citations, [{"source_file": "FR_part1.pdf", "chunk_id": 891}]
+        )
+
+    def test_bare_number_with_period_gets_cited(self):
+        cited, citations = assign_citations("630,000.", [CHUNK_891])
+        self.assertIn("[FR_part1.pdf #891]", cited)
+
+    def test_two_word_sentence_needs_both_words(self):
+        # "Revenue rose." shares only "revenue" with the chunk, so it
+        # must not be cited — a short sentence must match ALL its
+        # content words, not just one.
+        answer = "Revenue rose."
+        chunk = {
+            "source_file": "doc.txt",
+            "chunk_id": 0,
+            "content": "The documents describe revenue and sales.",
+        }
+        cited, citations = assign_citations(answer, [chunk])
+        self.assertEqual(cited, answer)
+        self.assertEqual(citations, [])
+
     def test_mixed_answer_only_matching_sentences_cited(self):
         answer = (
             "Fryatt's revenue was $630,000. "

@@ -82,10 +82,12 @@ original repository.
   matching chunk is cited inline, e.g. `Fryatt's revenue was
   $630,000. [FR_part1.pdf #891]`. A sentence with no strong match
   gets no marker — an uncited claim is honest, a guessed citation
-  is not. Deterministic, no extra LLM call; the response also
-  carries a `citations` list. Retrieval-only answers are not cited
-  (their boilerplate once earned a false citation from the rogue
-  test document).
+  is not. A short sentence must match all of its own content words
+  (a bare-number answer like `630,000` is cited when the number
+  matches a chunk exactly). Deterministic, no extra LLM call; the
+  response also carries a `citations` list. Retrieval-only answers
+  are not cited (their boilerplate once earned a false citation
+  from the rogue test document).
 - **Multi-turn follow-ups (`conversation.py`):** the frontend keeps
   the chat history and sends the last 3 turns with each question.
   When a question looks like a follow-up ("What year was that?"),
@@ -157,7 +159,7 @@ original repository.
   covers history truncation, the follow-up detector and the rewrite
   prompt, and `tests/test_metrics_summary.py` checks every dashboard
   number against its source results file — all without loading any
-  ML model. 101 tests in total.
+  ML model. 104 tests in total.
 - **LLM settings configurable:** `LLM_MODEL`,
   `LLM_TEMPERATURE`, `LLM_MAX_TOKENS` via env vars (defaults
   `openai/gpt-oss-20b`, `0.3`, `500`).

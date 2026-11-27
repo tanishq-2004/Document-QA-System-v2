@@ -22,10 +22,14 @@ import re
 # a chunk (overlap coefficient = shared / shorter side) AND at least
 # this many shared words to earn a citation. The word-count floor
 # stops short generic sentences ("Based on the documents") earning a
-# citation from one shared word. 0.30 was checked against realistic
-# paraphrased answers: "Fryatt's revenue was $630,000." vs its chunk
-# scores ~0.5 with 3 shared words, while an unrelated sentence
-# scores ~0.0.
+# citation from one shared word — but it is capped at the sentence's
+# own token count, so a bare-number answer ("630,000") can still be
+# cited: it has 2 tokens ("630", "000") and must match both. That
+# cap was missing at first, and the live demo answered "630,000"
+# with no citation because 2 shared words < 3. 0.30 was checked
+# against realistic paraphrased answers: "Fryatt's revenue was
+# $630,000." vs its chunk scores ~0.5 with 4 shared words, while an
+# unrelated sentence scores ~0.0.
 MIN_OVERLAP = 0.30
 MIN_SHARED_TOKENS = 3
 
@@ -98,10 +102,13 @@ def assign_citations(
                 best_score = score
                 best = source
                 best_shared = shared
+        # A short sentence cannot share 3 words it does not have:
+        # it must match all of its own content words instead.
+        required_shared = min(min_shared, len(sent_tokens))
         if (
             best is not None
             and best_score >= min_overlap
-            and best_shared >= min_shared
+            and best_shared >= required_shared
         ):
             key = (best.get("source_file"), best.get("chunk_id"))
             cited_sentences.append(
