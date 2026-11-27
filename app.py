@@ -153,7 +153,7 @@ reranker = CrossEncoder(
 # LLM settings are env-configurable; the defaults are the original values.
 LLM_MODEL = os.environ.get("LLM_MODEL", "openai/gpt-oss-20b")
 LLM_TEMPERATURE = float(os.environ.get("LLM_TEMPERATURE", "0.3"))
-LLM_MAX_TOKENS = int(os.environ.get("LLM_MAX_TOKENS", "300"))
+LLM_MAX_TOKENS = int(os.environ.get("LLM_MAX_TOKENS", "500"))
 # Server-side Groq key (e.g. a Hugging Face Space secret). When set, the
 # key does not have to be sent with every /api/query request.
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")

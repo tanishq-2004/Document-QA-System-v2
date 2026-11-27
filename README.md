@@ -119,7 +119,7 @@ original repository.
   loading any ML model. 64 tests in total.
 - **LLM settings configurable:** `LLM_MODEL`,
   `LLM_TEMPERATURE`, `LLM_MAX_TOKENS` via env vars (defaults
-  `openai/gpt-oss-20b`, `0.3`, `300`).
+  `openai/gpt-oss-20b`, `0.3`, `500`).
 - **Code split:** pure text helpers moved from `app.py` to
   `text_utils.py` so they can be tested without model loads.
 - Dockerfile ports are now 7860 (Streamlit, required by HF Docker
@@ -335,7 +335,7 @@ publicly without auth in front of it.
 | `MAX_QUESTION_CHARS` | `1000` | Max question length |
 | `RELEVANCE_MIN_SCORE` | `0.0` | Min cross-encoder score to answer (reranked arm only) |
 | `RATE_LIMIT_PER_MINUTE` | `60` | Max `/api/query` calls per minute per process |
-| `LLM_MODEL` / `LLM_TEMPERATURE` / `LLM_MAX_TOKENS` | `openai/gpt-oss-20b` / `0.3` / `300` | Groq generation settings |
+| `LLM_MODEL` / `LLM_TEMPERATURE` / `LLM_MAX_TOKENS` | `openai/gpt-oss-20b` / `0.3` / `500` | Groq generation settings |
 | `HYBRID_SEARCH` | `true` | Hybrid (BM25 + FAISS) retrieval by default; `false` = dense-only. Per-query `"retrieval"` field overrides it |
 
 > The Performance table further down now shows measured numbers
