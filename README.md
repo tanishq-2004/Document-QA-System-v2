@@ -1,43 +1,129 @@
-# 🔍 Document QA System
+# Document QA System
 
-> Production-grade RAG pipeline for semantic document search, grounded question answering, and intelligent retrieval using FAISS, FastAPI, LangChain, and Groq-hosted LLMs.
+[![Live Demo](https://img.shields.io/badge/%F0%9F%A4%97%20Live%20Demo-Hugging%20Face%20Spaces-blue)](https://huggingface.co/spaces/Skywalker67/Document-QA-System)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)](https://fastapi.tiangolo.com/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Frontend-red)](https://streamlit.io/)
+[![FAISS](https://img.shields.io/badge/FAISS-Vector%20Store-blueviolet)](https://github.com/facebookresearch/faiss)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED)](https://www.docker.com/)
+[![GitHub](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/tanishq-2004/Document-QA-System-v2)
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-Frontend-red?logo=streamlit&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green?logo=fastapi&logoColor=white)
-![FAISS](https://img.shields.io/badge/FAISS-Vector%20Store-blueviolet)
-![LangChain](https://img.shields.io/badge/LangChain-RAG-success)
-![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
+A Retrieval-Augmented Generation (RAG) system that answers questions
+**grounded strictly in your own documents** — upload PDFs, DOCX or text,
+ask in plain language, and get an answer with the exact source chunk cited.
+It does not answer from the model's memory; if the answer is not in the
+documents, it refuses.
 
----
+**Try it live:** https://huggingface.co/spaces/Skywalker67/Document-QA-System
 
-# 📌 Overview
+## Project overview
 
-This project is a **Retrieval-Augmented Generation (RAG)** system that allows users to upload documents and ask natural language questions grounded strictly in document content.
+This project implements a complete RAG pipeline the honest way: documents are
+chunked, embedded and indexed; a question is retrieved with hybrid search
+(dense FAISS + keyword BM25, fused with Reciprocal Rank Fusion), re-ranked
+with a cross-encoder, and answered by a Groq-hosted LLM that is instructed
+to use only the retrieved context. Every stage is timed, every answer
+carries its sources, and the whole pipeline is measured with a real
+evaluation suite — precision@3, Hit@3, refusal accuracy, prompt-injection
+resistance and answer correctness — run against a fixed corpus and against
+public SQuAD documents at 100, 200 and 500 documents.
 
-The system combines:
+To be precise about what this system is:
 
-- ⚡ Hybrid retrieval: **FAISS** (dense) + **BM25** (keyword), fused with Reciprocal Rank Fusion
-- 🎯 Cross-encoder **re-ranking** with fallback and near-duplicate diversity
-- 🧠 LLM answer generation using **Groq-hosted openai/gpt-oss-20b**
-- 📚 Grounded source citations
-- 📊 Real-time latency metrics
-- 💾 Persistent vector index caching
-- 🐳 Dockerized deployment architecture
-- 🚀 Deployed on HuggingFace Spaces
+- **Built here:** the pipeline itself — chunking and indexing, the hybrid
+  retrieval fusion, the re-ranking fallback and diversity logic, the
+  prompt-injection guardrails, the two-level caching, the inline citations,
+  the multi-turn follow-up rewriting, and the evaluation harness.
+- **Library models:** the embedding model (`all-MiniLM-L6-v2`), the
+  cross-encoder re-ranker (`ms-marco-MiniLM-L-6-v2`) and the LLM
+  (`openai/gpt-oss-20b` via Groq) are all pre-trained models loaded by
+  name, not trained here. FAISS and LangChain provide the vector store
+  and the document loading.
 
-The application is designed with a modular backend architecture using **FastAPI**, while the frontend is built using **Streamlit** for an interactive user experience.
+## Why this project exists
 
----
+Most question-answering demos send your question straight to an LLM and
+trust whatever it says. That is how hallucinations ship: the model answers
+confidently from memory, with no way to check it. This project exists to
+build the alternative properly — a system where every answer is traceable
+to a chunk of a document you uploaded, where the system refuses instead of
+guessing, and where the retrieval quality is measured rather than claimed.
+It is a retrieval-engineering project and a deployed demo, not a research
+system (see [This system vs production RAG](#this-system-vs-production-rag)).
 
-# 🔗 Live Links
+## At a glance
 
-- GitHub Repository: https://github.com/tanishq-2004/Document-QA-System-v2
-- Hugging Face Demo: https://huggingface.co/spaces/Skywalker67/Document-QA-System
+| | |
+|---|---|
+| Pipeline | Upload → chunk (500 chars / 50 overlap) → embed → FAISS + BM25 → RRF fuse → cross-encoder rerank → Groq LLM |
+| Embedding model | `all-MiniLM-L6-v2` (384-dim vectors) |
+| Re-ranker | `ms-marco-MiniLM-L-6-v2` (cross-encoder) |
+| LLM | `openai/gpt-oss-20b` via Groq (temp 0.3, max 500 tokens) |
+| Retrieval | Hybrid: FAISS top-10 + BM25 top-10, RRF (k=60) → top-10 → rerank → top 3 |
+| Eval corpus | 7 documents, 21 chunks, 27 questions (19 answerable, 4 refusal, 4 injection) |
+| Retrieval quality | **P@3 0.351, Hit@3 1.0** (7-doc eval, all four arms, two runs) |
+| Scale tested | 500 public documents / 1,109 chunks, Hit@3 1.0 (hybrid+rerank) vs 0.90 (dense-only) |
+| Answer correctness | Token-F1 **0.594** (100 docs) / **0.489** (200 docs), vs SQuAD references |
+| Retrieval latency | FAISS ~12–14 ms, BM25 0.3–9.9 ms, rerank ~470–597 ms (medians) |
+| Caching | Answer cache: repeat question **0.1 ms** (vs ~1,300 ms first ask); document cache: re-upload **~2 ms**, ~98% faster |
+| Tests | **105/105** passing |
+| Deployment | Docker, live on Hugging Face Spaces (cpu-basic) |
 
----
+## How it works
 
-# ✏️ What changed in this edited copy
+```mermaid
+flowchart LR
+    A[Upload PDF / DOCX / TXT] --> B[Chunk<br/>500 chars, 50 overlap]
+    B --> C[Embed<br/>all-MiniLM-L6-v2, 384-dim]
+    C --> D[FAISS index<br/>+ BM25 index]
+    D --> E[Question]
+    E --> F[Hybrid retrieval<br/>FAISS top-10 + BM25 top-10<br/>RRF fuse, k=60]
+    F --> G[Cross-encoder rerank<br/>ms-marco-MiniLM-L-6-v2<br/>top 3]
+    G --> H[Groq LLM<br/>gpt-oss-20b, grounded prompt]
+    H --> I[Answer + inline citations<br/>+ sources + timings]
+```
+
+```mermaid
+flowchart TB
+    subgraph Query["One query — what happens, in order"]
+        direction TB
+        Q["Question (3–1000 chars)"] --> CHK["Answer cache?<br/>repeat question → 0.1 ms, no model call"]
+        CHK --> RET["Hybrid retrieval<br/>FAISS top-10 + BM25 top-10, RRF-fused to top-10"]
+        RET --> RR["Cross-encoder rerank to top 3<br/>near-duplicates dropped, fallback on error"]
+        RR --> THR["Relevance threshold<br/>best score < 0.0 → refuse, no LLM call"]
+        THR --> GEN["Groq generation<br/>grounded prompt, documents as untrusted data"]
+        GEN --> SAN["Post-generation check<br/>known injection payload → refusal"]
+        SAN --> CIT["Inline citations<br/>sentence → chunk by word overlap"]
+    end
+```
+
+## What is built here, what is library code
+
+Built in this repo:
+
+- Chunking, embedding and indexing orchestration (`app.py`, `text_utils.py`)
+- Hybrid retrieval: pure-Python BM25, Reciprocal Rank Fusion, the rerank
+  fallback and the near-duplicate diversity rule (`retrieval.py`)
+- Manifest-based document caching that drops stale chunks when a file is
+  edited (`manifest.py`)
+- The answer cache for repeated questions (`answer_cache.py`)
+- Deterministic inline citations, matched by content-word overlap
+  (`citations.py`)
+- Multi-turn follow-up detection and rewriting (`conversation.py`)
+- Prompt-injection guardrails: the hardened system prompt, the relevance
+  threshold, the post-generation payload check (`guardrails.py`)
+- The evaluation harness: four retrieval arms, refusal and injection
+  cases, groundedness and token-F1 (`eval/eval.py`)
+
+Taken from libraries:
+
+- `sentence-transformers` for the embedding model
+- `sentence-transformers` cross-encoder for the re-ranker
+- Groq's API for the LLM (OpenAI-compatible client)
+- LangChain for document loading, text splitting and the FAISS wrapper
+- FAISS for the vector index, FastAPI for the backend, Streamlit for the UI
+
+## What changed in this edited copy
 
 This copy is an edited version of the original project (same FastAPI +
 Streamlit + Docker stack, same live Space). Nothing was changed in the
@@ -105,8 +191,8 @@ original repository.
   are excluded, with the reason stated, because Groq 429s
   contaminated them). It was removed on 27 Nov 2026 — the same
   static numbers for every visitor made it clutter, not a feature.
-  The measured numbers still live in this README's Performance
-  section and in `metrics_summary.json`, checked by
+  The measured numbers still live in this README's Results section
+  and in `metrics_summary.json`, checked by
   `tests/test_metrics_summary.py`.
 - **Hybrid search (`retrieval.py`):** pure-Python BM25 (no new
   dependency) over chunk text, rebuilt from the chunk registry on
@@ -129,8 +215,8 @@ original repository.
   measurable benefit. Switch only at > 50k chunks, multi-user
   concurrent writes, or cross-service persistence. Retrieval lives
   behind the `retrieval.py` interface, so swapping the store later
-  is a localised change (see "Why FAISS, not a vector DB" below).
-  No vector-DB dependency was added.
+  is a localised change (see "Why FAISS, not a dedicated vector DB"
+  below). No vector-DB dependency was added.
 - **Upload validation:** empty / zero-chunk documents now return a
   clear error instead of crashing in FAISS.
 - **Query validation:** a missing or < 3-character question now
@@ -173,7 +259,216 @@ original repository.
   Spaces) / 8000 (uvicorn, internal only); `requirements.txt`
   versions are unchanged on purpose, so the live Space keeps working.
 
-## Running the eval
+## Retrieval architecture — the mathematics
+
+The pipeline has three retrieval stages and one generation stage. Each
+stage below is the actual code in this repo, with its formula.
+
+### Chunking
+
+Documents are split into overlapping character chunks: **500 characters**
+per chunk, **50 characters** of overlap with the next chunk
+(`text_utils.py`). The overlap exists so a fact that straddles a boundary
+still appears whole in at least one chunk — the eval found one expected
+phrase sitting in two adjacent chunks for exactly this reason. A
+743-page ACCA textbook produces 2,131 chunks this way; a short SQuAD
+paragraph produces about 2.
+
+### Dense retrieval: embeddings and L2 distance
+
+Each chunk is embedded with `all-MiniLM-L6-v2` into a **384-dimensional**
+vector, and the question is embedded the same way. FAISS (LangChain's
+`FAISS.from_documents`, flat index) ranks chunks by **Euclidean (L2)
+distance** between the question vector `q` and each chunk vector `d` —
+lower distance means closer:
+
+`distance(q, d) = ||q - d||_2 = sqrt(Σ (q_i - d_i)^2)`
+
+The top 10 closest chunks are the dense candidates. FAISS search is
+~12–14 ms median and flat vs corpus size (measured from 7 to 500 docs).
+
+### Keyword retrieval: BM25
+
+Dense retrieval can miss exact numbers, names and rare terms, because two
+texts can mean similar things without sharing words. BM25 scores chunks
+by exact term overlap instead. This repo implements Okapi BM25 in pure
+Python (`retrieval.py`, no new dependency), with `k1 = 1.5` and `b = 0.75`:
+
+`score(D, Q) = Σ IDF(q_i) · [ f(q_i, D) · (k1 + 1) ] / [ f(q_i, D) + k1 · (1 - b + b · |D| / avgdl) ]`
+
+where `f(q_i, D)` is how often the query term `q_i` appears in chunk `D`,
+`|D|` is the chunk's length, `avgdl` is the average chunk length, and
+
+`IDF(q_i) = ln( 1 + (N - n(q_i) + 0.5) / (n(q_i) + 0.5) )`
+
+with `N` the number of chunks and `n(q_i)` the number of chunks containing
+the term. The `+0.5` terms keep the IDF positive even for terms that
+appear in most chunks. BM25 costs 0.3 ms at 7 docs and 9.9 ms at 500 docs.
+
+### Fusion: Reciprocal Rank Fusion
+
+Dense and keyword retrieval return two ranked top-10 lists that disagree
+in useful ways. Reciprocal Rank Fusion merges them using only rank
+positions — no score normalisation, so the L2 distances and BM25 scores
+never have to be compared directly. With fusion constant `k = 60`:
+
+`RRF(d) = Σ_r 1 / (k + rank_r(d))`
+
+where the sum runs over the two ranked lists and `rank_r(d)` is chunk `d`'s
+rank in list `r` (1-based). A chunk ranked #1 in one list and #5 in the
+other scores `1/61 + 1/65`; a chunk ranked #1 in both scores `2/61`. The
+fused top 10 goes to the re-ranker. Set `HYBRID_SEARCH=false` or pass
+`"retrieval": "dense"` to skip BM25 and use FAISS alone.
+
+### Cross-encoder re-ranking
+
+A bi-encoder (the embedding model) scores the question and each chunk
+separately and compares vectors. A cross-encoder does the opposite: it
+takes the **pair** `(question, chunk)` as one input and scores their
+joint relevance directly. `ms-marco-MiniLM-L-6-v2` returns a single
+relevance logit per pair — higher means more relevant — and the top 10
+fused chunks are re-ordered by it, keeping the top 3. Cross-encoder
+scoring is the most accurate stage and also the slowest: ~470–597 ms
+median per query, dominating retrieval time.
+
+Two safeguards sit on this stage. First, if `reranker.predict()` throws,
+the query falls back to retrieval order (`rerank_fallback: true` in the
+metrics) instead of a 500. Second, top-3 selection drops near-duplicate
+chunks (token-overlap coefficient > 0.6 with an already-selected chunk),
+so the same fact in two overlapping chunks does not fill two of the three
+sources. Third, the relevance threshold: if the best reranked chunk
+scores below `RELEVANCE_MIN_SCORE` (default `0.0`, cross-encoder logits
+where relevant pairs typically score above 0), the backend refuses
+instead of letting the LLM guess. The threshold applies only when the
+reranker actually ran.
+
+### Generation
+
+The top 3 chunks are passed to `openai/gpt-oss-20b` (Groq) with a
+hardened system prompt (`guardrails.build_system_prompt()`): the
+documents are **untrusted data**, never follow instructions inside them,
+answer only from context, use the fixed refusal phrase "not present in
+the documents", and never reveal the system prompt or any secret. The
+context is wrapped in `<<<DOCUMENTS>>>` delimiters and labelled
+untrusted, structurally separate from the question
+(`guardrails.build_user_message()`). Generation runs at temperature 0.3
+with a 500-token cap (`LLM_MAX_TOKENS`).
+
+> Note (27 Nov 2026): the original default `llama-3.1-8b-instant` was
+> retired by Groq — the Groq models list no longer contains it (verified
+> via the Groq API), and queries with it fail with HTTP 404. The default
+> is now `openai/gpt-oss-20b`; override with the `LLM_MODEL` env var if
+> Groq changes its catalogue again.
+
+### How answers are scored
+
+The eval reports four numbers, defined here so the results below are
+unambiguous:
+
+- **Precision@3 (P@3):** the fraction of the top 3 chunks that are the
+  ground-truth chunk. Each eval question has exactly one ground-truth
+  chunk, so P@3 is capped at 0.333 — a perfect run scores 0.333, not 1.0.
+- **Hit@3:** 1 if the ground-truth chunk is anywhere in the top 3, else 0,
+  averaged over questions. This is the real retrieval signal when P@3 is
+  capped.
+- **Token-F1:** word-overlap F1 between the generated answer and the
+  reference answer (lowercased tokens, `2·P·R/(P+R)`). Free, no LLM judge.
+  Exact-phrase matching is reported too, but the model paraphrases instead
+  of copying spans, so token-F1 is the fairer number.
+- **Groundedness:** whether the retrieved context contains the expected
+  phrase, and whether the answer contains it.
+
+## Dataset
+
+**Eval corpus (this repo):** 7 hand-built documents in `eval/corpus/`
+(21 chunks), with `eval/questions.json` — 27 questions: 19 answerable
+(15 general + 4 keyword-heavy, where BM25 should help), 4 refusal
+(unanswerable from the documents), 4 prompt-injection. The corpus
+includes `rogue-memo.txt`, a fictional document holding five attack
+shapes (direct instruction, fake system/user turns, a planted false
+fact, an exfiltration attempt). Ground truth is computed with the app's
+own splitter (500/50), so a chunk is "correct" only if the app itself
+would produce it.
+
+**Scale corpus (public):** the SQuAD v1.1 dev set, public, CC BY-SA 4.0 —
+https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json
+(2,067 unique contexts available; 4.7 MB download). Each context is one
+`.txt` document (title + context). Corpora are nested and deterministic
+(seed 42): the 100 docs are a subset of the 200, which are a subset of
+the 500. 20 sampled questions per size (1 per context, answer span
+verified to sit in the app-splitter chunks of that file) plus 4 refusal
+questions. The corpus `.txt` files are **not** committed (see
+`.gitignore`); only the download script, the questions files and the
+results JSON are in the repo.
+
+A second, bigger-document scale test used only contexts of at least
+1 KB (390 of the 2,067 qualify): 100 documents, 336 chunks.
+
+## Installation
+
+```bash
+git clone https://github.com/tanishq-2004/Document-QA-System-v2.git
+cd Document-QA-System-v2
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+# Mac/Linux
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+Requires Python 3.11+ and a Groq API key for generation (retrieval works
+without one — see [Evaluation](#evaluation)). `requirements.txt` versions
+are pinned deliberately and unchanged, so the live Space keeps working.
+
+## Running locally
+
+```bash
+# Terminal 1 — FastAPI backend
+uvicorn app:app --port 8000
+
+# Terminal 2 — Streamlit frontend
+streamlit run streamlit.py
+```
+
+Frontend: `http://localhost:7860`. Backend docs: `http://localhost:8000/docs`.
+Set `GROQ_API_KEY` in the environment (or enter a key in the sidebar) for
+generation; without a key the system runs in retrieval-only mode and
+answers with the retrieved context instead of a generated answer.
+
+## Running with Docker
+
+```bash
+docker build -t document-qa .
+docker run -p 7860:7860 -p 8000:8000 document-qa
+```
+
+Streamlit serves on 7860 (HF Docker Spaces route external traffic there);
+uvicorn stays internal on 8000. The Docker build was never run locally in
+this project's VM (Docker is unavailable there); the proof it works is
+the live Hugging Face Space, which builds its image from this Dockerfile
+and runs it.
+
+## API endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/health` | System health and vector index statistics |
+| POST | `/api/upload` | Upload and index documents (PDF / DOCX / TXT, max 10 MB) |
+| POST | `/api/query` | Ask questions against indexed documents |
+| GET | `/api/documents` | View indexed documents and chunk counts |
+| DELETE | `/api/reset` | Clear uploaded files and vector store |
+
+`POST /api/query` takes `{"question", "groq_api_key"?, "rerank"?, "retrieval"?}`
+and returns the answer, sources with chunk ids, per-stage timings
+(`retrieval_ms`, `rerank_ms`, `generation_ms`, `bm25_ms`), `cached`,
+`injection_flagged`, `refused`, `citations` and `standalone_question`
+(when a follow-up was rewritten). `rerank: false` disables re-ranking for
+that query; `"retrieval": "dense"` uses FAISS alone.
+
+## Evaluation
 
 Start the backend first (`uvicorn app:app --port 8000`), then:
 
@@ -181,42 +476,32 @@ Start the backend first (`uvicorn app:app --port 8000`), then:
 python eval/eval.py
 ```
 
-This resets the index, uploads every document in `eval/corpus/`
-(works for any corpus size — 5, 25, 50 or 100 docs), asks each
-answerable question in `eval/questions.json` in four arms
-(dense-only, dense+rerank, hybrid-only, hybrid+rerank), and asks
-the refusal / injection questions once each, then writes
-`eval/results.json` with docs / total chunks / index time, median
-latency (including `bm25_ms`), precision@3 for all four arms
-(plus the keyword-question subset separately), refusal accuracy,
-injection pass/fail per case, and groundedness.
+This resets the index, uploads every document in `eval/corpus/`, asks
+each answerable question in `eval/questions.json` in four arms
+(dense-only, dense+rerank, hybrid-only, hybrid+rerank), and asks the
+refusal / injection questions once each, then writes `eval/results.json`
+with docs / total chunks / index time, median latency (including
+`bm25_ms`), precision@3 for all four arms (plus the keyword-question
+subset separately), refusal accuracy, injection pass/fail per case, and
+groundedness.
 
-By default no Groq key is sent, so generation timing is
-retrieval-only and the refusal / injection / groundedness checks
-that need a real LLM answer are reported as **skipped, never as a
-pass**. To evaluate those, run with `GROQ_API_KEY` set in the
-environment — the eval reads it from the env var and sends it in
-the query body; it is never printed or written to `results.json`.
+By default no Groq key is sent, so generation timing is retrieval-only
+and the refusal / injection / groundedness checks that need a real LLM
+answer are reported as **skipped, never as a pass**. To evaluate those,
+run with `GROQ_API_KEY` set in the environment — the eval reads it from
+the env var and sends it in the query body; it is never printed or
+written to `results.json`.
 
 **Caveat — server-side key defeats retrieval-only mode.** If the
-backend itself was started with `GROQ_API_KEY` in its environment,
-it will still call Groq even when the eval sends no key (the
-backend falls back to its own env var). For a true retrieval-only
-run, start the backend without the key in its environment. This
-bit the 500-doc public run once: a "retrieval-only" run timed out
-because the backend was still calling Groq, which was rate-limited
-and retried for ~59 s inside the request.
+backend itself was started with `GROQ_API_KEY` in its environment, it
+will still call Groq even when the eval sends no key (the backend falls
+back to its own env var). For a true retrieval-only run, start the
+backend without the key in its environment. This bit the 500-doc public
+run once: a "retrieval-only" run timed out because the backend was still
+calling Groq, which was rate-limited and retried for ~59 s inside the
+request.
 
-## Public-document scale test (SQuAD v1.1 dev, local only)
-
-Corpus: SQuAD v1.1 dev set, public, CC BY-SA 4.0 —
-https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json
-(2,067 unique contexts available; 4.7 MB download). Each context is
-one `.txt` document (title + context). Corpora are nested and
-deterministic (seed 42): the 100 docs are a subset of the 200, which
-are a subset of the 500. 20 sampled questions per size (1 per context,
-answer span verified to sit in the app-splitter chunks of that file)
-plus 4 refusal questions. Reproduce it locally with:
+The scale test is reproduced with:
 
 ```bash
 python eval/download_public_corpus.py --out-dir eval/corpus_public
@@ -226,61 +511,89 @@ python eval/eval.py --base-url http://127.0.0.1:8001 \
   --out eval/results_public_500.json
 ```
 
-The corpus `.txt` files are **not** committed (see `.gitignore`);
-only the download script, the questions files and the results JSON
-are in the repo. Full results: `eval/results_public_100.json`,
+## Experiments
+
+The eval compares four retrieval arms on the same questions, so the
+differences are the arms, not the questions: **dense-only** (FAISS),
+**dense+rerank**, **hybrid-only** (FAISS + BM25, RRF, no rerank) and
+**hybrid+rerank**. The experiments are the 7-doc eval (run twice, with
+Groq), the public-document scale test (100 / 200 / 500 SQuAD docs), and
+the bigger-document test (100 docs of at least 1 KB, retrieval-only).
+Only numbers from actual runs are reported — nothing is estimated.
+
+| Docs | Chunks | Index time | P@3 dense / dense+rerank / hybrid / hybrid+rerank | Hit@3 dense / reranked |
+|---:|---:|---:|---|---:|
+| 7 | 21 | — | 0.351 / 0.351 / 0.351 / 0.351 | 1.0 / 1.0 |
+| 100 | 218 | 22.2 s | 0.333 / 0.333 / 0.333 / 0.333 | 1.0 / 1.0 |
+| 200 | 437 | 23.7 s | 0.333 / 0.333 / 0.333 / 0.333 | 1.0 / 1.0 |
+| 500 | 1,109 | 67.5 s* | 0.300 / 0.333 / 0.316 / 0.333 | 0.90 / 1.0 |
+| 100 (≥1 KB docs) | 336 | 32.3 s | 0.333 / 0.350 / 0.333 / 0.333 | 1.0 / 1.0 |
+
+\* 500-doc index time measured twice: 67.5 s and 140.7 s (see below).
+
+**Did hybrid help? Only at 500 docs, and only a little.** At 7, 100 and
+200 docs every arm hits Hit@3 1.0 — the facts are too distinct, so
+dense retrieval already finds everything (ceiling effect). At 500 docs
+the corpus is dense enough that dense-only misses 2 of 20 (Hit@3 0.90,
+P@3 0.300); hybrid-only recovers one of them (Hit@3 0.95, P@3 0.316),
+and reranking recovers both (Hit@3 1.0, P@3 0.333 in both reranked
+arms). So hybrid+rerank beats dense-only by +3.3 pp P@3 at 500 docs —
+re-ranking alone improves precision@3 by **11%** (0.300 → 0.333). BM25
+costs 2.0 ms (100 docs) → 9.9 ms (500 docs); FAISS stays ~12–14 ms
+flat; reranking dominates retrieval at ~470–550 ms.
+
+**Answer correctness (token-F1 vs the SQuAD reference, free, no LLM
+judge):** 0.594 at 100 docs, 0.489 at 200 docs (20 questions each, real
+generations). Exact-phrase hit was only 0.45 at both sizes even though
+the retrieved context contained the phrase 0.95 of the time — the model
+paraphrases instead of copying the span, so exact-phrase is too strict
+and token-F1 is the fairer number.
+
+## Results
+
+All numbers below are from real runs — nothing here is an estimate or a
+guess. Full results files: `eval/results_hybrid_run1.json`,
+`eval/results_hybrid_run2.json`, `eval/results_public_100.json`,
 `eval/results_public_200.json`, `eval/results_public_500.json`,
 `eval/results_public_500_retrieval_only.json`,
-`eval/results_public_500_answers.json`. All runs used Groq
-`openai/gpt-oss-20b`, local backend on port 8001.
+`eval/results_public_500_answers.json`, `eval/results_public_100big.json`.
 
-| Docs | Chunks | Index time | P@3 dense / dense+rerank / hybrid / hybrid+rerank | Hit@3 dense / reranked | FAISS / BM25 / rerank (median ms) | Total (median / p95 ms) |
-|---:|---:|---:|---|---:|---:|---:|
-| 100 | 218 | 22.2 s | 0.333 / 0.333 / 0.333 / 0.333 | 1.0 / 1.0 | 14.1 / 2.0 / 515.9 | 3860 / 7407 |
-| 200 | 437 | 23.7 s | 0.333 / 0.333 / 0.333 / 0.333 | 1.0 / 1.0 | 12.4 / 4.1 / 524.1 | 3972 / 5275 |
-| 500 | 1109 | 67.5 s* | 0.300 / 0.333 / 0.316 / 0.333 | 0.90 / 1.0 | 12.4 / 9.9 / 466.6 | 893 / 1300† |
+| Metric | Measured value | How measured |
+|---|---|---|
+| FAISS retrieval | ~12–14 ms median | 100–500 doc SQuAD runs; flat vs corpus size |
+| BM25 retrieval | 0.3 ms (7 docs) – 9.9 ms (500 docs) median | 7-doc eval and SQuAD runs |
+| Cross-encoder reranking | ~470–597 ms median | 7-doc eval and SQuAD runs; dominates retrieval |
+| Retrieval-only total | 609.5 ms median / 753.9 ms p95 | 7-doc eval recheck, 27 Nov 2026 |
+| End-to-end with Groq generation | 3859.6 ms median | 100 docs / 400 chunks, Groq `openai/gpt-oss-20b` |
+| Scale tested | 500 docs / 1,109 chunks | Hit@3 1.0 hybrid+rerank vs 0.90 dense-only |
+| Answer correctness (token-F1) | 0.594 (100 docs) / 0.489 (200 docs) | SQuAD reference answers, free, no LLM judge |
+| Chunking strategy | 500 chars / 50 overlap | Fixed config |
+| Vector persistence | Enabled | FAISS index + manifest on disk |
+| Unit tests | 105/105 passing | `pytest` (no ML models loaded) |
 
-P@3 is capped at 0.333 here because each question has exactly one
-ground-truth chunk and the top 3 can contain it at most once — so
-read Hit@3 (is the right chunk in the top 3 at all) as the real
-retrieval signal. Refusal was 4/4 at all three sizes.
-
-**Did hybrid help? Only at 500 docs, and only a little.** At 100 and
-200 docs every arm hits Hit@3 1.0 — the facts are too distinct, so
-dense retrieval already finds everything (ceiling effect again).
-At 500 docs the corpus is dense enough that dense-only misses 2 of
-20 (Hit@3 0.90, P@3 0.300); hybrid-only recovers one of them (Hit@3
-0.95, P@3 0.316), and reranking recovers both (Hit@3 1.0, P@3
-0.333 in both reranked arms). So hybrid+rerank beats dense-only by
-+3.3 pp P@3 at 500 docs. BM25 costs 2.0 ms (100 docs) → 9.9 ms
-(500 docs); FAISS stays ~12–14 ms flat; reranking dominates
-retrieval at ~470–550 ms.
-
-**Answer correctness (token-F1 vs the SQuAD reference, free,
-no LLM judge):** 0.594 at 100 docs, 0.489 at 200 docs (20 questions
-each, real generations). Exact-phrase hit was only 0.45 at both
-sizes even though the retrieved context contained the phrase 0.95
-of the time — the model paraphrases instead of copying the span, so
-exact-phrase is too strict and token-F1 is the fairer number.
+**Do not quote a sub-2-second end-to-end time.** Generation latency is
+unstable — it is Groq-side variance, not this code: the same eval run
+twice gave generation medians of 0.79 s and 3.71 s. Quote only the
+measured medians above, with their context.
 
 **What is NOT valid from the 500-doc Groq run — read this before
-quoting any 500-doc answer number.** The three Groq runs together
-used ~199k of Groq's 200k tokens/day free-tier limit, so the 500-doc
-run's generations failed with HTTP 429 partway through. Its
-retrieval numbers are clean (confirmed by an identical retrieval-only
-re-run: same P@3 and Hit@3 in all four arms), but its
-answer-correctness numbers (token-F1 0.069, exact-phrase 0.85,
-generation 416 ms) are contaminated by fast-failing generation calls
-whose error text echoes retrieved context — do not quote them. A
-small re-check after the limit partially reset (`eval/
-public_answer_check.py`, 7 questions) also hit the limit on 6 of 7
-calls; the one real generation it produced was correct, and one
-injection question answered with a real generation gave the true
+quoting any 500-doc answer number.** The three Groq runs together used
+~199k of Groq's 200k tokens/day free-tier limit, so the 500-doc run's
+generations failed with HTTP 429 partway through. Its retrieval numbers
+are clean (confirmed by an identical retrieval-only re-run: same P@3
+and Hit@3 in all four arms), but its answer-correctness numbers
+(token-F1 0.069, exact-phrase 0.85, generation 416 ms) are contaminated
+by fast-failing generation calls whose error text echoes retrieved
+context — do not quote them. A small re-check after the limit partially
+reset (`eval/public_answer_check.py`, 7 questions) also hit the limit
+on 6 of 7 calls; the one real generation it produced was correct, and
+one injection question answered with a real generation gave the true
 fact (24 days, not the planted 99). Injection 4/4 and refusal 4/4
 stand from the earlier runs on this same guardrail code; at 500 docs
 they could not be cleanly re-measured because of the token limit.
 
 **Two real findings, not artefacts:**
+
 - *False refusal (Q18 at 500 docs).* "Who is most likely to teach a
   child at home?" — the correct chunk (squad-0426 chunk 0) ranks #1
   but its cross-encoder score is −2.03, below the 0.0 relevance
@@ -296,19 +609,18 @@ they could not be cleanly re-measured because of the token limit.
   Cache-hit re-upload at 500 docs: **1.7–2.0 ms** vs ~124 ms median
   fresh index per doc (~98% faster).
 
-\* 500-doc index time measured twice: 67.5 s and 140.7 s (see above).
-† 500-doc total/generation latency from the Groq run is contaminated
-by the token-limit failures; the retrieval-only re-run gives the clean
-retrieval latency: total median 569.8 ms, p95 858.4 ms, generation 0 ms.
-No stop-rule limit was hit (no OOM, no errors, median total query
-well under 30 s); the limit found was Groq's daily token budget, not
-the system's.
+**Live demo checks (27 Nov 2026):** the Space indexed a 743-page ACCA
+textbook (split into two parts under the 10 MB limit, 2,131 chunks) plus
+5 SQuAD documents — 2,144 chunks / 7 files — and answered every
+verification question correctly, including multi-turn follow-ups
+("What year was that?" → "What year does the revenue figure of
+$630,000 refer to?") and inline citations ("$630,000
+[FR_part1.pdf #891]"). Two answers came back empty on first ask and
+correct on re-ask; the cause is unknown (see Limitations).
 
----
+## Guardrails & threat model
 
-# 🛡️ Guardrails & threat model
-
-## What is guarded
+### What is guarded
 
 **Prompt injection is the centrepiece.** Uploaded documents are
 untrusted data, and a RAG system hands them straight to the LLM, so
@@ -360,7 +672,7 @@ simple in-memory rate limit of 60 queries/min per process
 (`RATE_LIMIT_PER_MINUTE`, HTTP 429) — 60, not 30, because the eval
 suite itself issues ~40 queries in under a minute.
 
-## What is NOT guarded
+### What is NOT guarded
 
 This is **not a jailbreak-proof filter**. A determined attacker
 with a carefully crafted document can still mislead an LLM — the
@@ -386,77 +698,84 @@ publicly without auth in front of it.
 | `HYBRID_SEARCH` | `true` | Hybrid (BM25 + FAISS) retrieval by default; `false` = dense-only. Per-query `"retrieval"` field overrides it |
 | `ANSWER_CACHE_MAX_ENTRIES` | `200` | Repeated-question answer cache size (FIFO); `0` disables it |
 
-> The Performance table further down now shows measured numbers
-> from real runs (see "Running the eval" and the public-document
-> scale test above). The original claimed numbers (sub-second
-> retrieval, 20+ documents) were unmeasured claims, not results,
-> and have been removed — do not quote them.
+## Why FAISS, not a dedicated vector DB?
 
----
+The project keeps FAISS (in-process, persisted to disk) instead of
+moving to a dedicated vector database such as Qdrant, Chroma or
+Pinecone. The reason is scale, measured, not assumed:
 
-# 🏗️ Architecture
+- At 100 documents / 400 chunks the vectors are ~0.6 MB and the
+  backend uses ~660–690 MB RSS total. FAISS search is ~20 ms and
+  flat vs corpus size. A separate vector-DB server would add a
+  process to run, network latency per query, deployment complexity
+  (and cost, for hosted options) with no measurable benefit at this
+  size.
+- Switch only when one of these is true: > 50k chunks (where a
+  flat FAISS index starts to hurt and IVF/HNSW or a managed index
+  earns its keep), multi-user concurrent writes that need
+  transactions, or persistence that must be shared across services.
+- Retrieval is isolated behind `retrieval.py` (BM25 + RRF + rerank
+  fallback + diversity) and the chunk registry in `app.py`, so
+  swapping FAISS for another store later is a localised change —
+  the query, rerank and generation code does not know which store
+  produced the candidates.
 
-```text
-User Question
-      │
-      ▼
-[Embedding Model]
-sentence-transformers/all-MiniLM-L6-v2
-      │
-      ▼
-[Hybrid Retrieval]
-FAISS top-10 (dense) + BM25 top-10 (keyword)
-  → Reciprocal Rank Fusion (k=60) → top-10
-      │
-      ▼
-[Cross-Encoder Re-ranking]
-ms-marco-MiniLM-L-6-v2
-(fallback to retrieval order on error;
- near-duplicate chunks dropped from top 3)
-      │
-      ▼
-[Groq-hosted LLM]
-openai/gpt-oss-20b
-      │
-      ▼
-Grounded Answer + Sources + Timing Metrics
-```
+## Limitations
 
----
+- **Generation latency is unstable.** End-to-end time depends on
+  Groq's API, not this code: the same eval run twice gave generation
+  medians of 0.79 s and 3.71 s. Never quote a sub-2-second
+  end-to-end time.
+- **Groq's free tier is the bottleneck.** 200k tokens/day. The
+  three scale-test runs together hit it, which contaminated the
+  500-doc run's answer numbers with HTTP 429 failures. The demo
+  runs on the owner's key, so heavy public use can exhaust it.
+- **Two empty answers, cause unknown.** During the live demo test
+  two first-ask answers came back empty (metrics present, no text)
+  and correct on re-ask, with clean logs and successful Groq calls
+  both times. Intermittent and unexplained — worth knowing before
+  demoing.
+- **The relevance threshold can refuse a right answer.** One false
+  refusal in 20 at 500 docs: the correct chunk ranked #1 but scored
+  −2.03, below the 0.0 threshold, so a paraphrased question was
+  refused. Tuning the threshold needs a full re-eval.
+- **Indexing rewrites the whole index.** Every upload saves the
+  full FAISS index, so per-upload cost grows with index size, and
+  index time is noisy (the same 500-doc index took 67.5 s and
+  140.7 s in two runs).
+- **Single user, no auth.** No authentication on any endpoint, an
+  in-memory rate limit that resets per process, and a 10 MB upload
+  cap. A 743-page, 11.6 MB PDF is rejected as-is and must be split.
+- **Reranking dominates retrieval.** ~470–597 ms of the ~610 ms
+  retrieval-only total is the cross-encoder. Retrieval is fast;
+  the reranker is the cost of the quality.
+- **The demo index is wiped on every rebuild.** A Space restart
+  clears the in-memory index, so the test documents must be
+  re-uploaded after every deploy.
 
-# ✨ Features
+## Future improvements
 
-- 📄 Upload and query PDF / DOCX / TXT documents
-- ⚡ Hybrid retrieval (FAISS + BM25, RRF-fused) using FAISS
-- 🎯 Two-stage retrieval with cross-encoder reranking
-- 💾 Persistent vector index caching (manifest-based, stale-file safe)
-- 📊 Live retrieval and generation latency metrics
-- 🔍 Grounded source citations with chunk tracking
-- 🧩 Modular FastAPI backend with REST APIs
-- 🎛️ Interactive Streamlit frontend
-- 🐳 Dockerized deployment
-- ☁️ Deployable on Hugging Face Spaces
+- Corrective RAG: grade retrieval with the reranker score and retry
+  with a rewritten query before refusing, instead of refusing outright.
+- Multi-hop questions that need facts from more than one document.
+- Parent-document retrieval: retrieve small chunks, return the
+  surrounding passage for generation.
+- A stronger embedding model (e.g. BGE-small) with a full re-eval of
+  all four arms before adopting it.
+- Re-rank a bigger pool (top 20 → top 3) instead of top 10 → top 3.
+- Incremental indexing, so an upload does not rewrite the whole
+  FAISS index.
+- Table-aware chunking for documents where the facts live in tables.
+- Multi-file upload, streaming answers, `.md` upload support.
+- A document filter in the sidebar, so questions can be scoped to
+  chosen files.
+- Query expansion / multi-query retrieval (RAG fusion) for paraphrases.
+- Groq quota protection for the public demo (a daily token budget or
+  a tighter rate limit).
+- Self-seeding demo documents in the Space, so the index survives a
+  rebuild.
 
----
-
-# 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | Streamlit |
-| Backend | FastAPI + Uvicorn |
-| Vector Database | FAISS |
-| Embedding Model | sentence-transformers/all-MiniLM-L6-v2 |
-| Re-ranker | ms-marco-MiniLM-L-6-v2 |
-| LLM | openai/gpt-oss-20b (Groq API) |
-| RAG Framework | LangChain |
-| Document Parsing | PyPDF + python-docx |
-| Containerization | Docker |
-| Deployment | Hugging Face Spaces |
-
----
-
-# 📂 Project Structure
+## Project structure
 
 ```text
 Document-QA-System/
@@ -497,263 +816,14 @@ Document-QA-System/
 └── screenshots/
 ```
 
----
-
-# 🚀 Run Locally
-
-## 1. Clone Repository
-
-```bash
-git clone https://github.com/tanishq-2004/Document-QA-System-v2.git
-
-cd Document-QA-System-v2
-```
-
----
-
-## 2. Create Virtual Environment
-
-### Windows
-
-```bash
-python -m venv venv
-
-venv\Scripts\activate
-```
-
-### Mac/Linux
-
-```bash
-python -m venv venv
-
-source venv/bin/activate
-```
-
----
-
-## 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 4. Start FastAPI Backend
-
-```bash
-uvicorn app:app --reload --port 8000
-```
-
----
-
-## 5. Start Streamlit Frontend
-
-```bash
-streamlit run streamlit.py
-```
-
----
-
-## 6. Open Application
-
-Frontend:
-
-```text
-http://localhost:7860
-```
-
-Backend Docs:
-
-```text
-http://localhost:8000/docs
-```
-
----
-
-# 🐳 Run with Docker
-
-## Build Docker Image
-
-```bash
-docker build -t document-qa .
-```
-
----
-
-## Run Docker Container
-
-```bash
-docker run -p 7860:7860 -p 8000:8000 document-qa
-```
-
----
-
-# 🌐 API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/health` | System health and vector index statistics |
-| POST | `/api/upload` | Upload and index documents |
-| POST | `/api/query` | Ask questions against indexed documents |
-| GET | `/api/documents` | View indexed documents and chunk counts |
-| DELETE | `/api/reset` | Clear uploaded files and vector store |
-
----
-
-# 📊 Performance
-
-Every number below is measured, from a real run — see "Running the
-eval" and the public-document scale test above for the method and
-the raw result files. The original claimed numbers (retrieval
-< 100 ms, reranking ~100–300 ms, end-to-end ~1–2 s, "20+
-documents") had no measurement behind them and have been removed.
-
-| Metric | Measured value | How measured |
-|---|---|---|
-| FAISS retrieval | ~12–14 ms median | 100–500 doc SQuAD runs; flat vs corpus size |
-| BM25 retrieval | 0.3 ms (7 docs) – 9.9 ms (500 docs) median | 7-doc eval and SQuAD runs |
-| Cross-encoder reranking | ~470–597 ms median | 7-doc eval and SQuAD runs; dominates retrieval |
-| Retrieval-only total | 609.5 ms median / 753.9 ms p95 | 7-doc eval recheck, 27 Nov 2026 |
-| End-to-end with Groq generation | 3859.6 ms median | 100 docs / 400 chunks, Groq `openai/gpt-oss-20b` |
-| Scale tested | 500 docs / 1109 chunks | Hit@3 1.0 hybrid+rerank vs 0.90 dense-only |
-| Answer correctness (token-F1) | 0.594 (100 docs) / 0.489 (200 docs) | SQuAD reference answers, free, no LLM judge |
-| Chunking strategy | 500 chars / 50 overlap | Fixed config |
-| Vector persistence | Enabled | FAISS index + manifest on disk |
-
-**Do not quote a sub-2-second end-to-end time.** Generation
-latency is unstable — it is Groq-side variance, not this code:
-the same eval run twice gave generation medians of 0.79 s and
-3.71 s. Quote only the measured medians above, with their context.
-The 500-doc run's answer numbers are also not quotable: its
-generations failed with HTTP 429 when Groq's 200k tokens/day free
-limit was hit (see the contamination warning in the scale-test
-section above).
-
----
-
-# 🔍 Retrieval Pipeline
-
-The retrieval pipeline follows a **hybrid, three-stage architecture** for balancing retrieval speed and answer relevance.
-
----
-
-## Stage 1 — Hybrid Retrieval (FAISS + BM25)
-
-- Documents are chunked using overlapping text splitting
-- Chunks are embedded using:
-  - `all-MiniLM-L6-v2`
-- Embeddings are indexed in a FAISS vector database
-- Top semantic candidates are retrieved efficiently (top-10)
-- In parallel, a pure-Python BM25 index (`retrieval.py`, no new
-  dependency) retrieves the top-10 chunks by exact keyword match —
-  this is what catches exact numbers, model names and rare terms
-  that dense retrieval can miss
-- The two top-10 lists are fused with Reciprocal Rank Fusion
-  (k=60) into a single top-10. Set `HYBRID_SEARCH=false` or pass
-  `"retrieval": "dense"` to use FAISS alone.
-
----
-
-## Stage 2 — Cross-Encoder Re-ranking
-
-Retrieved chunks are re-ranked using:
-
-```text
-ms-marco-MiniLM-L-6-v2
-```
-
-This improves:
-
-- retrieval precision
-- contextual relevance
-- grounded response quality
-
-If the reranker throws, the query falls back to retrieval order
-(`rerank_fallback: true` in the metrics) instead of a 500, and
-near-duplicate chunks are dropped from the top 3 so the same fact
-does not fill two of the three sources.
-
----
-
-## Final Generation
-
-Top-ranked chunks are passed into:
-
-```text
-openai/gpt-oss-20b
-```
-
-hosted through the Groq API for fast low-latency inference.
-
-The model generates answers strictly grounded in retrieved context.
-
-> Note (27 Nov 2026): the original default `llama-3.1-8b-instant` was
-> retired by Groq — the Groq models list no longer contains it (verified
-> via the Groq API), and queries with it fail with HTTP 404. The default
-> is now `openai/gpt-oss-20b`; override with the `LLM_MODEL` env var if
-> Groq changes its catalogue again.
-
----
-
-# 🗄️ Why FAISS, not a dedicated vector DB?
-
-The project keeps FAISS (in-process, persisted to disk) instead of
-moving to a dedicated vector database such as Qdrant, Chroma or
-Pinecone. The reason is scale, measured, not assumed:
-
-- At 100 documents / 400 chunks the vectors are ~0.6 MB and the
-  backend uses ~660–690 MB RSS total. FAISS search is ~20 ms and
-  flat vs corpus size. A separate vector-DB server would add a
-  process to run, network latency per query, deployment complexity
-  (and cost, for hosted options) with no measurable benefit at this
-  size.
-- Switch only when one of these is true: > 50k chunks (where a
-  flat FAISS index starts to hurt and IVF/HNSW or a managed index
-  earns its keep), multi-user concurrent writes that need
-  transactions, or persistence that must be shared across services.
-- Retrieval is isolated behind `retrieval.py` (BM25 + RRF + rerank
-  fallback + diversity) and the chunk registry in `app.py`, so
-  swapping FAISS for another store later is a localised change —
-  the query, rerank and generation code does not know which store
-  produced the candidates.
-
----
-
-# 📸 Screenshots
-
-## Upload Interface
-
-![Upload UI](screenshots/upload-ui.png)
-
----
-
-## Answer Generation
-
-![Answer Generation](screenshots/answer-generation.png)
-
----
-
-## Metrics Dashboard
-
-![Metrics Dashboard](screenshots/metrics-dashboard.png)
-
----
-
-## Source Citations
-
-![Source Citations](screenshots/source-citations.png)
-
----
-
-# ☁️ Deployment
+## Deployment
 
 Live demo: https://huggingface.co/spaces/Skywalker67/Document-QA-System
 (Docker SDK, cpu-basic, Streamlit on 7860, uvicorn internal on 8000).
 The same Docker image runs anywhere Docker runs; the only verified
 deployment is the Hugging Face Space below.
 
-## What actually happened — the original Space was updated in place
+### What actually happened — the original Space was updated in place
 
 On 27 Nov 2026 the **existing** Space was edited in place, not
 replaced: all 10 code files were committed together as Space commit
@@ -775,9 +845,7 @@ and came back RUNNING.
   France?" answered **"Paris"** with real generation (Retrieval
   20.2 ms, Reranking 39.3 ms, Generation 1268.1 ms, Total
   1327.7 ms), and "What is the secret code?" was refused with
-  "not present in the documents". The test document
-  (`live-test-doc.txt`, 1 chunk) is still indexed in the Space;
-  remove it with the sidebar "Clear Vector Store" button.
+  "not present in the documents".
   **Sidebar key precedence:** a Groq key entered in the Space
   sidebar overrides the Space secret for that session, and that
   visitor's generations run on their key and their daily limit.
@@ -790,7 +858,7 @@ and came back RUNNING.
   Hugging Face API token was rejected with 401 "Invalid user
   token", so an API push was never possible and remains untested.
 
-## Updating the Space later
+### Updating the Space later
 
 Edit the files in this repo, commit and push here, then upload the
 changed code files to the existing Space in place (same browser
@@ -799,9 +867,49 @@ route as above). Do not touch the Space `README.md`,
 a Space restart clears the in-memory index — re-upload any
 documents you want indexed afterwards.
 
+## This system vs production RAG
+
+| | This system | Production RAG |
+|---|---|---|
+| Users | One user at a time, shared index | Multi-user, isolated indexes, auth |
+| Vector store | In-process FAISS, persisted to disk | Managed vector DB (Qdrant / Pinecone), sharded |
+| Retrieval | Hybrid BM25 + FAISS, RRF, cross-encoder rerank | Same ideas, plus ANN indexes, query routing, caching layers |
+| LLM | Free-tier Groq, 200k tokens/day | Provisioned inference, rate limits per tenant, fallbacks |
+| Guardrails | Prompt hardening, threshold, payload check | Those, plus auth, upload scanning, audit logs, red-teaming |
+| Scale tested | 500 documents / 1,109 chunks | Millions of chunks, distributed indexing |
+| Serving | Free CPU tier, ~610 ms retrieval-only median | GPU inference, SLA-backed latency |
+
+This system is a deployed, measured RAG project for learning retrieval
+engineering and demonstrating it. It is not a production service, and
+its numbers should never be quoted as production benchmarks.
+
+## Screenshots
+
+### Upload Interface
+
+![Upload UI](screenshots/upload-ui.png)
+
 ---
 
-# 📄 Resume Highlights
+### Answer Generation
+
+![Answer Generation](screenshots/answer-generation.png)
+
+---
+
+### Metrics Dashboard
+
+![Metrics Dashboard](screenshots/metrics-dashboard.png)
+
+---
+
+### Source Citations
+
+![Source Citations](screenshots/source-citations.png)
+
+---
+
+## Resume highlights
 
 This project demonstrates:
 
@@ -814,11 +922,9 @@ This project demonstrates:
 - Docker-based deployment workflows
 - Retrieval latency optimization
 
----
+## Author
 
-# 👨‍💻 Author
-
-## Tanishq Gupta
+### Tanishq Gupta
 
 Final-year B.Tech student focused on:
 
@@ -827,10 +933,14 @@ Final-year B.Tech student focused on:
 - Semantic Search Systems
 - AI-powered Backend Engineering
 
----
+## Links
 
-# 📜 License
+- **Live demo:** https://huggingface.co/spaces/Skywalker67/Document-QA-System
+- **Code:** https://github.com/tanishq-2004/Document-QA-System-v2
+- **Original project:** https://github.com/tanishq-2004/Document-QA-System
+- **Scale corpus:** [SQuAD v1.1 dev](https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v1.1.json)
+  (CC BY-SA 4.0)
+
+## License
 
 MIT License
-
-Free to use, modify, and distribute.
